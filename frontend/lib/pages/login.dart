@@ -45,6 +45,7 @@ class _LogInPageState extends State<LogInPage> {
                   labelText: 'Password',
                 ),
               ),
+              const Flexible(child: FractionallySizedBox(heightFactor: 0.1)),
               OutlinedButton(
                   onPressed: () =>
                       logInButtonPressed(context, usernameController.text),
@@ -60,5 +61,5 @@ class _LogInPageState extends State<LogInPage> {
 void logInButtonPressed(BuildContext context, String username) {
   debugPrint("hi");
   Navigator.push(
-      context, MaterialPageRoute(builder: (_) =>  StartPage(username)));
+      context, MaterialPageRoute(builder: (_) => StartPage(username)));
 }
