@@ -30,10 +30,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  # firebase_core:
+  #database
+  # cloud_firestore:
+  #user auth
+  # firebase_auth:
+  # google_sign_in:
+  #analytics
+  # firebase_analytics:
+  #crashlytics
+  #performance
+
 
 
   # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # Use with the CupertinoIcons class  for iOS style icons.
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -57,6 +69,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

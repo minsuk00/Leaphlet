@@ -32,6 +32,7 @@ class _LogInPageState extends State<LogInPage> {
               TextField(
                 controller: usernameController,
                 autofocus: false,
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'username',

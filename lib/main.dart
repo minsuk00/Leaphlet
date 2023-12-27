@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/home.dart';
+import 'package:test/pages/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const LogInPage(),
     );
   }
 }
