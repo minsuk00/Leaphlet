@@ -45,7 +45,7 @@ class _LogInPageState extends State<LogInPage> {
                   labelText: 'Password',
                 ),
               ),
-              ElevatedButton(
+              OutlinedButton(
                   onPressed: () =>
                       logInButtonPressed(context, usernameController.text),
                   child: const Text("log in")),
