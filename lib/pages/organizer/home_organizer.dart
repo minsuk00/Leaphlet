@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:test/cloud_functions/test_firestore.dart';
+
 class OrganizerHomePage extends StatefulWidget {
   const OrganizerHomePage({super.key});
 
@@ -50,10 +52,9 @@ class _OrganizerHomePageState extends State<OrganizerHomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                QuerySnapshot<Map<String, dynamic>> snapshot =
-                    await _firestore.collection("test_message").get();
+                final msgs = await fsGetMsgs();
                 setState(() {
-                  _msgList = snapshot.docs.map((e) => e.data()).toList();
+                  _msgList = msgs;
                 });
               },
               child: const Text("Get data"),
