@@ -30,10 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  # firebase_core:
+
+  firebase_core: ^2.24.2
   #database
-  # cloud_firestore:
+  cloud_firestore: ^4.13.6
   #user auth
   # firebase_auth:
   # google_sign_in:
