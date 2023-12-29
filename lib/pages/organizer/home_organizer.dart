@@ -16,6 +16,7 @@ class _OrganizerHomePageState extends State<OrganizerHomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List _msgList = [];
 
+
   @override
   void dispose() {
     _controller.dispose();
