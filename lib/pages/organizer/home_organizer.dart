@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,9 +14,9 @@ class OrganizerHomePage extends StatefulWidget {
 
 class _OrganizerHomePageState extends State<OrganizerHomePage> {
   final TextEditingController _controller = TextEditingController();
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List _msgList = [];
-
 
   @override
   void dispose() {
