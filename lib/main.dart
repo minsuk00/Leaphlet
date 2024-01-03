@@ -14,22 +14,22 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
   await Firebase.initializeApp(
-    // name: "test-project",
+    name: "test-project",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
 
-  if (kDebugMode) {
-   try {
-     debugPrint('##### using emulator #####');
-     debugPrint(Platform.isAndroid.toString());
-     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-   } catch (e) {
-     // ignore: avoid_print
-     print(e);
-   }
- }
+//   if (kDebugMode) {
+//    try {
+//      debugPrint('##### using emulator #####');
+//      debugPrint(Platform.isAndroid.toString());
+//      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+//      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+//    } catch (e) {
+//      // ignore: avoid_print
+//      print(e);
+//    }
+//  }
   runApp(const MyApp());
 }
 
