@@ -1,9 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:test/cloud_functions/test_firestore.dart';
+import 'package:test/pages/organizer/create_new_event.dart';
+import 'package:test/pages/organizer/check_existing_events.dart';
+import 'package:test/pages/organizer/inquiry.dart';
 
 class OrganizerHomePage extends StatefulWidget {
   const OrganizerHomePage({super.key});
@@ -13,70 +11,37 @@ class OrganizerHomePage extends StatefulWidget {
 }
 
 class _OrganizerHomePageState extends State<OrganizerHomePage> {
-  final TextEditingController _controller = TextEditingController();
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List _msgList = [];
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(),
+        title: const Text('Home (Organizer)'),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'message',
-                ),
-              ),
+            OutlinedButton(
+              onPressed: () => moveToPage(context, const CreateNewEventPage()),
+              child: const Text("Create New Event"),
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  await _firestore
-                      .collection("test_message")
-                      .doc()
-                      .set({"msg": _controller.text});
-                },
-                child: const Text("Send data")),
-            const SizedBox(
-              height: 30,
+            OutlinedButton(
+              onPressed: () => moveToPage(context, const CheckExistingEventsPage()),
+              child: const Text("Check Existing Events"),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                final msgs = await fsGetMsgs();
-                setState(() {
-                  _msgList = msgs;
-                });
-              },
-              child: const Text("Get data"),
+            OutlinedButton(
+              onPressed: () => moveToPage(context, const InquiryPage()),
+              child: const Text("Inquiry"),
             ),
-            SizedBox(
-              height: 300,
-              child: Scrollbar(
-                thickness: 30,
-                thumbVisibility: true,
-                child: ListView.builder(
-                  itemCount: _msgList.length,
-                  itemBuilder: (context, index) {
-                    return Card(child: Text(_msgList[index]['msg']));
-                  },
-                ),
-              ),
-            )
           ],
         ),
       ),
     );
   }
+}
+
+void moveToPage(BuildContext context, StatefulWidget targetPage) {
+  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }

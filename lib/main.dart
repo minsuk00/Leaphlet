@@ -14,11 +14,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
   await Firebase.initializeApp(
-    // name: "test-project",
+    name: "test-project",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // change haha
+
   if (kDebugMode) {
    try {
      debugPrint('##### using emulator #####');
