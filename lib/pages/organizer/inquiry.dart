@@ -39,6 +39,7 @@ class _InquiryPageState extends State<InquiryPage> {
               width: 200,
               child: TextField(
                 controller: _controller,
+                maxLines: 3, 
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'message',
