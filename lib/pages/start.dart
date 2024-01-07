@@ -39,6 +39,6 @@ class StartPage extends StatelessWidget {
   }
 }
 
-void moveToPage(BuildContext context, StatefulWidget targetPage) {
+void moveToPage(BuildContext context, Widget targetPage) {
   Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }
