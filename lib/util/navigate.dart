@@ -13,3 +13,7 @@ void popNTimes(BuildContext context, int nTimes) {
   int cnt = nTimes;
   Navigator.popUntil(context, (_) => cnt-- <= 0);
 }
+
+void popToPage(BuildContext context, String targetPageName){
+  Navigator.popUntil(context, (route) => route.settings.name == targetPageName);
+}

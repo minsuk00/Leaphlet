@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/pages/visitor/events.dart';
 import 'package:test/util/navigate.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
@@ -67,7 +68,8 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 actions: [
                   ElevatedButton(
                       onPressed: () {
-                        popNTimes(context, 2);
+                        // popNTimes(context, 2);
+                        popToPage(context, "EventsPage");
                       },
                       child: const Text("ok"))
                 ],
