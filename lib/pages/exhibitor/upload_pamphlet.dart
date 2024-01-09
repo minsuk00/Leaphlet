@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 //import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:test/pages/exhibitor/confirmation.dart';
+import 'package:test/util/navigate.dart';
+
 
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -164,8 +166,4 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
       )
     );
   }
-}
-
-void moveToPage(BuildContext context, StatefulWidget targetPage) {
-  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }

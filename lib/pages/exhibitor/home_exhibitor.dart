@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test/pages/exhibitor/upload_pamphlet.dart';
 import 'package:test/pages/exhibitor/existing_files.dart';
 import 'package:test/pages/common/info.dart';
+import 'package:test/util/navigate.dart';
+
 
 class ExhibitorHomePage extends StatefulWidget {
   const ExhibitorHomePage({super.key});
@@ -40,8 +42,4 @@ class _ExhibitorHomePageState extends State<ExhibitorHomePage> {
       ),
     );
   }
-}
-
-void moveToPage(BuildContext context, StatefulWidget targetPage) {
-  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }

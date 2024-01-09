@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test/pages/exhibitor/home_exhibitor.dart';
 import 'package:test/pages/organizer/home_organizer.dart';
 import 'package:test/pages/visitor/home_visitor.dart';
+import 'package:test/util/navigate.dart';
+
 
 class StartPage extends StatelessWidget {
   // const StartPage({super.key});
@@ -37,8 +39,4 @@ class StartPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void moveToPage(BuildContext context, Widget targetPage) {
-  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }
