@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test/pages/common/info.dart';
 import 'package:test/pages/visitor/events.dart';
 import 'package:test/pages/visitor/saved_files.dart';
+import 'package:test/util/navigate.dart';
 
 class VisitorHomePage extends StatelessWidget {
   const VisitorHomePage({super.key});
@@ -35,8 +36,4 @@ class VisitorHomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-void moveToPage(BuildContext context, Widget targetPage) {
-  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }

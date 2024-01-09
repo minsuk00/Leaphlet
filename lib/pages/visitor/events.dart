@@ -4,7 +4,7 @@ import 'dart:convert';
 // import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:test/pages/util/navigate.dart';
+import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test/pages/organizer/create_new_event.dart';
 import 'package:test/pages/organizer/check_existing_events.dart';
 import 'package:test/pages/organizer/inquiry.dart';
+import 'package:test/util/navigate.dart';
+
 
 class OrganizerHomePage extends StatefulWidget {
   const OrganizerHomePage({super.key});
@@ -40,8 +42,4 @@ class _OrganizerHomePageState extends State<OrganizerHomePage> {
       ),
     );
   }
-}
-
-void moveToPage(BuildContext context, StatefulWidget targetPage) {
-  Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
 }
