@@ -1,5 +1,6 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:test/util/navigate.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -35,7 +36,8 @@ class _InquiryPageState extends State<InquiryPage> {
         leading: const BackButton(),
         title: const Text('Inquiry'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 200),
         child: Form(
           key: _formKey,
           child: Column(
@@ -89,6 +91,23 @@ class _InquiryPageState extends State<InquiryPage> {
     //       .set({"msg": _messageInputController.text});
     // };
 
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('success'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  popToPage(context, "OrganizerHomePage");
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
