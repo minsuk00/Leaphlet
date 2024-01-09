@@ -15,6 +15,8 @@ class InquiryPage extends StatefulWidget {
 class _InquiryPageState extends State<InquiryPage> {
   final TextEditingController _emailInputController = TextEditingController();
   final TextEditingController _messageInputController = TextEditingController();
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // Add a form key
 
   // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -34,12 +36,12 @@ class _InquiryPageState extends State<InquiryPage> {
         title: const Text('Inquiry'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 300,
-              child: TextFormField(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
                 controller: _emailInputController,
                 autofocus: false,
                 textInputAction: TextInputAction.next,
@@ -54,22 +56,25 @@ class _InquiryPageState extends State<InquiryPage> {
                   return null;
                 },
               ),
-            ),
-            SizedBox(
-              width: 300,
-              child: TextField(
+              TextFormField(
                 controller: _messageInputController,
                 maxLines: 10,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'message',
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your message';
+                  }
+                  return null;
+                },
               ),
-            ),
-            ElevatedButton(
-                onPressed: submitInquiryButtonPressed,
-                child: const Text("Submit")),
-          ],
+              ElevatedButton(
+                  onPressed: submitInquiryButtonPressed,
+                  child: const Text("Submit")),
+            ],
+          ),
         ),
       ),
     );
@@ -83,5 +88,7 @@ class _InquiryPageState extends State<InquiryPage> {
     //       .doc()
     //       .set({"msg": _messageInputController.text});
     // };
+
+    if (_formKey.currentState!.validate()) {}
   }
 }
