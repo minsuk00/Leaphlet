@@ -10,6 +10,8 @@ class EventViewPage extends StatefulWidget {
 }
 
 class _EventViewPageState extends State<EventViewPage> {
+  final TextStyle myTextStyle = const TextStyle(fontSize: 25);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +20,26 @@ class _EventViewPageState extends State<EventViewPage> {
         title: Text(widget.eventCode),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back'),
+        child: Column(
+          children: [
+            Text(
+              "Booth Number (Organization)",
+              style: myTextStyle,
+            ),
+            Text(
+              "Name: example name",
+              style: myTextStyle,
+            ),
+            Text("Contact: example@gmail.com", style: myTextStyle),
+            Text(
+              "Phone number: (+81) 000-0000-0000",
+              style: myTextStyle,
+            ),
+            Text(
+              "PDF",
+              style: myTextStyle,
+            ),
+          ],
         ),
       ),
     );
