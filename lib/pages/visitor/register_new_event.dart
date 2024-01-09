@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/visitor/events.dart';
 import 'package:test/util/navigate.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
