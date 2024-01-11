@@ -31,13 +31,15 @@ class _InquiryPageState extends State<InquiryPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double paddingValue = screenWidth * 0.15;
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
         title: const Text('Inquiry'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(paddingValue),
         child: Form(
           key: _formKey,
           child: Column(
@@ -73,8 +75,9 @@ class _InquiryPageState extends State<InquiryPage> {
                 },
               ),
               ElevatedButton(
-                  onPressed: submitInquiryButtonPressed,
-                  child: const Text("Submit")),
+                onPressed: submitInquiryButtonPressed,
+                child: const Text("Submit")
+              ),
             ],
           ),
         ),
