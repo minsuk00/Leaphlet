@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:test/cloud_functions/test_firestore.dart';
 
 class CreateNewEventPage extends StatefulWidget {
@@ -19,7 +19,8 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
   TextEditingController endDateInput = TextEditingController();
   TextEditingController eventNameInput = TextEditingController();
   late String eventCode; // Variable to store the generated event code
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add a form key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance; // Add a form key
 
   @override
   void initState() {
@@ -150,9 +151,12 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      generateAndShowEventCode(context);
+                      await saveEventData();
+                      if (mounted) {
+                        generateAndShowEventCode(context);
+                      }
                     }
                   },
                   child: const Text('Submit Event'),
@@ -163,6 +167,22 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
         )
       ) 
     );
+  }
+
+  Future<void> saveEventData() async {
+    try {
+      // Firestoreにイベントデータを保存
+      await _firestore.collection("registered_events").add({
+        'eventName': eventNameInput.text,
+        'startDate': startDateInput.text,
+        'endDate': endDateInput.text,
+        'eventCode': eventCode,
+      });
+      // 保存後の処理（例：メッセージ表示、画面遷移など）をここに記述
+    } catch (e) {
+      // エラーハンドリング
+      print('Error saving event data: $e');
+    }
   }
 
   void generateAndShowEventCode(BuildContext context) {
