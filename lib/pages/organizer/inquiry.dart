@@ -1,8 +1,8 @@
-//import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:test/util/navigate.dart';
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // import 'package:test/cloud_functions/test_firestore.dart';
 
@@ -18,6 +18,7 @@ class _InquiryPageState extends State<InquiryPage> {
   final TextEditingController _messageInputController = TextEditingController();
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -85,7 +86,7 @@ class _InquiryPageState extends State<InquiryPage> {
     );
   }
 
-  submitInquiryButtonPressed() {
+  void submitInquiryButtonPressed() async {
     // TODO: send email to us
     // () async {
     //   await _firestore
@@ -95,22 +96,29 @@ class _InquiryPageState extends State<InquiryPage> {
     // };
 
     if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('success'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  popToPage(context, "OrganizerHomePage");
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      // Firestoreにデータを保存
+      await _firestore.collection("inquiry").add({
+        'email': _emailInputController.text,
+        'message': _messageInputController.text,
+      });
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('success'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    popToPage(context, "OrganizerHomePage");
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 }

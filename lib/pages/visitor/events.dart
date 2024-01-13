@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'dart:convert';
-// import 'dart:io';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
+import 'package:path_provider/path_provider.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -18,14 +19,39 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List _eventData = [];
 
+  // Future<void> readJson() async {
+  //   final String response =
+  //       // await rootBundle.loadString('assets/dummy_event.json');
+  //       await rootBundle.loadString('assets/save_registered_event_by_visitors.json');
+  //   final data = await json.decode(response);
+  //   setState(() {
+  //     _eventData = data["events"];
+  //   });
+  //   debugPrint(_eventData.toString());
+  // }
   Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/dummy_event.json');
-    final data = await json.decode(response);
-    setState(() {
-      _eventData = data["events"];
-    });
-    debugPrint(_eventData.toString());
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/save_registered_event_by_visitors.json');
+
+      // ファイルが存在するか確認
+      if (!await file.exists()) {
+        print("file not found");
+        return;
+      }
+
+      // ファイルからJSONを読み込む
+      String content = await file.readAsString();
+      final data = jsonDecode(content);
+
+      setState(() {
+        _eventData = data["events"] ?? [];
+      });
+
+      debugPrint(_eventData.toString());
+    } catch (e) {
+      print("error occurred: $e");
+    }
   }
 
   @override
