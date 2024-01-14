@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // fsGetEventName() async {
@@ -8,7 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //   return snapshot.docs.map((e) => e.data()).toList();
 // }
 
-getEventNameByCode(String eventCode) async {
+Future<Map<String, String?>?> getEventNameByCode(String eventCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   try {
@@ -29,7 +31,14 @@ getEventNameByCode(String eventCode) async {
       return null;
     }
   } catch (e) {
-    print('Error fetching event data: $e');
+    log('Error fetching event data: $e');
     return null;
   }
+}
+
+Future<String?> createNewEvent(
+    String eventName, String startDate, String endDate) async {
+  // TODO: create new event and return eventCode
+
+  //return eventCode
 }

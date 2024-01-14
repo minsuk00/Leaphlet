@@ -56,6 +56,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
       ),
     );
   }
+
 // void main() async {
 //   String? eventName = await getEventNameByCode("KAHVXKT");
 //   if (eventName != null) {
@@ -66,54 +67,60 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
 // }
   Future<void> registerButtonPressed(BuildContext context) async {
     String eventCode = _eventCodeInputController.text;
-    var eventDetails = await getEventNameByCode(eventCode); 
-    bool isEventCodeValid =
-        // eventCode == "logic"; 
-        eventDetails != null; //TODO: check if event code is valid
     if (_formKey.currentState!.validate()) {
+      var eventDetails = await getEventNameByCode(eventCode);
+      bool isEventCodeValid =
+          // eventCode == "logic";
+          eventDetails != null; //TODO: check if event code is valid
       if (mounted) {
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            if (isEventCodeValid) {
-              String? eventName = eventDetails['eventName'];
-              String? startDate = eventDetails['startDate'];
-              String? endDate = eventDetails['endDate'];
-              return AlertDialog(
-                title: const Text("success"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        // popNTimes(context, 2);
-                        Map<String, dynamic> newEvent = {
-                          "event_name": eventName,
-                          "start_date": startDate,
-                          "end_date": endDate,
-                        };
-                        saveRegisteredEvent("save_registered_event_by_visitors.json", newEvent);
-                        popToPage(context, "EventsPage");
-                      },
-                      child: const Text("ok"))
-                ],
-              );
-            } else {
-              return AlertDialog(
-                title: const Text("invalid event code"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("ok"))
-                ],
-              );
-            }
-          }
-        );
+            context: context,
+            builder: (BuildContext context) {
+              if (isEventCodeValid) {
+                String? eventName = eventDetails['eventName'];
+                String? startDate = eventDetails['startDate'];
+                String? endDate = eventDetails['endDate'];
+                //KAHVXKT
+                debugPrint(
+                    '################' + eventDetails.runtimeType.toString());
+                return AlertDialog(
+                  title: const Text("success"),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // popNTimes(context, 2);
+                          Map<String, dynamic> newEvent = {
+                            "event_name": eventName,
+                            "start_date": startDate,
+                            "end_date": endDate,
+                          };
+                          saveRegisteredEvent(
+                              "save_registered_event_by_visitors.json",
+                              newEvent);
+                          popToPage(context, "EventsPage");
+                        },
+                        child: const Text("ok"))
+                  ],
+                );
+              } else {
+                return AlertDialog(
+                  title: const Text("invalid event code"),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("ok"))
+                  ],
+                );
+              }
+            });
       }
     }
   }
-  Future<void> saveRegisteredEvent(String fileName, Map<String, dynamic> newEvent) async {
+
+  Future<void> saveRegisteredEvent(
+      String fileName, Map<String, dynamic> newEvent) async {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/$fileName');
 

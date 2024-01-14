@@ -36,7 +36,7 @@ class _EventsPageState extends State<EventsPage> {
 
       // ファイルが存在するか確認
       if (!await file.exists()) {
-        print("file not found");
+        print("###################file not found");
         return;
       }
 
