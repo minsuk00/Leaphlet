@@ -41,4 +41,5 @@ Future<String?> createNewEvent(
   // TODO: create new event and return eventCode
 
   //return eventCode
+  return null;
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:test/backend/cloud_functions/inquiry.dart';
 import 'package:test/util/navigate.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 // import 'package:test/cloud_functions/test_firestore.dart';
 
@@ -19,7 +19,7 @@ class _InquiryPageState extends State<InquiryPage> {
   final TextEditingController _messageInputController = TextEditingController();
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
