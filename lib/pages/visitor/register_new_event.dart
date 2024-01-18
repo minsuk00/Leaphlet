@@ -1,10 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
+// import 'dart:convert';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:test/backend/local_functions/event.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/backend/cloud_functions/event.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:test/util/user_type.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
