@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/event.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
 // import 'package:test/backend/local_functions/util.dart';
 
 // import 'dart:convert';
@@ -65,7 +67,7 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void loadEventListFromFile() {
-    getEventListFromLocalFile(UserType.visitor).then((value) {
+    getListFromLocalFile(UserType.visitor, FileType.event).then((value) {
       // debugPrint('############### INIT EVENTS PAGE ##################');
       // debugPrint('$value');
       setState(() {

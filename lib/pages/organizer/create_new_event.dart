@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test/backend/local_functions/event.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/util/user_type.dart';
 // import 'package:test/cloud_functions/test_firestore.dart';
@@ -180,7 +182,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
       };
       // Firestoreにイベントデータを保存
       await _firestore.collection("registered_events").add(newEventData);
-      saveEventToLocalFile(newEventData, UserType.organizer);
+      saveToLocalFile(newEventData, UserType.organizer, FileType.event);
       // 保存後の処理（例：メッセージ表示、画面遷移など）をここに記述
     } catch (e) {
       // エラーハンドリング

@@ -1,7 +1,9 @@
 // import 'dart:convert';
 // import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/event.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/backend/cloud_functions/event.dart';
 // import 'package:path_provider/path_provider.dart';
@@ -95,7 +97,8 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                           //   "start_date": startDate,
                           //   "end_date": endDate,
                           // };
-                          saveEventToLocalFile(eventDetails, UserType.visitor)
+                          saveToLocalFile(eventDetails, UserType.visitor,
+                                  FileType.event)
                               .then(
                                   (value) => popToPage(context, "EventsPage"));
                         },

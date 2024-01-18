@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/event.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
 import 'package:test/util/user_type.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +25,7 @@ class _CheckExistingEventsPageState extends State<CheckExistingEventsPage> {
   }
 
   void loadEventListFromFile() {
-    getEventListFromLocalFile(UserType.organizer).then((value) {
+    getListFromLocalFile(UserType.organizer, FileType.event).then((value) {
       setState(() {
         _eventData = value;
       });
