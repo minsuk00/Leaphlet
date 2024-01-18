@@ -82,7 +82,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 String? endDate = eventDetails['endDate'];
                 //KAHVXKT
                 debugPrint(
-                    '################' + eventDetails.runtimeType.toString());
+                    '################${eventDetails.runtimeType}');
                 return AlertDialog(
                   title: const Text("success"),
                   actions: [
@@ -125,7 +125,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
     final file = File('${directory.path}/$fileName');
 
     if (!await file.exists()) {
-      print("file not found");
+      debugPrint("file not found");
       await file.writeAsString(jsonEncode({"events": []})); // 新しいファイルを初期化
     }
 

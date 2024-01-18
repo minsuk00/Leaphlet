@@ -181,7 +181,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
       // 保存後の処理（例：メッセージ表示、画面遷移など）をここに記述
     } catch (e) {
       // エラーハンドリング
-      print('Error saving event data: $e');
+      debugPrint('Error saving event data: $e');
     }
   }
 

@@ -36,7 +36,7 @@ class _EventsPageState extends State<EventsPage> {
 
       // ファイルが存在するか確認
       if (!await file.exists()) {
-        print("###################file not found");
+        debugPrint("###################file not found");
         return;
       }
 
@@ -50,7 +50,7 @@ class _EventsPageState extends State<EventsPage> {
 
       debugPrint(_eventData.toString());
     } catch (e) {
-      print("error occurred: $e");
+      debugPrint("error occurred: $e");
     }
   }
 
@@ -125,7 +125,7 @@ class _EventsPageState extends State<EventsPage> {
             height: 20,
           ),
           OutlinedButton(
-            onPressed: () => moveToPage(context, RegisterNewEventPage()),
+            onPressed: () => moveToPage(context, const RegisterNewEventPage()),
             child: const Text("register new event"),
           ),
           const SizedBox(
