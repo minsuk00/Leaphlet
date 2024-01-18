@@ -8,7 +8,7 @@ Future<void> saveEventToLocalFile(
     Map<String, dynamic> newEventObject, UserType userType) async {
   //assign file according to user type
   String userTypeString = userType.name;
-  final fileName = "event_code_$userTypeString";
+  final fileName = "event_info_$userTypeString";
 
   //get file content
   final List<dynamic> eventList = await getLocalFileContent(fileName);
@@ -24,12 +24,12 @@ Future<void> saveEventToLocalFile(
 Future<List<dynamic>> getEventListFromLocalFile(UserType userType) async {
   //assign file according to user type
   String userTypeString = userType.name;
-  final fileName = "event_code_$userTypeString";
+  final fileName = "event_info_$userTypeString";
   return getLocalFileContent(fileName);
 }
 
 void resetLocalEventList(UserType userType) {
   String userTypeString = userType.name;
-  final fileName = "event_code_$userTypeString";
+  final fileName = "event_info_$userTypeString";
   resetFile(fileName);
 }
