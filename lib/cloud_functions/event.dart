@@ -1,14 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'dart:io';
 
-// fsGetEventName() async {
-//   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-//   QuerySnapshot<Map<String, dynamic>> snapshot =
-//       await firestore.collection("registered_event").get();
-//   return snapshot.docs.map((e) => e.data()).toList();
-// }
-
-getEventNameByCode(String eventCode) async {
+getEventInfo(String eventCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   try {
@@ -31,5 +26,27 @@ getEventNameByCode(String eventCode) async {
   } catch (e) {
     print('Error fetching event data: $e');
     return null;
+  }
+}
+
+class GetEventListFromLocalFile {
+  static Future<List> readJson() async {
+    List eventData = [];
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/registered_events_by_visitors.json');
+
+      if (!await file.exists()) {
+        print("file not found");
+        return eventData;
+      }
+
+      String content = await file.readAsString();
+      final data = jsonDecode(content);
+      eventData = data["events"] ?? [];
+    } catch (e) {
+      print("error occurred: $e");
+    }
+    return eventData;
   }
 }

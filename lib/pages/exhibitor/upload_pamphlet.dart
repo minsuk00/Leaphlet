@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
-//import 'dart:io';
+import 'dart:math';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:test/pages/exhibitor/confirmation.dart';
 import 'package:test/util/navigate.dart';
-
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:test/cloud_functions/test_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:test/cloud_functions/event.dart';
 
 class UploadPamphletPage extends StatefulWidget {
   const UploadPamphletPage({super.key});
@@ -25,8 +24,18 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
   TextEditingController emailAddressInput = TextEditingController();
   TextEditingController phoneNumberInput = TextEditingController();
   TextEditingController pamphletInput = TextEditingController();
+  late String pamphletID;
+  late String _selectedFilePath;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  @override
+  void initState() {
+    pamphletID = generatePamphletID();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +61,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Event Name',
+                    labelText: 'Event Code',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -141,9 +150,12 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                     );
                     if (result != null) {
                       String filePath = result.files.single.path!;
+                      _selectedFilePath = filePath;
                       // Do something with the file path (store it or display the file name, etc.)
-                      pamphletInput.text =
-                          filePath.substring(filePath.lastIndexOf("/")+1);
+                      // String fileName =
+                      //   filePath.substring(filePath.lastIndexOf("/")+1);
+                      // pamphletInput.text = fileName;
+                      pamphletInput.text = filePath.substring(filePath.lastIndexOf("/")+1);
                       if (kDebugMode) {
                         print('Selected file: $filePath');
                       }
@@ -161,9 +173,12 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      moveToPage(context, const ConfirmationPage());
+                      await uploadPamphlet();
+                      if (mounted) {
+                        moveToPage(context, const ConfirmationPage());
+                      }
                     }
                   },
                   child: const Text('Confirm'),
@@ -174,5 +189,52 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
         )
       )
     );
+  }
+
+  Future<void> uploadPamphlet() async {
+    if (_selectedFilePath.isNotEmpty) {
+      File file = File(_selectedFilePath);
+
+      String fileName = pamphletInput.text; // またはユニークなファイル名を生成
+
+      try {
+        // upload pdf to Firebase Storage
+        TaskSnapshot snapshot = await _storage.ref('uploaded_pdfs/$fileName').putFile(file);
+
+        // get URL
+        String fileUrl = await snapshot.ref.getDownloadURL();
+        var eventDetails = await getEventInfo(eventCodeInput.text); 
+        bool isEventCodeValid =
+          eventDetails != null;
+        if (isEventCodeValid) {
+          String? eventName = eventDetails['eventName'];
+          // save pamphlet information to Firestore
+          await _firestore.collection("uploaded_pamphlets").add({
+            'eventCode': eventCodeInput.text,
+            'eventName': eventName,
+            'boothNumber': boothNumberInput.text,
+            'orgName': orgNameInput.text,
+            'yourName': yourNameInput.text,
+            'emailAddress': emailAddressInput.text,
+            'phoneNumber': phoneNumberInput.text,
+            'boothCode': pamphletID,
+            'pamphletURL': fileUrl,
+          });
+        }
+          print('File Uploaded');
+      } catch (e) {
+        print('Error unploaded: $e');
+      }
+    }
+  }
+
+  String generatePamphletID() {
+    const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    final Random rnd = Random();
+    String code = '';
+    for (int i = 0; i < 7; i++) {
+      code += chars[rnd.nextInt(chars.length)];
+    }
+    return code;
   }
 }

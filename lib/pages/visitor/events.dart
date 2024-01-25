@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/services.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:test/cloud_functions/event.dart';
+
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -19,45 +15,15 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List _eventData = [];
 
-  // Future<void> readJson() async {
-  //   final String response =
-  //       // await rootBundle.loadString('assets/dummy_event.json');
-  //       await rootBundle.loadString('assets/save_registered_event_by_visitors.json');
-  //   final data = await json.decode(response);
-  //   setState(() {
-  //     _eventData = data["events"];
-  //   });
-  //   debugPrint(_eventData.toString());
-  // }
-  Future<void> readJson() async {
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/save_registered_event_by_visitors.json');
-
-      // ファイルが存在するか確認
-      if (!await file.exists()) {
-        print("file not found");
-        return;
-      }
-
-      // ファイルからJSONを読み込む
-      String content = await file.readAsString();
-      final data = jsonDecode(content);
-
-      setState(() {
-        _eventData = data["events"] ?? [];
-      });
-
-      debugPrint(_eventData.toString());
-    } catch (e) {
-      print("error occurred: $e");
-    }
-  }
-
   @override
   void initState() {
-    readJson();
     super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+    _eventData = await GetEventListFromLocalFile.readJson();
+    setState(() {});
   }
 
   Padding getSearchBar(BuildContext context) {
@@ -140,6 +106,9 @@ class _EventsPageState extends State<EventsPage> {
                   itemCount: _eventData.length,
                   itemBuilder: (context, index) {
                     final String eventName = _eventData[index]['event_name'];
+                    final String startDate = _eventData[index]['start_date'];
+                    final String endDate = _eventData[index]['end_date'];
+                    final String eventCode = _eventData[index]['event_code'];
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 100),
@@ -149,7 +118,12 @@ class _EventsPageState extends State<EventsPage> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         // TODO: query event by event code
-                        onPressed: () => moveToPage(context, EventViewPage(eventCode: eventName)),
+                        onPressed: () => moveToPage(context, EventViewPage(
+                            eventName: eventName, 
+                            startDate: startDate, 
+                            endDate: endDate, 
+                            eventCode: eventCode,
+                        )),
                         child: ListTile(
                           title: Text(eventName),
                         ),

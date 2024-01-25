@@ -66,7 +66,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
 // }
   Future<void> registerButtonPressed(BuildContext context) async {
     String eventCode = _eventCodeInputController.text;
-    var eventDetails = await getEventNameByCode(eventCode); 
+    var eventDetails = await getEventInfo(eventCode); 
     bool isEventCodeValid =
         // eventCode == "logic"; 
         eventDetails != null; //TODO: check if event code is valid
@@ -89,8 +89,9 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                           "event_name": eventName,
                           "start_date": startDate,
                           "end_date": endDate,
+                          "event_code": eventCode,
                         };
-                        saveRegisteredEvent("save_registered_event_by_visitors.json", newEvent);
+                        saveEventToLocalFile("registered_events_by_visitors.json", newEvent);
                         popToPage(context, "EventsPage");
                       },
                       child: const Text("ok"))
@@ -113,7 +114,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
       }
     }
   }
-  Future<void> saveRegisteredEvent(String fileName, Map<String, dynamic> newEvent) async {
+  Future<void> saveEventToLocalFile(String fileName, Map<String, dynamic> newEvent) async {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/$fileName');
 
