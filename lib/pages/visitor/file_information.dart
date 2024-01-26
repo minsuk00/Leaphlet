@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test/cloud_functions/pamphlets.dart'; // このパスは適宜修正してください。
+import 'package:test/backend/cloud_functions/pamphlets.dart'; // このパスは適宜修正してください。
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
+// import 'package:test/backend/local_functions/util.dart';
+
+// import 'dart:convert';
+// import 'dart:io';
+
+// import 'package:flutter/services.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
-import 'package:test/cloud_functions/event.dart';
-
+// import 'package:path_provider/path_provider.dart';
+import 'package:test/util/user_type.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -18,12 +27,18 @@ class _EventsPageState extends State<EventsPage> {
   @override
   void initState() {
     super.initState();
-    loadData();
+    loadEventListFromFile();
+    // resetLocalEventList(UserType.visitor);
   }
 
-  void loadData() async {
-    _eventData = await GetEventListFromLocalFile.readJson();
-    setState(() {});
+  void loadEventListFromFile() {
+    getListFromLocalFile(UserType.visitor, FileType.event).then((value) {
+      // debugPrint('############### INIT EVENTS PAGE ##################');
+      // debugPrint('$value');
+      setState(() {
+        _eventData = value;
+      });
+    });
   }
 
   Padding getSearchBar(BuildContext context) {
@@ -91,7 +106,12 @@ class _EventsPageState extends State<EventsPage> {
             height: 20,
           ),
           OutlinedButton(
-            onPressed: () => moveToPage(context, RegisterNewEventPage()),
+            onPressed: () {
+              moveToPage(context, const RegisterNewEventPage()).then((_) {
+                // debugPrint('################## push popped!!');
+                loadEventListFromFile();
+              });
+            },
             child: const Text("register new event"),
           ),
           const SizedBox(
