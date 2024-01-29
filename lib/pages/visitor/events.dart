@@ -28,7 +28,7 @@ class _EventsPageState extends State<EventsPage> {
   void initState() {
     super.initState();
     loadEventListFromFile();
-    // resetLocalEventList(UserType.visitor);
+    // resetLocalListFile(UserType.visitor,FileType.event);
   }
 
   void loadEventListFromFile() {

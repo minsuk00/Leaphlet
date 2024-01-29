@@ -56,4 +56,4 @@ Future<void> resetFile(String fileName) async {
   }
 }
 
-enum FileType { event, booth }
+enum FileType { event, booth, pamphlet }

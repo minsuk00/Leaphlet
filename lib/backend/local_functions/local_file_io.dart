@@ -73,3 +73,6 @@ String getFileNamePrefix(FileType fileType) {
     return "";
   }
 }
+
+//save pdf byte data to temporary cache
+//download pdf to local directory
