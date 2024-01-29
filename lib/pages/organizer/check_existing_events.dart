@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:test/backend/local_functions/deprecated_event.dart';
 import 'package:test/backend/local_functions/local_file_io.dart';
 import 'package:test/backend/local_functions/util.dart';
@@ -39,33 +40,36 @@ class _CheckExistingEventsPageState extends State<CheckExistingEventsPage> {
           leading: const BackButton(),
           title: const Text("Existing Events"),
         ),
-        body: Expanded(
-          // flex: 100,
-          child: Scrollbar(
-            thickness: 15,
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _eventData.length,
-                itemBuilder: (context, index) {
-                  final String eventName = _eventData[index]['eventName'];
-                  final String eventCode = _eventData[index]['eventCode'];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 5, horizontal: 100),
-                    // child: ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(10)),
-                    //   ),
-                    child: ListTile(
-                      title: Text(eventName),
-                      subtitle: Text(eventCode),
-                      tileColor: Colors.lightGreen,
+        body: Scrollbar(
+          thickness: 15,
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _eventData.length,
+              itemBuilder: (context, index) {
+                final String eventName = _eventData[index]['eventName'];
+                final String eventCode = _eventData[index]['eventCode'];
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
+                  // child: ElevatedButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10)),
+                  //   ),
+                  child: ListTile(
+                    title: Text(eventName),
+                    subtitle: Text(eventCode),
+                    tileColor: Colors.lightGreen,
+                    trailing: ElevatedButton(
+                      child: const Text("Copy Event Code"),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: eventCode));
+                      },
                     ),
-                    // ),
-                  );
-                }),
-          ),
+                  ),
+                  // ),
+                );
+              }),
         ));
   }
 }

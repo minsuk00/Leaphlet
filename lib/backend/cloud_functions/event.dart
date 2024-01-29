@@ -1,16 +1,7 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// fsGetEventName() async {
-//   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-//   QuerySnapshot<Map<String, dynamic>> snapshot =
-//       await firestore.collection("registered_event").get();
-//   return snapshot.docs.map((e) => e.data()).toList();
-// }
-
-Future<Map<String, String?>?> getEventNameByCode(String eventCode) async {
+Future<Map<String, String?>?> getEventInfo(String eventCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   try {
@@ -25,7 +16,8 @@ Future<Map<String, String?>?> getEventNameByCode(String eventCode) async {
       return {
         'eventName': doc['eventName'] as String?,
         'startDate': doc['startDate'] as String?,
-        'endDate': doc['endDate'] as String?
+        'endDate': doc['endDate'] as String?,
+        'eventCode': eventCode,
       };
     } else {
       return null;

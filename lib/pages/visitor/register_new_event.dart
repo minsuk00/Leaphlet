@@ -72,7 +72,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
   Future<void> registerButtonPressed(BuildContext context) async {
     String eventCode = _eventCodeInputController.text;
     if (_formKey.currentState!.validate()) {
-      var eventDetails = await getEventNameByCode(eventCode);
+      var eventDetails = await getEventInfo(eventCode);
       bool isEventCodeValid =
           // eventCode == "logic";
           eventDetails != null; //TODO: check if event code is valid

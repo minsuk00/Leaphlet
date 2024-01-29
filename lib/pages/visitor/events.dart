@@ -24,41 +24,6 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List _eventData = [];
 
-  // Future<void> readJson() async {
-  //   final String response =
-  //       // await rootBundle.loadString('assets/dummy_event.json');
-  //       await rootBundle.loadString('assets/save_registered_event_by_visitors.json');
-  //   final data = await json.decode(response);
-  //   setState(() {
-  //     _eventData = data["events"];
-  //   });
-  //   debugPrint(_eventData.toString());
-  // }
-  // Future<void> readJson() async {
-  //   try {
-  //     final directory = await getApplicationDocumentsDirectory();
-  //     final file = File('${directory.path}/save_registered_event_by_visitors.json');
-
-  //     // ファイルが存在するか確認
-  //     if (!await file.exists()) {
-  //       debugPrint("###################file not found");
-  //       return;
-  //     }
-
-  //     // ファイルからJSONを読み込む
-  //     String content = await file.readAsString();
-  //     final data = jsonDecode(content);
-
-  //     setState(() {
-  //       _eventData = data["events"] ?? [];
-  //     });
-
-  //     debugPrint(_eventData.toString());
-  //   } catch (e) {
-  //     debugPrint("error occurred: $e");
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -105,7 +70,7 @@ class _EventsPageState extends State<EventsPage> {
         suggestionsBuilder:
             (BuildContext context, SearchController controller) {
           return List<ListTile>.generate(_eventData.length, (index) {
-            final String eventName = _eventData[index]['event_name'];
+            final String eventName = _eventData[index]['eventName'];
             return ListTile(
                 title: Text(eventName),
                 onTap: () {
@@ -161,6 +126,9 @@ class _EventsPageState extends State<EventsPage> {
                   itemCount: _eventData.length,
                   itemBuilder: (context, index) {
                     final String eventName = _eventData[index]['eventName'];
+                    final String startDate = _eventData[index]['startDate'];
+                    final String endDate = _eventData[index]['endDate'];
+                    final String eventCode = _eventData[index]['eventCode'];
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 100),
@@ -170,8 +138,12 @@ class _EventsPageState extends State<EventsPage> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         // TODO: query event by event code
-                        onPressed: () => moveToPage(
-                            context, EventViewPage(eventCode: eventName)),
+                        onPressed: () => moveToPage(context, EventViewPage(
+                            eventName: eventName, 
+                            startDate: startDate, 
+                            endDate: endDate, 
+                            eventCode: eventCode,
+                        )),
                         child: ListTile(
                           title: Text(eventName),
                         ),
