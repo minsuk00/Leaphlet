@@ -74,5 +74,5 @@ String getFileNamePrefix(FileType fileType) {
   }
 }
 
-//save pdf byte data to temporary cache
 //download pdf to local directory
+//reset all cache
