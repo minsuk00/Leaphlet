@@ -1,10 +1,10 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart';
 
 class PdfViewPage extends StatefulWidget {
-  final url;
+  final String url;
   const PdfViewPage({super.key, required this.url});
 
   @override

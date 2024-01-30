@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart'; // このパスは適宜修正してください。
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:flutter_pdfview/flutter_pdfview.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test/pages/visitor/pdf_view.dart';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:test/util/navigate.dart';
 
@@ -91,7 +91,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () => moveToPage(
-                    context, PdfViewPage(url: boothInfo['pamphletURL'])),
+                    context, PdfViewPage(url: boothInfo['pamphletURL']!)),
                 child: const Text("View PDF"))
             // localPath != null
             //     ? Expanded(

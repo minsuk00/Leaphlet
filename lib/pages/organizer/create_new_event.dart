@@ -84,7 +84,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     ),
-                    icon: Icon(Icons.calendar_today),
+                    icon: const Icon(Icons.calendar_today),
                     labelText: "Start Date",
                     filled: true,
                     fillColor: Colors.white,
