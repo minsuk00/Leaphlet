@@ -1,14 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
-//import 'dart:io';
+import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:test/pages/exhibitor/confirmation.dart';
 import 'package:test/util/navigate.dart';
-
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:test/cloud_functions/test_firestore.dart';
+import 'package:test/backend/cloud_functions/pamphlets.dart';
 
 class UploadPamphletPage extends StatefulWidget {
   const UploadPamphletPage({super.key});
@@ -25,8 +21,16 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
   TextEditingController emailAddressInput = TextEditingController();
   TextEditingController phoneNumberInput = TextEditingController();
   TextEditingController pamphletInput = TextEditingController();
+  late String pamphletID;
+  late String _selectedFilePath;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
+
+  @override
+  void initState() {
+    pamphletID = generateBoothCode();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Event Name',
+                    labelText: 'Event Code',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -141,9 +145,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                     );
                     if (result != null) {
                       String filePath = result.files.single.path!;
-                      // Do something with the file path (store it or display the file name, etc.)
-                      pamphletInput.text =
-                          filePath.substring(filePath.lastIndexOf("/")+1);
+                      _selectedFilePath = filePath;
+                      pamphletInput.text = filePath.substring(filePath.lastIndexOf("/")+1);
                       if (kDebugMode) {
                         print('Selected file: $filePath');
                       }
@@ -161,9 +164,12 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      moveToPage(context, const ConfirmationPage());
+                      await uploadPamphlet(_selectedFilePath, pamphletInput.text, eventCodeInput.text, boothNumberInput.text, orgNameInput.text, yourNameInput.text, emailAddressInput.text, phoneNumberInput.text, pamphletID);
+                      if (mounted) {
+                        moveToPage(context, const ConfirmationPage());
+                      }
                     }
                   },
                   child: const Text('Confirm'),
@@ -174,5 +180,15 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
         )
       )
     );
+  }
+
+  String generateBoothCode() {
+    const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    final Random rnd = Random();
+    String code = '';
+    for (int i = 0; i < 7; i++) {
+      code += chars[rnd.nextInt(chars.length)];
+    }
+    return code;
   }
 }

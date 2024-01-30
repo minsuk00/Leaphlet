@@ -2,7 +2,10 @@
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
 import 'package:test/pages/login.dart';
+import 'package:test/util/user_type.dart';
 
 import 'firebase_options.dart';
 
@@ -17,67 +20,67 @@ Future<void> main() async {
     name: "test-project",
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  resetLocalListFile(UserType.all, FileType.pamphlet);
 
-
-//   if (kDebugMode) {
-//    try {
-//      debugPrint('##### using emulator #####');
-//      debugPrint(Platform.isAndroid.toString());
-//      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-//      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-//    } catch (e) {
-//      // ignore: avoid_print
-//      print(e);
-//    }
+  // if (kDebugMode) {
+  //  try {
+  //   //  debugPrint('##### using emulator #####');
+  //   //  debugPrint(Platform.isAndroid.toString());
+  //    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  //    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //  } catch (e) {
+  //    // ignore: avoid_print
+  //    print(e);
+  //  }
 //  }
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {  
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        // debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a purple toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
-          useMaterial3: true,
-        ),
-        // home: FutureBuilder(
-        //   future: _fbApp,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.hasError) {
-        //       debugPrint('You have an error! ${snapshot.error.toString()}');
-        //       return const Text("Error in initializing Firebase App");
-        //     } else if (snapshot.hasData) {
-        //       return const LogInPage();
-        //     } else {
-        //       return const Center(
-        //         child: CircularProgressIndicator(),
-        //       );
-        //     }
-        //   },
-        // )
-        home: const LogInPage(),
-        );
+      // debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
+        useMaterial3: true,
+      ),
+      // home: FutureBuilder(
+      //   future: _fbApp,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasError) {
+      //       debugPrint('You have an error! ${snapshot.error.toString()}');
+      //       return const Text("Error in initializing Firebase App");
+      //     } else if (snapshot.hasData) {
+      //       return const LogInPage();
+      //     } else {
+      //       return const Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     }
+      //   },
+      // )
+      home: const LogInPage(),
+    );
   }
 }
 
@@ -168,3 +171,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+// 

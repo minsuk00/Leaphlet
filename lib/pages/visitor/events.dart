@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+// import 'package:test/backend/local_functions/deprecated_event.dart';
+// import 'package:test/backend/local_functions/util.dart';
 
-import 'dart:convert';
+// import 'dart:convert';
 // import 'dart:io';
 
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
+// import 'package:path_provider/path_provider.dart';
+import 'package:test/util/user_type.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -18,20 +24,21 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List _eventData = [];
 
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/dummy_event.json');
-    final data = await json.decode(response);
-    setState(() {
-      _eventData = data["events"];
-    });
-    debugPrint(_eventData.toString());
-  }
-
   @override
   void initState() {
-    readJson();
     super.initState();
+    loadEventListFromFile();
+    // resetLocalListFile(UserType.visitor,FileType.event);
+  }
+
+  void loadEventListFromFile() {
+    getListFromLocalFile(UserType.visitor, FileType.event).then((value) {
+      // debugPrint('############### INIT EVENTS PAGE ##################');
+      // debugPrint('$value');
+      setState(() {
+        _eventData = value;
+      });
+    });
   }
 
   Padding getSearchBar(BuildContext context) {
@@ -63,7 +70,7 @@ class _EventsPageState extends State<EventsPage> {
         suggestionsBuilder:
             (BuildContext context, SearchController controller) {
           return List<ListTile>.generate(_eventData.length, (index) {
-            final String eventName = _eventData[index]['event_name'];
+            final String eventName = _eventData[index]['eventName'];
             return ListTile(
                 title: Text(eventName),
                 onTap: () {
@@ -99,7 +106,12 @@ class _EventsPageState extends State<EventsPage> {
             height: 20,
           ),
           OutlinedButton(
-            onPressed: () => moveToPage(context, RegisterNewEventPage()),
+            onPressed: () {
+              moveToPage(context, const RegisterNewEventPage()).then((_) {
+                // debugPrint('################## push popped!!');
+                loadEventListFromFile();
+              });
+            },
             child: const Text("register new event"),
           ),
           const SizedBox(
@@ -113,7 +125,10 @@ class _EventsPageState extends State<EventsPage> {
                   shrinkWrap: true,
                   itemCount: _eventData.length,
                   itemBuilder: (context, index) {
-                    final String eventName = _eventData[index]['event_name'];
+                    final String eventName = _eventData[index]['eventName'];
+                    final String startDate = _eventData[index]['startDate'];
+                    final String endDate = _eventData[index]['endDate'];
+                    final String eventCode = _eventData[index]['eventCode'];
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 100),
@@ -123,7 +138,12 @@ class _EventsPageState extends State<EventsPage> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         // TODO: query event by event code
-                        onPressed: () => moveToPage(context, EventViewPage(eventCode: eventName)),
+                        onPressed: () => moveToPage(context, EventViewPage(
+                            eventName: eventName, 
+                            startDate: startDate, 
+                            endDate: endDate, 
+                            eventCode: eventCode,
+                        )),
                         child: ListTile(
                           title: Text(eventName),
                         ),

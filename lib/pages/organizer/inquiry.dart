@@ -1,5 +1,6 @@
-//import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:test/backend/cloud_functions/inquiry.dart';
 import 'package:test/util/navigate.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +19,7 @@ class _InquiryPageState extends State<InquiryPage> {
   final TextEditingController _messageInputController = TextEditingController();
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // final FirebaseFirestore _firestore = FirebaseFirestore.instanceFor(app: Firebase.app("test-project"));
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -75,9 +77,8 @@ class _InquiryPageState extends State<InquiryPage> {
                 },
               ),
               ElevatedButton(
-                onPressed: submitInquiryButtonPressed,
-                child: const Text("Submit")
-              ),
+                  onPressed: submitInquiryButtonPressed,
+                  child: const Text("Submit")),
             ],
           ),
         ),
@@ -85,32 +86,43 @@ class _InquiryPageState extends State<InquiryPage> {
     );
   }
 
-  submitInquiryButtonPressed() {
-    // TODO: send email to us
+  void submitInquiryButtonPressed() async {
     // () async {
     //   await _firestore
     //       .collection("test_message")
     //       .doc()
     //       .set({"msg": _messageInputController.text});
     // };
-
     if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('success'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  popToPage(context, "OrganizerHomePage");
-                },
-                child: const Text('OK'),
-              ),
-            ],
+      // Firestoreにデータを保存
+      // await _firestore.collection("inquiry").add({
+      //   'email': _emailInputController.text,
+      //   'message': _messageInputController.text,
+      // });
+      try {
+        await sendInquiry(
+            _emailInputController.text, _messageInputController.text);
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('success'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      popToPage(context, "OrganizerHomePage");
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
           );
-        },
-      );
+        }
+      } catch (e) {
+        throw Exception("############### inquiry error: $e");
+      }
     }
   }
 }
