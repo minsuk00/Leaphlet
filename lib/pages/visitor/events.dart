@@ -42,11 +42,9 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Padding getSearchBar(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: SizedBox(
-        width: 0.6 * screenWidth,
         child: SearchAnchor(
           isFullScreen: false,
           // viewLeading: const Icon(null),
@@ -117,11 +115,11 @@ class _EventsPageState extends State<EventsPage> {
           // const Spacer(flex: 1),
           SizedBox(height: screenHeight * 0.02),
           SizedBox(
-            width: 0.6 * screenWidth,
+            width: 0.4 * screenWidth,
             height: 0.08 * screenHeight,
             child: OutlinedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -136,18 +134,18 @@ class _EventsPageState extends State<EventsPage> {
                });
               },
               child: Padding(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(10),
                 child: Text("ADD EVENT",
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    fontSize: 0.035 * screenWidth,
+                    fontSize: screenWidth * 0.04,
                   ),
                 ),
               ),
             ),
           ),
           
-          SizedBox(height: screenHeight * 0.06),
+          SizedBox(height: screenHeight * 0.05),
 
           Expanded(
             // flex: 100,
@@ -161,13 +159,23 @@ class _EventsPageState extends State<EventsPage> {
                     final String startDate = _eventData[index]['startDate'];
                     final String endDate = _eventData[index]['endDate'];
                     final String eventCode = _eventData[index]['eventCode'];
+                    
+                    // Define colors to alternate
+                    Color color;
+                    if (index % 2 == 0) {
+                      color = const Color(0xFF04724D); // First color
+                    } else {
+                      color = const Color(0xFF3E885E); // Second color
+                    }
+
                     return Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 100),
+                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          backgroundColor: color,
                         ),
                         // TODO: query event by event code
                         onPressed: () => moveToPage(context, EventViewPage(
@@ -177,7 +185,10 @@ class _EventsPageState extends State<EventsPage> {
                             eventCode: eventCode,
                         )),
                         child: ListTile(
-                          title: Text(eventName),
+                          title: Text(
+                            eventName,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     );
