@@ -22,17 +22,22 @@ uploadPamphlet(
 
   File file = File(filePath);
   try {
+    await storage.ref('uploaded_pdfs/$fileName').putFile(file);
+    print('###################  Upload PDF to Firebase Storage!');
     // upload pdf to Firebase Storage
-    TaskSnapshot snapshot =
-        await storage.ref('uploaded_pdfs/$fileName').putFile(file);
+    // TaskSnapshot snapshot =
+        // await storage.ref('uploaded_pdfs/$fileName').putFile(file);
     // get URL
-    String fileUrl = await snapshot.ref.getDownloadURL();
+    // String fileUrl = await snapshot.ref.getDownloadURL();
+    // Use relative path directly
+    String fileUrl = 'uploaded_pdfs/$fileName';
 
     // save pamphlet information to Firestore
     var eventDetails = await getEventInfo(eventCode);
     bool isEventCodeValid = eventDetails != null;
     if (isEventCodeValid) {
       String? eventName = eventDetails['eventName'];
+      print('################### Get Event Details!');
       await firestore.collection("uploaded_pamphlets").add({
         'eventCode': eventCode,
         'eventName': eventName,
@@ -129,7 +134,8 @@ Future<String?> getPamphletPdf(String url) async {
       print('################### Download Complete!');
 
       //cache locally
-      final file = await getLocalFile('$url.pdf');
+      // final file = await getLocalFile('$url.pdf');
+      final file = await getLocalFile(url);
       await file.writeAsBytes(bytes!, flush: true);
       localPath = file.path;
 
