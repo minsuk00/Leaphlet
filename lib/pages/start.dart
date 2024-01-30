@@ -13,26 +13,128 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Logged-in as $username',
+                  // must add function to retreive username
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 0.04 * screenWidth,
+                    color: const Color(0xFF3E885E),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Implement your logout functionality here
+                  },
+                  child: Text(
+                    'LOGOUT',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.04 * screenWidth,
+                      color: const Color(0xFF3E885E),
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
+      backgroundColor: const Color(0xFFC2D3CD),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            OutlinedButton(
-              onPressed: () => moveToPage(context, const VisitorHomePage()),
-              child: const Text("Use as Visitor"),
+            SizedBox(
+              width: 0.75 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: OutlinedButton(
+                onPressed: () => moveToPage(context, const VisitorHomePage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text("Use as Visitor",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.06 * screenWidth,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            OutlinedButton(
-              onPressed: () => moveToPage(context, const ExhibitorHomePage()),
-              child: const Text("Use as Exhibitor"),
+            SizedBox(height: screenWidth * 0.03),
+            
+            SizedBox(
+              width: 0.75 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: OutlinedButton(
+                onPressed: () => moveToPage(context, const ExhibitorHomePage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text("Use as Exhibitor",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.06 * screenWidth,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            OutlinedButton(
+            
+            SizedBox(height: screenWidth * 0.03),
+
+            TextButton(
               onPressed: () => moveToPage(context, const OrganizerHomePage()),
-              child: const Text("Use as Organizer"),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                  EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.035),
+                  ),
+                ),
+              ),
+              child: Text("Use as Organizer",
+                style: TextStyle(
+                  fontSize: 0.04 * screenWidth,
+                  fontFamily: 'Roboto',
+                ),
+              ),
             ),
           ],
         ),
