@@ -44,12 +44,14 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
         if (result != null) {
           String filePath = result.files.single.path!;
           setState(() {
-            _selectedFilePath = filePath.substring(filePath.lastIndexOf("/") + 1);
+            _selectedFilePath = filePath;
+            pamphletInput.text = filePath.substring(filePath.lastIndexOf("/") + 1);
           });
-          if (kDebugMode) {
-            print('Selected file: $filePath');
-          }
-        }
+          print('###### Selected file: $filePath');
+          // if (kDebugMode) {
+          //   print('Selected file: $filePath');
+          // }
+        } 
       },
       child: Container(
         width: 0.6 * screenWidth, 
