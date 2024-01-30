@@ -11,7 +11,9 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
         title: const Text("Existing Files"),
       ),

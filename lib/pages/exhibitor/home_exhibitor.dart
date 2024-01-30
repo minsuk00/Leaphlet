@@ -15,8 +15,12 @@ class ExhibitorHomePage extends StatefulWidget {
 class _ExhibitorHomePageState extends State<ExhibitorHomePage> {
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
         title: const Text('Home (Exhibitor)'),
       ),
@@ -25,17 +29,84 @@ class _ExhibitorHomePageState extends State<ExhibitorHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            OutlinedButton(
-              onPressed: () => moveToPage(context, const UploadPamphletPage()),
-              child: const Text("Upload Pamphlet"),
+            SizedBox(
+              width: 0.7 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: OutlinedButton(
+                onPressed: () => moveToPage(context, const UploadPamphletPage()),                
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text("Upload Pamphlet",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.06 * screenWidth,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            OutlinedButton(
-              onPressed: () => moveToPage(context, const ExistingFilesPage()),
-              child: const Text("Check Existing Files"),
+
+            SizedBox(height: screenWidth * 0.03),
+            
+            SizedBox(
+              width: 0.7 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: OutlinedButton(
+                onPressed: () => moveToPage(context, const ExistingFilesPage()),                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text("Existing Files",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.06 * screenWidth,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            OutlinedButton(
-              onPressed: () => moveToPage(context, const InfoPage()),
-              child: const Text("Information"),
+
+            SizedBox(height: screenWidth * 0.03),
+
+            SizedBox(
+              width: 0.7 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: OutlinedButton(
+                onPressed: () => moveToPage(context, const InfoPage()),                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text("Info",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 0.06 * screenWidth,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

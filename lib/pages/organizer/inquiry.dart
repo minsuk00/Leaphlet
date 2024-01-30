@@ -33,10 +33,13 @@ class _InquiryPageState extends State<InquiryPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double paddingValue = screenWidth * 0.15;
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
         title: const Text('Inquiry'),
       ),
@@ -46,14 +49,21 @@ class _InquiryPageState extends State<InquiryPage> {
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: screenWidth * 0.01),
+              
               TextFormField(
                 controller: _emailInputController,
                 autofocus: false,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  ),
                   labelText: 'Your Email',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -62,12 +72,19 @@ class _InquiryPageState extends State<InquiryPage> {
                   return null;
                 },
               ),
+
+              SizedBox(height: screenWidth * 0.01),
+              
               TextFormField(
                 controller: _messageInputController,
                 maxLines: 10,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'message',
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  ),
+                  labelText: 'Message',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -76,9 +93,34 @@ class _InquiryPageState extends State<InquiryPage> {
                   return null;
                 },
               ),
+              
+              SizedBox(height: screenWidth * 0.03),
+              
               ElevatedButton(
-                  onPressed: submitInquiryButtonPressed,
-                  child: const Text("Submit")),
+                onPressed: submitInquiryButtonPressed,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                  ),
+                  side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(color: Color(0xFF04724D)),
+                  ),
+                ),
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 0.04 * screenWidth,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
