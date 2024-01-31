@@ -26,6 +26,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
   TextEditingController phoneNumberInput = TextEditingController();
   TextEditingController pamphletInput = TextEditingController();
   late String boothCode;
+  late String eventName;
   late String _selectedFilePath = '';
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
@@ -96,11 +97,11 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
   }
 
   // Function to show the pop-up dialog
-  void showEventCodeDialog(BuildContext context, isValid) {
+  void showEventCodeDialog(BuildContext context, eventInfo) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          if (isValid == null) {
+          if (eventInfo == null) {
             return AlertDialog(
               title: const Text('EVENT CODE NOT FOUND'),
               //content: const Text('Your event code was not found.'),
@@ -114,6 +115,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
               ],
             );
           } else {
+            eventName = eventInfo['eventName'];
             return AlertDialog(
               title: const Text('SUCCESS'),
               //content: const Text('Your event code was not found.'),
@@ -196,9 +198,9 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextButton(
                                   onPressed: () async {
-                                    final value =
+                                    final eventInfo =
                                         await getEventInfo(eventCodeInput.text);
-                                    showEventCodeDialog(context, value);
+                                    showEventCodeDialog(context, eventInfo);
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -392,7 +394,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                               final newBoothItem = {
                                 "boothCode": boothCode,
                                 "eventCode": eventCodeInput.text,
-                                "eventName": "",
+                                "eventName": eventName,
                                 "boothNumber": boothNumberInput.text,
                                 "orgName": orgNameInput.text,
                                 "name": yourNameInput.text,

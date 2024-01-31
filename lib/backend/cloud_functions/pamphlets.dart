@@ -26,7 +26,7 @@ uploadPamphlet(
     print('###################  Upload PDF to Firebase Storage!');
     // upload pdf to Firebase Storage
     // TaskSnapshot snapshot =
-        // await storage.ref('uploaded_pdfs/$fileName').putFile(file);
+    // await storage.ref('uploaded_pdfs/$fileName').putFile(file);
     // get URL
     // String fileUrl = await snapshot.ref.getDownloadURL();
     // Use relative path directly
@@ -129,7 +129,9 @@ Future<String?> getPamphletPdf(String url) async {
     } else {
       //download from firebase if not cached
       print('################### Downloading Pdf from Firebase Storage...');
+      print('################### URL: $url');
       final ref = FirebaseStorage.instance.ref().child(url);
+      print('################### ref $ref');
       final bytes = await ref.getData();
       print('################### Download Complete!');
 
@@ -144,6 +146,8 @@ Future<String?> getPamphletPdf(String url) async {
       saveToLocalFile(newCacheObject, UserType.all, FileType.pamphlet);
     }
     return localPath;
+  } on FirebaseException catch (e) {
+    print("Firebase Exception: $e");
   } catch (e) {
     print('error: $e');
   }
@@ -172,7 +176,7 @@ getAllBoothInfoForAnEvent(String eventCode) async {
                 'emailAddress': doc['emailAddress'] as String?,
                 'phoneNumber': doc['phoneNumber'] as String?,
                 'boothCode': doc['boothCode'] as String?,
-                // 'pamphletURL': doc['pamphletURL'] as String?,
+                'pamphletURL': doc['pamphletURL'] as String?,
               })
           .toList();
 

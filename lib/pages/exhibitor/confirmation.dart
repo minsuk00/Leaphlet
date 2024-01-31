@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ConfirmationPage extends StatefulWidget {
-  const ConfirmationPage({super.key});
+  final Map<String, String> boothInfo;
+  const ConfirmationPage({Key? key, required this.boothInfo}) : super(key: key);
 
   @override
   State<ConfirmationPage> createState() => _ConfirmationPageState();
