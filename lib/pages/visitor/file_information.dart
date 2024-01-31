@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart'; // このパスは適宜修正してください。
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
 // import 'package:flutter_pdfview/flutter_pdfview.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test/pages/visitor/pdf_view.dart';
+import 'package:test/util/logging.dart';
 // import 'dart:io';
 
 import 'package:test/util/navigate.dart';
+import 'package:test/util/user_type.dart';
 
 class FileInformationPage extends StatefulWidget {
   // const FileInformationPage({Key? key, required this.orgName, required this.boothNumber, required this.yourName, required this.emailAddress, required this.phoneNumber, required this.boothCode}) : super(key: key);
@@ -27,11 +31,14 @@ class FileInformationPage extends StatefulWidget {
 class _FileInformationPageState extends State<FileInformationPage> {
   final TextStyle myTextStyle = const TextStyle(fontSize: 25);
   // String? localPath;
-  Map<String, String> boothInfo = {};
+  Map<String, String?> boothInfo = {};
+  bool isSaved = false;
+  List<dynamic> _savedBoothsList = [];
 
   @override
   void initState() {
     super.initState();
+    boothInfo = widget.fileInfo;
     loadData();
   }
 
@@ -42,11 +49,40 @@ class _FileInformationPageState extends State<FileInformationPage> {
     // }
     // downloadFile(widget.fileInfo['pamphletURL']!);
 
-    getBoothInfo(widget.fileInfo['boothCode']!).then((value) {
-      setState(() {
-        // print("###################### $value");
-        boothInfo = value!;
-      });
+    // getBoothInfo(widget.fileInfo['boothCode']!).then((value) {
+    //   setState(() {
+    //     // print("###################### $value");
+    //     boothInfo = value!;
+    //   });
+    //   print("boothinfo: $boothInfo");
+    //   print("fileinfo ${widget.fileInfo}");
+    // });
+
+    _savedBoothsList =
+        await getListFromLocalFile(UserType.visitor, FileType.booth);
+    for (var savedBooth in _savedBoothsList) {
+      if (savedBooth['boothCode'] == boothInfo['boothCode']) {
+        setState(() {
+          isSaved = true;
+        });
+        break;
+      }
+    }
+
+    pprint(_savedBoothsList);
+    // print(_savedBoothsList);
+  }
+
+  toggleIsSaved() {
+    setState(() {
+      if (isSaved) {
+        isSaved = false;
+        deleteItemFromLocalFile(
+            boothInfo['boothCode']!, UserType.visitor, FileType.booth);
+      } else {
+        isSaved = true;
+        saveToLocalFile(boothInfo, UserType.visitor, FileType.booth);
+      }
     });
   }
 
@@ -80,6 +116,9 @@ class _FileInformationPageState extends State<FileInformationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ElevatedButton(
+                onPressed: toggleIsSaved,
+                child: Icon(isSaved ? Icons.star : Icons.star_border)),
             Text(
               "Name: ${boothInfo['yourName']}",
               style: myTextStyle,
