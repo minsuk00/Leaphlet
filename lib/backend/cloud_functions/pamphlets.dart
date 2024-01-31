@@ -139,6 +139,7 @@ Future<String?> getPamphletPdf(String url) async {
       //cache locally
       // final file = await getLocalFile('$url.pdf');
       final file = await getLocalFile(url);
+      print("##### !!");
       await file.writeAsBytes(bytes!, flush: true);
       localPath = file.path;
 
