@@ -18,6 +18,8 @@ Future<File> getLocalFile(String fileName) async {
   if (!file.existsSync()) {
     debugPrint(
         "##### $fileName not found. Creating and initializing new file...");
+
+    final File file = await File('$path/$fileName').create(recursive: true);
     file.writeAsStringSync(jsonEncode([])); // 新しいファイルを初期化
   }
 

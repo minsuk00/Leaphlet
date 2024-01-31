@@ -118,12 +118,13 @@ Future<String?> getPamphletPdf(String url) async {
     final String localPath;
     List<dynamic> localPamphletList =
         await getListFromLocalFile(UserType.all, FileType.pamphlet);
+    print("############ local pdf list: $localPamphletList");
     Iterable<dynamic> localCache =
-        localPamphletList.where((element) => element.url == url);
+        localPamphletList.where((element) => element['url'] == url);
 
     if (localCache.isNotEmpty) {
       //get from local cache if already cached
-      localPath = localCache.first.localPath;
+      localPath = localCache.first['localPath'];
       print('################### PDF found from local cache');
       print('###################$localPath');
     } else {
