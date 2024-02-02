@@ -1,5 +1,8 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:test/backend/local_functions/local_file_io.dart';
+import 'package:test/backend/local_functions/util.dart';
+import 'package:test/util/user_type.dart';
 
 Future<Map<String, String?>?> getEventInfo(String eventCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -28,10 +31,21 @@ Future<Map<String, String?>?> getEventInfo(String eventCode) async {
   }
 }
 
-Future<String?> createNewEvent(
-    String eventName, String startDate, String endDate) async {
-  // TODO: create new event and return eventCode
-
-  //return eventCode
-  return null;
+createNewEvent(
+    String eventName, String startDate, String endDate, String eventCode) async {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  try {
+    print('$eventName, $startDate, $endDate, $eventCode');
+    Map<String, String> newEventData = {
+      'eventName': eventName,
+      'startDate': startDate,
+      'endDate': endDate,
+      'eventCode': eventCode,   
+    };
+    await firestore.collection("registered_events").add(newEventData);
+    saveToLocalFile(newEventData, UserType.organizer, FileType.event);
+    print('#####Event informatin Uploaded');
+  } catch (e) {
+    print('#####Error. Failed to upload: $e');
+  }
 }
