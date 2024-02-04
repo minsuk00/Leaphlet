@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart';
+import 'package:test/backend/local_functions/util.dart';
+import 'package:test/pages/common/search_anchor_widget.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/visitor/file_information.dart';
 
@@ -44,44 +46,7 @@ class _EventViewPageState extends State<EventViewPage> {
   Padding getSearchBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: SearchAnchor(
-        isFullScreen: false,
-        // viewLeading: const Icon(null),
-        viewLeading: IconButton(
-            onPressed: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back)),
-        builder: (BuildContext context, SearchController controller) {
-          return SearchBar(
-            controller: controller,
-            padding: const MaterialStatePropertyAll<EdgeInsets>(
-                EdgeInsets.symmetric(horizontal: 16.0)),
-            onTap: () {
-              controller.openView();
-            },
-            onChanged: (_) {
-              controller.openView();
-            },
-            leading: const Icon(Icons.search),
-          );
-        },
-        suggestionsBuilder:
-            (BuildContext context, SearchController controller) {
-          return List<ListTile>.generate(_pamphletData.length, (index) {
-            final String orgName = _pamphletData[index]['orgName'];
-            return ListTile(
-                title: Text(orgName),
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                  setState(() {
-                    controller.closeView(orgName);
-                  });
-                });
-          });
-        },
-      ),
+      // child: getSearchAnchor(context, _pamphletData, FileType.booth, setState),
     );
   }
 
@@ -150,7 +115,8 @@ class _EventViewPageState extends State<EventViewPage> {
                           //   boothCode: boothCode,
                           // )),
                           child: ListTile(
-                            title: Text("${fileInfo['boothNumber']} (${fileInfo['orgName']})"),
+                            title: Text(
+                                "${fileInfo['boothNumber']} (${fileInfo['orgName']})"),
                           ),
                         ),
                       );
