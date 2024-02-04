@@ -20,6 +20,7 @@ class StartPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
+        // leading: const Text(""),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
