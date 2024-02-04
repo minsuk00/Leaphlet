@@ -16,8 +16,9 @@ SearchAnchor getSearchAnchor(
   } else if (fileType == FileType.booth) {
     elementNameKey = 'orgName';
     elementCodeKey = 'boothCode';
-  } else
+  } else {
     throw Exception("######### wrong file type for search anchor!");
+  }
 
   // final SearchController searchController = SearchController();
   // print("======================SEARCH ANCHOR REBUILD===================");

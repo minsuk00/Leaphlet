@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/backend/cloud_functions/event.dart';
 
@@ -19,8 +19,8 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
   TextEditingController eventNameInput = TextEditingController();
   late final String eventCode; // Variable to store the generated event code
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FirebaseFirestore _firestore =
-      FirebaseFirestore.instance; // Add a form key
+  // final FirebaseFirestore _firestore =
+  //     FirebaseFirestore.instance; // Add a form key
 
   @override
   void initState() {

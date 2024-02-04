@@ -200,6 +200,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                                   onPressed: () async {
                                     final eventInfo =
                                         await getEventInfo(eventCodeInput.text);
+                                    // ignore: use_build_context_synchronously
                                     showEventCodeDialog(context, eventInfo);
                                   },
                                   style: ButtonStyle(

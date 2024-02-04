@@ -6,7 +6,7 @@ import 'package:test/backend/local_functions/util.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:test/pages/visitor/pdf_view.dart';
-import 'package:test/util/logging.dart';
+// import 'package:test/util/logging.dart';
 // import 'dart:io';
 
 import 'package:test/util/navigate.dart';
