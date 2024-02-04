@@ -43,10 +43,49 @@ class _EventViewPageState extends State<EventViewPage> {
     });
   }
 
+  String _selectedBoothCode = "";
+  GlobalKey parentKey = GlobalKey(debugLabel: "parentKey");
+  Map<String, GlobalKey> keyDict = {};
+  final SearchController searchController = SearchController();
+  final ScrollController scrollController = ScrollController();
+  void modifyItemCode(String boothCode) {
+    double anchorY = 0;
+    double targetY = 0;
+
+    if (boothCode != "") {
+      RenderBox box = parentKey.currentContext?.findRenderObject() as RenderBox;
+      anchorY = box.localToGlobal(Offset.zero).dy;
+
+      BuildContext? ctx = keyDict[boothCode]?.currentContext;
+      if (ctx == null) {
+        //workaround. for some reason the bottom events has null for global key
+        targetY = parentKey.currentContext!.size!.height + anchorY;
+      } else {
+        RenderBox tBox = ctx.findRenderObject() as RenderBox;
+        targetY = tBox.localToGlobal(Offset.zero).dy;
+      }
+    }
+
+    setState(() {
+      _selectedBoothCode = boothCode;
+      // print("################ MODIFIED SELECTED EVENT CODE.");
+      if (boothCode != "") {
+        print(
+            "############## Scrolling to y-position: ${targetY - anchorY} ($targetY - $anchorY)");
+        scrollController.animateTo(
+          targetY - anchorY,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.linear,
+        );
+      }
+    });
+  }
+
   Padding getSearchBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      // child: getSearchAnchor(context, _pamphletData, FileType.booth, setState),
+      child: getSearchAnchor(context, _pamphletData, FileType.booth, setState,
+          modifyItemCode, searchController),
     );
   }
 
@@ -75,9 +114,11 @@ class _EventViewPageState extends State<EventViewPage> {
             Expanded(
               // flex: 100,
               child: Scrollbar(
+                key: parentKey,
                 thickness: 15,
                 child: ListView.builder(
-                    shrinkWrap: true,
+                    controller: scrollController,
+                    // shrinkWrap: true,
                     itemCount: _pamphletData.length,
                     itemBuilder: (context, index) {
                       // final String boothNumber =
@@ -90,16 +131,28 @@ class _EventViewPageState extends State<EventViewPage> {
                       // final String phoneNumber =
                       //     _pamphletData[index]['phoneNumber'];
 
-                      // final String boothCode =
-                      //     _pamphletData[index]['boothCode'];
                       final fileInfo = _pamphletData[index];
+                      String boothCode = fileInfo['boothCode'];
+                      Color? getBgColor() {
+                        if (_selectedBoothCode == "") {
+                          return Colors.white;
+                        } else {
+                          return boothCode == _selectedBoothCode
+                              ? Colors.grey[50]
+                              : Colors.grey[300];
+                        }
+                      }
+
+                      keyDict[boothCode] = GlobalKey();
                       return Container(
+                        key: keyDict[boothCode],
                         margin: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 100),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: getBgColor(),
                           ),
                           // TODO: query event by event code
                           onPressed: () => moveToPage(

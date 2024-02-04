@@ -23,7 +23,6 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  ScrollController scrollController = ScrollController();
   List _eventData = [];
 
   @override
@@ -47,25 +46,26 @@ class _EventsPageState extends State<EventsPage> {
   GlobalKey parentKey = GlobalKey(debugLabel: "parentKey");
   Map<String, GlobalKey> keyDict = {};
   final SearchController searchController = SearchController();
+  final ScrollController scrollController = ScrollController();
   void modifyItemCode(String eventCode) {
     double anchorY = 0;
     double targetY = 0;
 
-    print("#############");
-    keyDict.forEach(
-      (key, value) {
-        BuildContext? ctx = value.currentContext;
-        if (ctx == null) {
-          print("$key : null");
-        } else {
-          RenderBox box = ctx.findRenderObject() as RenderBox;
-          print("$key : ${box.localToGlobal(Offset.zero).dy}");
-        }
-      },
-    );
-    print("#############");
+    // print("#############");
+    // keyDict.forEach(
+    //   (key, value) {
+    //     BuildContext? ctx = value.currentContext;
+    //     if (ctx == null) {
+    //       print("$key : null");
+    //     } else {
+    //       RenderBox box = ctx.findRenderObject() as RenderBox;
+    //       print("$key : ${box.localToGlobal(Offset.zero).dy}");
+    //     }
+    //   },
+    // );
+    // print("#############");
 
-    print("======$eventCode");
+    // print("======$eventCode");
     if (eventCode != "") {
       RenderBox box = parentKey.currentContext?.findRenderObject() as RenderBox;
       anchorY = box.localToGlobal(Offset.zero).dy;
