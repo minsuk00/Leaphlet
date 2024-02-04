@@ -82,18 +82,26 @@ class _EventViewPageState extends State<EventViewPage> {
   }
 
   Padding getSearchBar(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final SearchAnchor searchAnchor = getSearchAnchor(context, _pamphletData,
+        FileType.booth, setState, modifyItemCode, searchController);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: getSearchAnchor(context, _pamphletData, FileType.booth, setState,
-          modifyItemCode, searchController),
+      child: SizedBox(
+        width: 0.8 * screenWidth,
+        child: searchAnchor,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
+        scrolledUnderElevation: 0.0,
         title: Text(widget.eventName),
       ),
       body: Center(
@@ -169,7 +177,7 @@ class _EventViewPageState extends State<EventViewPage> {
                           // )),
                           child: ListTile(
                             title: Text(
-                                "${fileInfo['boothNumber']} (${fileInfo['orgName']})"),
+                                "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
                           ),
                         ),
                       );
