@@ -1,4 +1,10 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:test/backend/cloud_functions/pamphlets.dart';
 // import 'package:test/backend/cloud_functions/pamphlets.dart'; // このパスは適宜修正してください。
 import 'package:test/backend/local_functions/local_file_io.dart';
 import 'package:test/backend/local_functions/util.dart';
@@ -11,6 +17,8 @@ import 'package:test/pages/visitor/pdf_view.dart';
 
 import 'package:test/util/navigate.dart';
 import 'package:test/util/user_type.dart';
+
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
 class FileInformationPage extends StatefulWidget {
   // const FileInformationPage({Key? key, required this.orgName, required this.boothNumber, required this.yourName, required this.emailAddress, required this.phoneNumber, required this.boothCode}) : super(key: key);
@@ -34,6 +42,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
   Map<String, String?> boothInfo = {};
   bool isSaved = false;
   List<dynamic> _savedBoothsList = [];
+  double? _progress;
 
   @override
   void initState() {
@@ -86,6 +95,12 @@ class _FileInformationPageState extends State<FileInformationPage> {
     });
   }
 
+  Future<String> getPdfDownloadURL(String filename) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    String url = await storageRef.child(filename).getDownloadURL();
+    return url;
+  }
+
   // Future<void> downloadFile(String url) async {
   //   try {
   //     final ref = FirebaseStorage.instance.ref().child(url);
@@ -104,12 +119,81 @@ class _FileInformationPageState extends State<FileInformationPage> {
   //   }
   // }
 
+  Future download(String url, String filename) async {
+    void showDownloadProgress(received, total) {
+      if (total != -1) {
+        debugPrint((received / total * 100).toStringAsFixed(0) + '%');
+      }
+    }
+
+    var savePath = '/storage/emulated/0/Download/$filename';
+    var dio = Dio();
+    dio.interceptors.add(LogInterceptor());
+    try {
+      // var status = await Permission.manageExternalStorage.status;
+      // if (!status.isGranted) {
+      //   print("#### PERMISSION NOT GRANTED YET. WAITING FOR PERMISSION...");
+      //   print(await Permission.manageExternalStorage.request());
+      //   print(await openAppSettings());
+      // } else {
+      //   print("#### PERMISSION GRANTED : $status");
+      // }
+
+      if (await Permission.manageExternalStorage.request().isGranted) {
+        var response = await dio.get(
+          url,
+          onReceiveProgress: showDownloadProgress,
+          //Received data with List<int>
+          options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            receiveTimeout: Duration.zero,
+          ),
+        );
+
+        var file = File(savePath);
+        var raf = file.openSync(mode: FileMode.write);
+        // response.data is List<int> type
+        raf.writeFromSync(response.data);
+        await raf.close();
+      } else {
+        print("###ERROR... PERMISSION NOT GRANTED");
+      }
+    } catch (e) {
+      debugPrint("ERROR: ${e.toString()}");
+    }
+  }
+
+  download1(String url, String pdfName) async {
+    // getPamphletPdf(boothInfo['pamphletURL']!);
+    FileDownloader.downloadFile(
+      name: pdfName,
+      url: url,
+      onProgress: (name, progress) {
+        // print("name: $name");
+        setState(() {
+          _progress = progress;
+        });
+      },
+      onDownloadCompleted: (value) {
+        print('path  $value ');
+        setState(() {
+          _progress = null;
+        });
+      },
+      notificationType: NotificationType.all,
+      // headers: {"Content-Type": "application/pdf"},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    String? pdfName = boothInfo['pamphletURL']?.substring(14);
+
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: Text("${boothInfo['boothNumber']} (${boothInfo['orgName']})"),
+        title: Text("${boothInfo['orgName']} (${boothInfo['boothNumber']})"),
       ),
       body: SingleChildScrollView(
         // PDF表示を含むコンテンツが縦に長くなる可能性があるため、SingleChildScrollViewを使用
@@ -120,25 +204,46 @@ class _FileInformationPageState extends State<FileInformationPage> {
                 onPressed: toggleIsSaved,
                 child: Icon(isSaved ? Icons.star : Icons.star_border)),
             Text(
+              "Event: ${boothInfo['eventName']}",
+              style: myTextStyle,
+            ),
+            Text(
+              "Booth Number: ${boothInfo['boothNumber']}",
+              style: myTextStyle,
+            ),
+            Text(
+              "Organization: ${boothInfo['orgName']}",
+              style: myTextStyle,
+            ),
+            Text(
               "Name: ${boothInfo['yourName']}",
               style: myTextStyle,
             ),
             Text(
-              "Contact: ${boothInfo['emailAddress']} (${boothInfo['phoneNumber']})",
+              "Email: ${boothInfo['emailAddress']}",
+              style: myTextStyle,
+            ),
+            Text(
+              "Phone: ${boothInfo['phoneNumber']}",
               style: myTextStyle,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-                onPressed: () => moveToPage(
-                    context, PdfViewPage(url: boothInfo['pamphletURL']!)),
-                child: const Text("View PDF"))
-            // localPath != null
-            //     ? Expanded(
-            //         child: PDFView(
-            //           filePath: localPath,
-            //         ),
-            //       )
-            //     : const Center(child: CircularProgressIndicator()),
+              onPressed: () => moveToPage(
+                  context, PdfViewPage(url: boothInfo['pamphletURL']!)),
+              child: Text("View PDF: $pdfName"),
+            ),
+            _progress != null
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    onPressed: () async {
+                      // download1(pdfName!);
+                      String url =
+                          await getPdfDownloadURL(boothInfo['pamphletURL']!);
+                      download(url, pdfName!);
+                    },
+                    child: const Text("Download PDF"),
+                  ),
           ],
         ),
       ),

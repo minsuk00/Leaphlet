@@ -380,6 +380,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
 
                       ElevatedButton(
                         onPressed: () async {
+                          boothCode = generateBoothCode();
+                          
                           if (_formKey.currentState!.validate()) {
                             await uploadPamphlet(
                                 _selectedFilePath,

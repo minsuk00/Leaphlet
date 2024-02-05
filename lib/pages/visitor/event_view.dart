@@ -25,7 +25,7 @@ class EventViewPage extends StatefulWidget {
 class _EventViewPageState extends State<EventViewPage> {
   final TextStyle myTextStyle = const TextStyle(fontSize: 25);
 
-  List? _pamphletData = [];
+  List? _pamphletData;
 
   @override
   void initState() {
