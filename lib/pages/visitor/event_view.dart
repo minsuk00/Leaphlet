@@ -25,7 +25,7 @@ class EventViewPage extends StatefulWidget {
 class _EventViewPageState extends State<EventViewPage> {
   final TextStyle myTextStyle = const TextStyle(fontSize: 25);
 
-  List _pamphletData = [];
+  List? _pamphletData = [];
 
   @override
   void initState() {
@@ -83,7 +83,7 @@ class _EventViewPageState extends State<EventViewPage> {
 
   Padding getSearchBar(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final SearchAnchor searchAnchor = getSearchAnchor(context, _pamphletData,
+    final SearchAnchor searchAnchor = getSearchAnchor(context, _pamphletData!,
         FileType.booth, setState, modifyItemCode, searchController);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -105,87 +105,89 @@ class _EventViewPageState extends State<EventViewPage> {
         title: Text(widget.eventName),
       ),
       body: Center(
-        child: Column(
-          children: [
-            getSearchBar(context),
-            // Text(
-            //   "Start Date: ${widget.startDate}",
-            //   style: myTextStyle,
-            // ),
-            // Text(
-            //   "End Date: ${widget.endDate}",
-            //   style: myTextStyle,
-            // ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              // flex: 100,
-              child: Scrollbar(
-                key: parentKey,
-                thickness: 15,
-                child: ListView.builder(
-                    controller: scrollController,
-                    // shrinkWrap: true,
-                    itemCount: _pamphletData.length,
-                    itemBuilder: (context, index) {
-                      // final String boothNumber =
-                      //     _pamphletData[index]['boothNumber'];
-                      // final String orgName = _pamphletData[index]['orgName'];
+        child: _pamphletData == null
+            ? const SizedBox.shrink()
+            : Column(
+                children: [
+                  getSearchBar(context),
+                  // Text(
+                  //   "Start Date: ${widget.startDate}",
+                  //   style: myTextStyle,
+                  // ),
+                  // Text(
+                  //   "End Date: ${widget.endDate}",
+                  //   style: myTextStyle,
+                  // ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    // flex: 100,
+                    child: Scrollbar(
+                      key: parentKey,
+                      thickness: 15,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          // shrinkWrap: true,
+                          itemCount: _pamphletData?.length,
+                          itemBuilder: (context, index) {
+                            // final String boothNumber =
+                            //     _pamphletData[index]['boothNumber'];
+                            // final String orgName = _pamphletData[index]['orgName'];
 
-                      // final String yourName = _pamphletData[index]['yourName'];
-                      // final String emailAddress =
-                      //     _pamphletData[index]['emailAddress'];
-                      // final String phoneNumber =
-                      //     _pamphletData[index]['phoneNumber'];
+                            // final String yourName = _pamphletData[index]['yourName'];
+                            // final String emailAddress =
+                            //     _pamphletData[index]['emailAddress'];
+                            // final String phoneNumber =
+                            //     _pamphletData[index]['phoneNumber'];
 
-                      final fileInfo = _pamphletData[index];
-                      String boothCode = fileInfo['boothCode'];
-                      Color? getBgColor() {
-                        if (_selectedBoothCode == "") {
-                          return Colors.white;
-                        } else {
-                          return boothCode == _selectedBoothCode
-                              ? Colors.grey[50]
-                              : Colors.grey[300];
-                        }
-                      }
+                            final fileInfo = _pamphletData?[index];
+                            String boothCode = fileInfo['boothCode'];
+                            Color? getBgColor() {
+                              if (_selectedBoothCode == "") {
+                                return Colors.white;
+                              } else {
+                                return boothCode == _selectedBoothCode
+                                    ? Colors.grey[50]
+                                    : Colors.grey[300];
+                              }
+                            }
 
-                      keyDict[boothCode] = GlobalKey();
-                      return Container(
-                        key: keyDict[boothCode],
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 100),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            backgroundColor: getBgColor(),
-                          ),
-                          // TODO: query event by event code
-                          onPressed: () => moveToPage(
-                            context,
-                            FileInformationPage(fileInfo: fileInfo),
-                          ),
-                          // FileInformationPage(
-                          //   orgName: orgName,
-                          //   boothNumber: boothNumber,
-                          //   yourName: yourName,
-                          //   emailAddress: emailAddress,
-                          //   phoneNumber: phoneNumber,
-                          //   boothCode: boothCode,
-                          // )),
-                          child: ListTile(
-                            title: Text(
-                                "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
-                          ),
-                        ),
-                      );
-                    }),
+                            keyDict[boothCode] = GlobalKey();
+                            return Container(
+                              key: keyDict[boothCode],
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 100),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  backgroundColor: getBgColor(),
+                                ),
+                                // TODO: query event by event code
+                                onPressed: () => moveToPage(
+                                  context,
+                                  FileInformationPage(fileInfo: fileInfo),
+                                ),
+                                // FileInformationPage(
+                                //   orgName: orgName,
+                                //   boothNumber: boothNumber,
+                                //   yourName: yourName,
+                                //   emailAddress: emailAddress,
+                                //   phoneNumber: phoneNumber,
+                                //   boothCode: boothCode,
+                                // )),
+                                child: ListTile(
+                                  title: Text(
+                                      "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }
