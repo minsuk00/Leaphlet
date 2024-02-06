@@ -13,6 +13,8 @@ import 'package:test/pages/visitor/event_view.dart';
 import 'package:test/pages/visitor/register_new_event.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:test/util/user_type.dart';
+import 'package:test/pages/common/info.dart';
+import 'package:marquee/marquee.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -196,6 +198,41 @@ class _EventsPageState extends State<EventsPage> {
             ),
           )
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Marquee(
+                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  scrollAxis: Axis.horizontal,
+                  blankSpace: 20.0,
+                  velocity: 100.0,
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              ElevatedButton(
+                onPressed: () => moveToPage(context, const InfoPage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                ),
+                child: const Text("VIEW MORE"),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

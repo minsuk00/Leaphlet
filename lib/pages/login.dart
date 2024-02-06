@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test/pages/start.dart';
 
 class LogInPage extends StatefulWidget {
-  const LogInPage({super.key});
-
+  const LogInPage({Key? key}) : super(key: key);
   @override
   State<LogInPage> createState() => _LogInPageState();
 }
@@ -11,7 +10,9 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  
+  String loginState = '';
+  
   @override
   void dispose() {
     usernameController.dispose();
@@ -31,53 +32,90 @@ class _LogInPageState extends State<LogInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 0.5 * screenWidth,
-                child: TextField(
-                  controller: usernameController,
-                  autofocus: false,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                    ),
-                    labelText: 'Username',
-                    filled: true,
-                    fillColor: Colors.white,
-                    labelStyle: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.04 * screenWidth,
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: 0.5 * screenWidth,
+              //   child: TextField(
+              //     controller: usernameController,
+              //     autofocus: false,
+              //     textInputAction: TextInputAction.next,
+              //     decoration: InputDecoration(
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              //       ),
+              //       labelText: 'Username',
+              //       filled: true,
+              //       fillColor: Colors.white,
+              //       labelStyle: TextStyle(
+              //         fontFamily: 'Roboto',
+              //         fontSize: 0.04 * screenWidth,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               
-              SizedBox(height: screenWidth * 0.02),
+              // SizedBox(height: screenWidth * 0.02),
               
-              SizedBox(
-                width: 0.5 * screenWidth,
-                child: TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                    ),
-                    labelText: 'Password',
-                    filled: true,
-                    fillColor: Colors.white,
-                    labelStyle: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.04 * screenWidth,
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: 0.5 * screenWidth,
+              //   child: TextField(
+              //     controller: passwordController,
+              //     obscureText: true,
+              //     decoration: InputDecoration(
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              //       ),
+              //       labelText: 'Password',
+              //       filled: true,
+              //       fillColor: Colors.white,
+              //       labelStyle: TextStyle(
+              //         fontFamily: 'Roboto',
+              //         fontSize: 0.04 * screenWidth,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               
-              SizedBox(height: screenWidth * 0.02),
+              // SizedBox(height: screenWidth * 0.02),
 
+              // OutlinedButton(
+              //   //onPressed: () => logInButtonPressed(context, usernameController.text),
+              //   onPressed: () {
+              //     // do nothing
+              //   },
+              //   style: ButtonStyle(
+              //     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+              //     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //       RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              //       ),
+              //     ),
+              //     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              //       EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+              //     ),
+              //     side: MaterialStateProperty.all<BorderSide>(
+              //       const BorderSide(color: Color(0xFF04724D)),
+              //     ),
+              //   ),
+              //   child: Text(
+              //     "Log-in",
+              //     style: TextStyle(
+              //       fontFamily: 'Roboto',
+              //       fontSize: 0.04 * screenWidth,
+              //       decoration: TextDecoration.lineThrough,
+              //     ),
+              //   ),
+              // ),
+              
+              SizedBox(height: screenWidth * 0.02),
+              
               OutlinedButton(
-                onPressed: () => logInButtonPressed(context, usernameController.text),
+                onPressed: () {
+                  setState(() {
+                    loginState = 'google_auth'; // Set login state to 'google_auth'
+                  });
+                  logInButtonPressed(context, usernameController.text, loginState);
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
                   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -94,37 +132,44 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                 ),
                 child: Text(
-                  "Log-in",
+                  "Log in with Google",
                   style: TextStyle(
-                    fontFamily: 'Roboto',
                     fontSize: 0.04 * screenWidth,
+                    fontFamily: 'Roboto',
+                    //fontStyle: FontStyle.italic,
                   ),
                 ),
               ),
-              
+
               SizedBox(height: screenWidth * 0.02),
-              
-              TextButton(
+
+              OutlinedButton(
                 onPressed: () {
-                      // Implement your sign-in with Google functionality here
+                  setState(() {
+                    loginState = 'guest'; // Set login state to 'guest'
+                  });
+                  logInButtonPressed(context, usernameController.text, loginState);
                 },
                 style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
-                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     ),
                   ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                  ),
+                  side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(color: Color(0xFF04724D)),
+                  ),
                 ),
                 child: Text(
-                  "Sign-in with Google",
+                  "Log in as a GUEST",
                   style: TextStyle(
-                    fontSize: 0.04 * screenWidth,
                     fontFamily: 'Roboto',
-                    fontStyle: FontStyle.italic,
+                    fontSize: 0.04 * screenWidth,
                   ),
                 ),
               ),
@@ -136,8 +181,8 @@ class _LogInPageState extends State<LogInPage> {
   }
 }
 
-void logInButtonPressed(BuildContext context, String username) {
+void logInButtonPressed(BuildContext context, String username, String loginState) {
   debugPrint("hi");
   Navigator.push(
-      context, MaterialPageRoute(builder: (_) => StartPage(username)));
+      context, MaterialPageRoute(builder: (_) => StartPage(username: username, loginState: loginState)));
 }

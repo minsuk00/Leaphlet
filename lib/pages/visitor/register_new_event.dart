@@ -8,6 +8,8 @@ import 'package:test/util/navigate.dart';
 import 'package:test/backend/cloud_functions/event.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:test/util/user_type.dart';
+import 'package:test/pages/common/info.dart';
+import 'package:marquee/marquee.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
   const RegisterNewEventPage({super.key});
@@ -17,8 +19,7 @@ class RegisterNewEventPage extends StatefulWidget {
 }
 
 class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
-  final TextEditingController _eventCodeInputController =
-      TextEditingController();
+  final TextEditingController _eventCodeInputController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -90,6 +91,41 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Marquee(
+                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  scrollAxis: Axis.horizontal,
+                  blankSpace: 20.0,
+                  velocity: 100.0,
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              ElevatedButton(
+                onPressed: () => moveToPage(context, const InfoPage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                ),
+                child: const Text("VIEW MORE"),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -110,46 +146,47 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
           eventDetails != null; //TODO: check if event code is valid
       if (mounted) {
         showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              if (isEventCodeValid) {
-                // String? eventName = eventDetails['eventName'];
-                // String? startDate = eventDetails['startDate'];
-                // String? endDate = eventDetails['endDate'];
-                //KAHVXKT
-                // debugPrint('################${eventDetails.runtimeType}');
-                return AlertDialog(
-                  title: const Text("success"),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          // popNTimes(context, 2);
-                          // Map<String, dynamic> newEvent = {
-                          //   "event_name": eventName,
-                          //   "start_date": startDate,
-                          //   "end_date": endDate,
-                          // };
-                          saveToLocalFile(eventDetails, UserType.visitor,
-                                  FileType.event)
-                              .then(
-                                  (value) => popToPage(context, "EventsPage"));
-                        },
-                        child: const Text("ok"))
-                  ],
-                );
-              } else {
-                return AlertDialog(
-                  title: const Text("invalid event code"),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          popOnce(context);
-                        },
-                        child: const Text("ok"))
-                  ],
-                );
-              }
-            });
+          context: context,
+          builder: (BuildContext context) {
+            if (isEventCodeValid) {
+              // String? eventName = eventDetails['eventName'];
+              // String? startDate = eventDetails['startDate'];
+              // String? endDate = eventDetails['endDate'];
+              //KAHVXKT
+              // debugPrint('################${eventDetails.runtimeType}');
+              return AlertDialog(
+                title: const Text("success"),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        // popNTimes(context, 2);
+                        // Map<String, dynamic> newEvent = {
+                        //   "event_name": eventName,
+                        //   "start_date": startDate,
+                        //   "end_date": endDate,
+                        // };
+                        saveToLocalFile(eventDetails, UserType.visitor,
+                                FileType.event)
+                            .then(
+                                (value) => popToPage(context, "EventsPage"));
+                      },
+                      child: const Text("ok"))
+                ],
+              );
+            } else {
+              return AlertDialog(
+                title: const Text("invalid event code"),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        popOnce(context);
+                      },
+                      child: const Text("ok"))
+                ],
+              );
+            }
+          }
+        );
       }
     }
   }

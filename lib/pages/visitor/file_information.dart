@@ -3,6 +3,9 @@ import 'package:test/backend/cloud_functions/pamphlets.dart'; // このパスは
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:test/util/navigate.dart';
+import 'package:test/pages/common/info.dart';
+import 'package:marquee/marquee.dart';
 import 'dart:io';
 
 class FileInformationPage extends StatefulWidget {
@@ -55,6 +58,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
@@ -82,6 +86,41 @@ class _FileInformationPageState extends State<FileInformationPage> {
                 )
               : const Center(child: CircularProgressIndicator()),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Marquee(
+                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  scrollAxis: Axis.horizontal,
+                  blankSpace: 20.0,
+                  velocity: 100.0,
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              ElevatedButton(
+                onPressed: () => moveToPage(context, const InfoPage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                ),
+                child: const Text("VIEW MORE"),
+              ),
+            ],
+          ),
         ),
       ),
     );
