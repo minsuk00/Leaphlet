@@ -3,13 +3,43 @@ import 'package:test/pages/exhibitor/home_exhibitor.dart';
 import 'package:test/pages/organizer/home_organizer.dart';
 import 'package:test/pages/visitor/home_visitor.dart';
 import 'package:test/util/navigate.dart';
-
+import 'package:test/pages/login.dart';
 
 class StartPage extends StatelessWidget {
-  // const StartPage({super.key});
-  const StartPage(this.username, {super.key});
-
+  const StartPage({Key? key, this.username = '', this.loginState = ''}) : super(key: key);
   final String username;
+  final String loginState;
+
+  void _logout(BuildContext context) {
+    // Reset login state and navigate back to login page
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LogInPage()));
+  }
+
+  void _showGuestRestrictionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Guest Mode Restriction'),
+          content: const Text('You must log in to use this feature.'),
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LogInPage()));
+              },
+              child: const Text('Return to log-in page'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,42 +49,9 @@ class StartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFC2D3CD),
-        leading: const BackButton(),
-        // leading: const Text(""),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Logged-in as $username',
-                  // must add function to retreive username
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 0.04 * screenWidth,
-                    color: const Color(0xFF3E885E),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Implement your logout functionality here
-                  },
-                  child: Text(
-                    'LOGOUT',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.04 * screenWidth,
-                      color: const Color(0xFF3E885E),
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        leading: loginState == 'google_auth' ? Container() : const BackButton(),
+        actions: _buildAppBarActions(context),
+        title: Text(_buildAppBarTitle()),
       ),
       backgroundColor: const Color(0xFFC2D3CD),
       body: Center(
@@ -93,7 +90,13 @@ class StartPage extends StatelessWidget {
               width: 0.75 * screenWidth,
               height: 0.15 * screenHeight,
               child: OutlinedButton(
-                onPressed: () => moveToPage(context, const ExhibitorHomePage()),
+                onPressed: () {
+                  if (loginState == 'guest') {
+                    _showGuestRestrictionDialog(context);
+                  } else {
+                    moveToPage(context, const ExhibitorHomePage());
+                  }
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -118,7 +121,13 @@ class StartPage extends StatelessWidget {
             SizedBox(height: screenWidth * 0.03),
 
             TextButton(
-              onPressed: () => moveToPage(context, const OrganizerHomePage()),
+              onPressed: () {
+                if (loginState == 'guest') {
+                  _showGuestRestrictionDialog(context);
+                } else {
+                  moveToPage(context, const OrganizerHomePage());
+                }
+              },              
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -141,5 +150,35 @@ class StartPage extends StatelessWidget {
         ),
       ),
     );
+  }
+  List<Widget> _buildAppBarActions(BuildContext context) {
+    if (loginState == 'google_auth') {
+      return [
+        TextButton(
+          onPressed: () => _logout(context),
+          child: Text(
+            'LOGOUT',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 0.04 * MediaQuery.of(context).size.width,
+              color: const Color(0xFF3E885E),
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      ];
+    } else {
+      return [];
+    }
+  }
+
+  String _buildAppBarTitle() {
+    if (loginState == 'google_auth') {
+      return 'Logged in as $username (Google)';
+    } else if (loginState == 'guest') {
+      return 'Logged in as a GUEST';
+    } else {
+      return '';
+    }
   }
 }

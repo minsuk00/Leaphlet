@@ -15,7 +15,7 @@ class _InfoPageState extends State<InfoPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
-        title: const Text("Information"),
+        title: const Text("Info"),
       ),
       body: Center(
         child: ElevatedButton(

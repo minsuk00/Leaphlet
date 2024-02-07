@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:test/util/navigate.dart';
+import 'package:test/pages/common/info.dart';
+import 'package:marquee/marquee.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart';
@@ -14,8 +17,6 @@ import 'package:test/backend/local_functions/util.dart';
 import 'package:test/pages/visitor/pdf_view.dart';
 // import 'package:test/util/logging.dart';
 // import 'dart:io';
-
-import 'package:test/util/navigate.dart';
 import 'package:test/util/user_type.dart';
 
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
@@ -188,10 +189,13 @@ class _FileInformationPageState extends State<FileInformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     String? pdfName = boothInfo['pamphletURL']?.substring(14);
 
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFC2D3CD),
         leading: const BackButton(),
         title: Text("${boothInfo['orgName']} (${boothInfo['boothNumber']})"),
       ),
@@ -245,6 +249,41 @@ class _FileInformationPageState extends State<FileInformationPage> {
                     child: const Text("Download PDF"),
                   ),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Marquee(
+                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  scrollAxis: Axis.horizontal,
+                  blankSpace: 20.0,
+                  velocity: 100.0,
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              ElevatedButton(
+                onPressed: () => moveToPage(context, const InfoPage()),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                ),
+                child: const Text("VIEW MORE"),
+              ),
+            ],
+          ),
         ),
       ),
     );
