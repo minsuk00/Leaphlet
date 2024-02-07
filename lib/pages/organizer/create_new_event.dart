@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
-
-// import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-// import 'package:test/backend/local_functions/deprecated_event.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test/util/navigate.dart';
-import 'package:test/util/user_type.dart';
-// import 'package:test/cloud_functions/test_firestore.dart';
+import 'package:test/backend/cloud_functions/event.dart';
 
 class CreateNewEventPage extends StatefulWidget {
   const CreateNewEventPage({super.key});
@@ -25,8 +19,8 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
   TextEditingController eventNameInput = TextEditingController();
   late final String eventCode; // Variable to store the generated event code
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FirebaseFirestore _firestore =
-      FirebaseFirestore.instance; // Add a form key
+  // final FirebaseFirestore _firestore =
+  //     FirebaseFirestore.instance; // Add a form key
 
   @override
   void initState() {
@@ -84,7 +78,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     ),
-                    icon: Icon(Icons.calendar_today),
+                    icon: const Icon(Icons.calendar_today),
                     labelText: "Start Date",
                     filled: true,
                     fillColor: Colors.white,
@@ -183,7 +177,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await saveEventData();
+                      await createNewEvent(eventNameInput.text, startDateInput.text, endDateInput.text, eventCode);
                       if (mounted) {
                         showEventCodeDialog(context);
                       }
@@ -199,23 +193,23 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
     );
   }
 
-  Future<void> saveEventData() async {
-    try {
-      Map<String, String> newEventData = {
-        'eventName': eventNameInput.text,
-        'startDate': startDateInput.text,
-        'endDate': endDateInput.text,
-        'eventCode': eventCode,
-      };
-      // Firestoreにイベントデータを保存
-      await _firestore.collection("registered_events").add(newEventData);
-      saveToLocalFile(newEventData, UserType.organizer, FileType.event);
-      // 保存後の処理（例：メッセージ表示、画面遷移など）をここに記述
-    } catch (e) {
-      // エラーハンドリング
-      debugPrint('Error saving event data: $e');
-    }
-  }
+  // Future<void> saveEventData() async {
+  //   try {
+  //     Map<String, String> newEventData = {
+  //       'eventName': eventNameInput.text,
+  //       'startDate': startDateInput.text,
+  //       'endDate': endDateInput.text,
+  //       'eventCode': eventCode,
+  //     };
+  //     // Firestoreにイベントデータを保存
+  //     await _firestore.collection("registered_events").add(newEventData);
+  //     saveToLocalFile(newEventData, UserType.organizer, FileType.event);
+  //     // 保存後の処理（例：メッセージ表示、画面遷移など）をここに記述
+  //   } catch (e) {
+  //     // エラーハンドリング
+  //     debugPrint('Error saving event data: $e');
+  //   }
+  // }
 
   void showEventCodeDialog(BuildContext context) {
     // Show the event code in a pop-up message

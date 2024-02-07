@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:test/backend/local_functions/util.dart';
 import 'package:test/util/user_type.dart';
 
@@ -17,10 +18,12 @@ Future<void> saveToLocalFile(Map<String, dynamic> newDataObject,
   final fileName = "$prefix$userTypeString";
 
   //get file content
-  final List<dynamic> list = await getLocalFileContent(fileName);
+  List<dynamic> list = await getLocalFileContent(fileName);
 
+  //filter list so there is no duplicate
+  list = list.where((element) => !mapEquals(element, newDataObject)).toList();
   //append new item to json list
-  list.add(newDataObject);
+  list.insert(0,newDataObject);
 
   // print("########### WRITING TO FILE $list");
   //convert json to String and update file
@@ -73,3 +76,6 @@ String getFileNamePrefix(FileType fileType) {
     return "";
   }
 }
+
+//download pdf to local directory
+//reset all cache

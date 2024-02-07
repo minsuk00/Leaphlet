@@ -1,1 +1,1 @@
-enum UserType { visitor, exhibitor, organizer }
+enum UserType { visitor, exhibitor, organizer, all }

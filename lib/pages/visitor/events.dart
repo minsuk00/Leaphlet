@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/local_functions/local_file_io.dart';
 import 'package:test/backend/local_functions/util.dart';
+import 'package:test/pages/common/search_anchor_widget.dart';
 // import 'package:test/backend/local_functions/deprecated_event.dart';
 // import 'package:test/backend/local_functions/util.dart';
 
@@ -30,7 +31,7 @@ class _EventsPageState extends State<EventsPage> {
   void initState() {
     super.initState();
     loadEventListFromFile();
-    // resetLocalEventList(UserType.visitor);
+    // resetLocalListFile(UserType.visitor,FileType.event);
   }
 
   void loadEventListFromFile() {
@@ -43,51 +44,70 @@ class _EventsPageState extends State<EventsPage> {
     });
   }
 
+  String _selectedEventCode = "";
+  GlobalKey parentKey = GlobalKey(debugLabel: "parentKey");
+  Map<String, GlobalKey> keyDict = {};
+  final SearchController searchController = SearchController();
+  final ScrollController scrollController = ScrollController();
+  void modifyItemCode(String eventCode) {
+    double anchorY = 0;
+    double targetY = 0;
+
+    // print("#############");
+    // keyDict.forEach(
+    //   (key, value) {
+    //     BuildContext? ctx = value.currentContext;
+    //     if (ctx == null) {
+    //       print("$key : null");
+    //     } else {
+    //       RenderBox box = ctx.findRenderObject() as RenderBox;
+    //       print("$key : ${box.localToGlobal(Offset.zero).dy}");
+    //     }
+    //   },
+    // );
+    // print("#############");
+
+    // print("======$eventCode");
+    if (eventCode != "") {
+      RenderBox box = parentKey.currentContext?.findRenderObject() as RenderBox;
+      anchorY = box.localToGlobal(Offset.zero).dy;
+
+      BuildContext? ctx = keyDict[eventCode]?.currentContext;
+      if (ctx == null) {
+        //workaround. for some reason the bottom events has null for global key
+        targetY = parentKey.currentContext!.size!.height + anchorY;
+      } else {
+        RenderBox tBox = ctx.findRenderObject() as RenderBox;
+        targetY = tBox.localToGlobal(Offset.zero).dy;
+      }
+    }
+
+    setState(() {
+      _selectedEventCode = eventCode;
+      // print("################ MODIFIED SELECTED EVENT CODE.");
+      if (eventCode != "") {
+        print(
+            "############## Scrolling to y-position: ${targetY - anchorY} ($targetY - $anchorY)");
+        scrollController.animateTo(
+          targetY - anchorY,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.linear,
+        );
+      }
+    });
+  }
+
   Padding getSearchBar(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final SearchAnchor searchAnchor = getSearchAnchor(context, _eventData,
+        FileType.event, setState, modifyItemCode, searchController);
+    // SearchController searchController = searchAnchor.searchController!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: SizedBox(
-        child: SearchAnchor(
-          isFullScreen: false,
-          // viewLeading: const Icon(null),
-          viewLeading: IconButton(
-              onPressed: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back)),
-          builder: (BuildContext context, SearchController controller) {
-            return SearchBar(
-              controller: controller,
-              padding: const MaterialStatePropertyAll<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 16.0)
-              ),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              onTap: () {
-                controller.openView();
-              },
-              onChanged: (_) {
-                controller.openView();
-              },
-              leading: const Icon(Icons.search),
-              hintText: 'SEARCH',
-            );
-          },
-          suggestionsBuilder:
-              (BuildContext context, SearchController controller) {
-            return List<ListTile>.generate(_eventData.length, (index) {
-              final String eventName = _eventData[index]['eventName'];
-              return ListTile(
-                  title: Text(eventName),
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    setState(() {
-                      controller.closeView(eventName);
-                    });
-                  });
-            });
-          },
-        ),
+        width: 0.6 * screenWidth,
+        child: searchAnchor,
       ),
     );
   }
@@ -95,7 +115,7 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height; 
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
@@ -108,7 +128,7 @@ class _EventsPageState extends State<EventsPage> {
         children: [
           SizedBox(height: screenHeight * 0.04),
           getSearchBar(context),
-          
+
           // const Flexible(
           //   child: FractionallySizedBox(
           //     heightFactor: 0.08,
@@ -121,7 +141,8 @@ class _EventsPageState extends State<EventsPage> {
             height: 0.08 * screenHeight,
             child: OutlinedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -131,13 +152,14 @@ class _EventsPageState extends State<EventsPage> {
               ),
               onPressed: () {
                 moveToPage(context, const RegisterNewEventPage()).then((_) {
-               // debugPrint('################## push popped!!');
-                 loadEventListFromFile();
-               });
+                  // debugPrint('################## push popped!!');
+                  loadEventListFromFile();
+                });
               },
               child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text("ADD EVENT",
+                padding: const EdgeInsets.all(14),
+                child: Text(
+                  "ADD EVENT",
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: screenWidth * 0.04,
@@ -146,46 +168,54 @@ class _EventsPageState extends State<EventsPage> {
               ),
             ),
           ),
-          
-          SizedBox(height: screenHeight * 0.05),
+
+          SizedBox(height: screenHeight * 0.06),
 
           Expanded(
             // flex: 100,
             child: Scrollbar(
               thickness: 15,
+              key: parentKey,
               child: ListView.builder(
-                  shrinkWrap: true,
+                  controller: scrollController,
+                  // shrinkWrap: true,
                   itemCount: _eventData.length,
                   itemBuilder: (context, index) {
                     final String eventName = _eventData[index]['eventName'];
                     final String startDate = _eventData[index]['startDate'];
                     final String endDate = _eventData[index]['endDate'];
                     final String eventCode = _eventData[index]['eventCode'];
-                    
-                    // Define colors to alternate
-                    Color color;
-                    if (index % 2 == 0) {
-                      color = const Color(0xFF04724D); // First color
-                    } else {
-                      color = const Color(0xFF3E885E); // Second color
+                    Color? getBgColor() {
+                      if (_selectedEventCode == "") {
+                        return Colors.white;
+                      } else {
+                        return eventCode == _selectedEventCode
+                            ? Colors.grey[50]
+                            : Colors.grey[300];
+                      }
                     }
 
+                    // print("$index $eventName : $eventCode");
+                    keyDict[eventCode] = GlobalKey();
                     return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+                      key: keyDict[eventCode],
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 100),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          backgroundColor: color,
+                              borderRadius: BorderRadius.circular(10)),
+                          backgroundColor: getBgColor(),
                         ),
                         // TODO: query event by event code
-                        onPressed: () => moveToPage(context, EventViewPage(
-                            eventName: eventName, 
-                            startDate: startDate, 
-                            endDate: endDate, 
-                            eventCode: eventCode,
-                        )),
+                        onPressed: () => moveToPage(
+                            context,
+                            EventViewPage(
+                              eventName: eventName,
+                              startDate: startDate,
+                              endDate: endDate,
+                              eventCode: eventCode,
+                            )),
                         child: ListTile(
                           title: Text(
                             eventName,
