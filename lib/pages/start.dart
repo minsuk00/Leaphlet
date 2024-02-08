@@ -4,13 +4,17 @@ import 'package:test/pages/organizer/home_organizer.dart';
 import 'package:test/pages/visitor/home_visitor.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class StartPage extends StatelessWidget {
-  const StartPage({Key? key, this.username = '', this.loginState = ''}) : super(key: key);
+  const StartPage({Key? key, this.username = '', this.loginState = '', required this.googleLogin}) : super(key: key);
   final String username;
   final String loginState;
+  final GoogleSignIn googleLogin;
 
-  void _logout(BuildContext context) {
+  void _logout(BuildContext context) async {
+    // Sign out the user
+    await googleLogin.signOut();
     // Reset login state and navigate back to login page
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LogInPage()));
   }
