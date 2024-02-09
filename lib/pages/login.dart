@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/pages/start.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class _LogInPageState extends State<LogInPage> {
   TextEditingController passwordController = TextEditingController();
   
   String loginState = '';
+  // String _displayName = "";
   
   @override
   void dispose() {
@@ -19,6 +22,11 @@ class _LogInPageState extends State<LogInPage> {
     passwordController.dispose();
     super.dispose();
   }
+
+  static final googleLogin = GoogleSignIn(scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +118,33 @@ class _LogInPageState extends State<LogInPage> {
               SizedBox(height: screenWidth * 0.02),
               
               OutlinedButton(
-                onPressed: () {
-                  setState(() {
-                    loginState = 'google_auth'; // Set login state to 'google_auth'
-                  });
-                  logInButtonPressed(context, usernameController.text, loginState);
+                onPressed: () async {
+                  // setState(() {
+                  //   loginState = 'google_auth'; // Set login state to 'google_auth'
+                  // });
+                  // logInButtonPressed(context, usernameController.text, loginState);
+                  // Google authentication
+                  GoogleSignInAccount? signinAccount = await googleLogin.signIn();
+                  if (signinAccount == null) return;
+                  GoogleSignInAuthentication auth =
+                      await signinAccount.authentication;
+                  final OAuthCredential credential = GoogleAuthProvider.credential(
+                    idToken: auth.idToken,
+                    accessToken: auth.accessToken,
+                  );
+                  // register login information to firebase
+                  User? user =
+                      (await FirebaseAuth.instance.signInWithCredential(credential))
+                          .user;
+                  if (user != null) {
+                    setState(() {
+                      loginState = 'google_auth';
+                      // _displayName = user.displayName!;
+                    });
+                    if (mounted) {
+                      logInButtonPressed(context, usernameController.text, loginState, googleLogin);
+                    }
+                  }                  
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
@@ -148,7 +178,7 @@ class _LogInPageState extends State<LogInPage> {
                   setState(() {
                     loginState = 'guest'; // Set login state to 'guest'
                   });
-                  logInButtonPressed(context, usernameController.text, loginState);
+                  logInButtonPressed(context, usernameController.text, loginState, googleLogin);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
@@ -181,8 +211,8 @@ class _LogInPageState extends State<LogInPage> {
   }
 }
 
-void logInButtonPressed(BuildContext context, String username, String loginState) {
+void logInButtonPressed(BuildContext context, String username, String loginState, googleLogin) {
   debugPrint("hi");
   Navigator.push(
-      context, MaterialPageRoute(builder: (_) => StartPage(username: username, loginState: loginState)));
+      context, MaterialPageRoute(builder: (_) => StartPage(username: username, loginState: loginState, googleLogin: googleLogin)));
 }
