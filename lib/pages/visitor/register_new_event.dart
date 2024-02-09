@@ -61,7 +61,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
               ),
             ),
 
-            SizedBox(height: screenWidth * 0.01),
+            SizedBox(height: screenWidth * 0.02),
             
             ElevatedButton(
               onPressed: () => registerButtonPressed(context),
@@ -84,7 +84,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 "Register",
                 style: TextStyle(
                   fontFamily: 'Roboto',
-                  fontSize: 14,
+                  fontSize: 22,
                 ),
               ),
             ),

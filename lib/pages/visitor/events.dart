@@ -219,7 +219,7 @@ class _EventsPageState extends State<EventsPage> {
                         child: ListTile(
                           title: Text(
                             eventName,
-                            style: const TextStyle(color: Colors.white),
+                            // style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
