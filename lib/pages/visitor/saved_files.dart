@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/pages/visitor/file_information.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/pages/common/info.dart';
 import 'package:marquee/marquee.dart';
@@ -35,6 +36,7 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
   // }
 
   List _savedBoothList = [];
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -62,36 +64,42 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
         title: const Text("Existing Files"),
       ),
       body: Scrollbar(
+        // key: parentKey,
         thickness: 15,
         child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: _savedBoothList.length,
-          itemBuilder: (context, index) {
-            final String eventName = _savedBoothList[index]['eventName'];
-            final String orgName = _savedBoothList[index]['orgName'];
-            return Container(
-              margin:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
-              // child: ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(10)),
-              //   ),
-              child: ListTile(
-                title: Text(orgName),
-                subtitle: Text(eventName),
-                tileColor: Colors.lightGreen,
-                // trailing: ElevatedButton(
-                //   child: const Text("Copy Event Code"),
-                //   onPressed: () {
-                //     // Clipboard.setData(ClipboardData(text: eventCode));
-                //   },
-                // ),
-              ),
-              // ),
-            );
-          },
-        )
+            controller: scrollController,
+            // shrinkWrap: true,
+            itemCount: _savedBoothList.length,
+            itemBuilder: (context, index) {
+              final fileInfo = _savedBoothList[index];
+              // String? boothCode = fileInfo['boothCode'];
+              final String eventName = _savedBoothList[index]['eventName'];
+              final String orgName = _savedBoothList[index]['orgName'];
+
+              // keyDict[boothCode] = GlobalKey();
+              return Container(
+                // key: keyDict[boothCode],
+                margin:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    // backgroundColor: getBgColor(),
+                  ),
+                  // TODO: query event by event code
+                  onPressed: () => moveToPage(
+                    context,
+                    FileInformationPage(fileInfo: fileInfo),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                        "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
+                    subtitle: Text(eventName),
+                  ),
+                ),
+              );
+            }),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
@@ -100,7 +108,8 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
             children: [
               Expanded(
                 child: Marquee(
-                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  text:
+                      "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
                   style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -114,8 +123,10 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
               ElevatedButton(
                 onPressed: () => moveToPage(context, const InfoPage()),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
