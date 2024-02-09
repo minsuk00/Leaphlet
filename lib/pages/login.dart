@@ -35,7 +35,7 @@ class _LogInPageState extends State<LogInPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFC2D3CD),
       body: Center(
-        child: SingleChildScrollView(
+        //child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -203,10 +203,51 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                 ),
               ),
+
+              SizedBox(height: screenWidth * 0.02),
+
+              Image.asset(
+                'assets/leaphlet_logo.png',
+                width: 500, 
+                height: 500,
+              ),
+
+              SizedBox(height: screenWidth * 0.02),
+
+              OutlinedButton(
+                onPressed: () async {
+                  setState(() {
+                    loginState = 'google_auth';
+                  });
+                  logInButtonPressed(context, usernameController.text, loginState, googleLogin);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                  ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                  ),
+                  side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(color: Color(0xFF04724D)),
+                  ),
+                ),
+                child: Text(
+                  "Log in as God",
+                  style: TextStyle(
+                    fontSize: 0.04 * screenWidth,
+                    fontFamily: 'Roboto',
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-      ),
+      //),
     );
   }
 }
