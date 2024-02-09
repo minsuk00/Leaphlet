@@ -8,8 +8,7 @@ import 'package:test/util/navigate.dart';
 import 'package:test/backend/cloud_functions/event.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:test/util/user_type.dart';
-import 'package:test/pages/common/info.dart';
-import 'package:marquee/marquee.dart';
+import 'package:test/pages/common/ad_bar.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
   const RegisterNewEventPage({super.key});
@@ -33,98 +32,73 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
         leading: const BackButton(),
         title: const Text("Register New Event"),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.3),
-              child: TextFormField(
-                controller: _eventCodeInputController,
-                autofocus: false,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  ),
-                  labelText: 'Event Code',
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an event code';
-                  }
-                  return null;
-                },
-              ),
-            ),
-
-            SizedBox(height: screenWidth * 0.02),
-            
-            ElevatedButton(
-              onPressed: () => registerButtonPressed(context),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  ),
-                ),
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                  EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.05 * screenWidth),
-                ),
-                side: MaterialStateProperty.all<BorderSide>(
-                  const BorderSide(color: Color(0xFF04724D)),
-                ),
-              ),
-              child: const Text(
-                "Register",
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 22,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: Marquee(
-                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.3),
+                child: TextFormField(
+                  controller: _eventCodeInputController,
+                  autofocus: false,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
+                    labelText: 'Event Code',
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
-                  scrollAxis: Axis.horizontal,
-                  blankSpace: 20.0,
-                  velocity: 100.0,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter an event code';
+                    }
+                    return null;
+                  },
                 ),
               ),
-              const SizedBox(width: 16.0),
+
+              SizedBox(height: screenWidth * 0.02),
+              
               ElevatedButton(
-                onPressed: () => moveToPage(context, const InfoPage()),
+                onPressed: () => registerButtonPressed(context),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     ),
                   ),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.05 * screenWidth),
+                  ),
+                  side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(color: Color(0xFF04724D)),
+                  ),
                 ),
-                child: const Text("VIEW MORE"),
+                child: const Text(
+                  "Register",
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 22,
+                  ),
+                ),
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: AdBar(
+        onUpdate: () {
+        },
       ),
     );
   }

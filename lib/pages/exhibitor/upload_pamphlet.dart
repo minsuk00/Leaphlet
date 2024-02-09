@@ -152,299 +152,310 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: const Color(0xFFC2D3CD),
+      appBar: AppBar(
         backgroundColor: const Color(0xFFC2D3CD),
-        appBar: AppBar(
-          backgroundColor: const Color(0xFFC2D3CD),
-          leading: const BackButton(),
-          title: const Text("Upload Pamphlet"),
-        ),
-        body: SingleChildScrollView(
-            child: Form(
-                key: _formKey, // Set the key to the form
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      SizedBox(height: screenWidth * 0.1),
+        leading: const BackButton(),
+        title: const Text("Upload Pamphlet"),
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey, // Set the key to the form
+            child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                  SizedBox(height: screenWidth * 0.1),
 
-                      SizedBox(
-                        width: 0.6 * screenWidth,
-                        child: Stack(
-                          children: [
-                            TextFormField(
-                              controller: eventCodeInput,
-                              autofocus: false,
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(screenWidth * 0.03),
-                                ),
-                                labelText: 'Event Code',
-                                filled: true,
-                                fillColor: Colors.white,
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter the event code';
-                                }
-                                return null;
+                  SizedBox(
+                    width: 0.6 * screenWidth,
+                    child: Stack(
+                      children: [
+                        TextFormField(
+                          controller: eventCodeInput,
+                          autofocus: false,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(screenWidth * 0.03),
+                            ),
+                            labelText: 'Event Code',
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the event code';
+                            }
+                            return null;
+                          },
+                        ),
+                        Positioned(
+                          right: screenWidth * 0.02,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextButton(
+                              onPressed: () async {
+                                final eventInfo =
+                                    await getEventInfo(eventCodeInput.text);
+                                // ignore: use_build_context_synchronously
+                                showEventCodeDialog(context, eventInfo);
                               },
-                            ),
-                            Positioned(
-                              right: screenWidth * 0.02,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextButton(
-                                  onPressed: () async {
-                                    final eventInfo =
-                                        await getEventInfo(eventCodeInput.text);
-                                    // ignore: use_build_context_synchronously
-                                    showEventCodeDialog(context, eventInfo);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            const Color(0xFF766561)),
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white),
-                                  ),
-                                  child: const Text('Confirm Event'),
-                                ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        const Color(0xFF766561)),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.01),
-
-                      SizedBox(
-                        width: 0.6 * screenWidth,
-                        child: TextFormField(
-                          controller: boothNumberInput,
-                          autofocus: false,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                            labelText: 'Booth Number',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter the booth number';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.01),
-
-                      SizedBox(
-                        width: 0.6 * screenWidth,
-                        child: TextFormField(
-                          controller: orgNameInput,
-                          autofocus: false,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                            labelText: 'Organization Name',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter the organization name';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.01),
-
-                      SizedBox(
-                        width: 0.6 * screenWidth,
-                        child: TextFormField(
-                          controller: yourNameInput,
-                          autofocus: false,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                            labelText: 'Name',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.01),
-
-                      SizedBox(
-                        width: 0.6 * screenWidth, // Adjust the width as needed
-                        child: TextFormField(
-                          controller: emailAddressInput,
-                          autofocus: false,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                            labelText: 'Email',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter the email address';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.01),
-
-                      SizedBox(
-                        width: 0.6 * screenWidth, // Adjust the width as needed
-                        child: TextField(
-                          controller: phoneNumberInput,
-                          autofocus: false,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                            labelText: 'Phone (optional)',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: screenWidth * 0.03),
-
-                      // TextFormField(
-                      //   readOnly: true,
-                      //   controller: pamphletInput,
-                      //   onTap: () async {
-                      //     FilePickerResult? result =
-                      //         await FilePicker.platform.pickFiles(
-                      //       type: FileType.custom,
-                      //       allowedExtensions: ['pdf'],
-                      //     );
-                      //     if (result != null) {
-                      //       String filePath = result.files.single.path!;
-                      //       _selectedFilePath = filePath;
-                      //       pamphletInput.text = filePath.substring(filePath.lastIndexOf("/")+1);
-                      //       if (kDebugMode) {
-                      //         print('Selected file: $filePath');
-                      //       }
-                      //     }
-                      //   },
-                      //   decoration: const InputDecoration(
-                      //     border: OutlineInputBorder(),
-                      //     labelText: 'Upload Pamphlet',
-                      //   ),
-                      //   validator: (value) {
-                      //     if (value == null || value.isEmpty) {
-                      //       return 'Please upload the pamphlet';
-                      //     }
-                      //     return null;
-                      //   },
-                      // ),
-                      buildPamphletUploadWidget(context),
-
-                      SizedBox(height: screenWidth * 0.05),
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          boothCode = generateBoothCode();
-                          
-                          if (_formKey.currentState!.validate()) {
-                            await uploadPamphlet(
-                                _selectedFilePath,
-                                pamphletInput.text,
-                                eventCodeInput.text,
-                                boothNumberInput.text,
-                                orgNameInput.text,
-                                yourNameInput.text,
-                                emailAddressInput.text,
-                                phoneNumberInput.text,
-                                boothCode);
-                            if (mounted) {
-                              final newBoothItem = {
-                                "boothCode": boothCode,
-                                "eventCode": eventCodeInput.text,
-                                "eventName": eventName,
-                                "boothNumber": boothNumberInput.text,
-                                "orgName": orgNameInput.text,
-                                "name": yourNameInput.text,
-                                "email": emailAddressInput.text,
-                                "phone": phoneNumberInput.text,
-                              };
-                              saveToLocalFile(newBoothItem, UserType.exhibitor,
-                                  util.FileType.booth);
-                              moveToPage(
-                                  context,
-                                  ConfirmationPage(
-                                    boothInfo: newBoothItem,
-                                  ));
-                            }
-                          }
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3E885E)),
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
+                              child: const Text('Confirm Event'),
                             ),
                           ),
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(
-                                vertical: 0.01 * screenHeight,
-                                horizontal: 0.06 * screenWidth),
-                          ),
-                          side: MaterialStateProperty.all<BorderSide>(
-                            const BorderSide(color: Color(0xFF04724D)),
-                          ),
                         ),
-                        child: Text(
-                          "Confirm",
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontSize: 0.04 * screenWidth,
-                          ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth,
+                    child: TextFormField(
+                      controller: boothNumberInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Booth Number',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the booth number';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth,
+                    child: TextFormField(
+                      controller: orgNameInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Organization Name',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the organization name';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth,
+                    child: TextFormField(
+                      controller: yourNameInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Name',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth, // Adjust the width as needed
+                    child: TextFormField(
+                      controller: emailAddressInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Email',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the email address';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth, // Adjust the width as needed
+                    child: TextField(
+                      controller: phoneNumberInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Phone (optional)',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.03),
+
+                  // TextFormField(
+                  //   readOnly: true,
+                  //   controller: pamphletInput,
+                  //   onTap: () async {
+                  //     FilePickerResult? result =
+                  //         await FilePicker.platform.pickFiles(
+                  //       type: FileType.custom,
+                  //       allowedExtensions: ['pdf'],
+                  //     );
+                  //     if (result != null) {
+                  //       String filePath = result.files.single.path!;
+                  //       _selectedFilePath = filePath;
+                  //       pamphletInput.text = filePath.substring(filePath.lastIndexOf("/")+1);
+                  //       if (kDebugMode) {
+                  //         print('Selected file: $filePath');
+                  //       }
+                  //     }
+                  //   },
+                  //   decoration: const InputDecoration(
+                  //     border: OutlineInputBorder(),
+                  //     labelText: 'Upload Pamphlet',
+                  //   ),
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please upload the pamphlet';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  buildPamphletUploadWidget(context),
+
+                  SizedBox(height: screenWidth * 0.05),
+
+                  ElevatedButton(
+                    onPressed: () async {
+                      boothCode = generateBoothCode();
+                      
+                      if (_formKey.currentState!.validate()) {
+                        await uploadPamphlet(
+                            _selectedFilePath,
+                            pamphletInput.text,
+                            eventCodeInput.text,
+                            boothNumberInput.text,
+                            orgNameInput.text,
+                            yourNameInput.text,
+                            emailAddressInput.text,
+                            phoneNumberInput.text,
+                            boothCode);
+                        if (mounted) {
+                          final newBoothItem = {
+                            "boothCode": boothCode,
+                            "eventCode": eventCodeInput.text,
+                            "eventName": eventName,
+                            "boothNumber": boothNumberInput.text,
+                            "orgName": orgNameInput.text,
+                            "name": yourNameInput.text,
+                            "email": emailAddressInput.text,
+                            "phone": phoneNumberInput.text,
+                          };
+                          saveToLocalFile(newBoothItem, UserType.exhibitor,
+                              util.FileType.booth);
+                          moveToPage(
+                              context,
+                              ConfirmationPage(
+                                boothInfo: newBoothItem,
+                              ));
+                        }
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF3E885E)),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      shape:
+                          MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
                         ),
                       ),
-                    ])))));
+                      padding:
+                          MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(
+                            vertical: 0.01 * screenHeight,
+                            horizontal: 0.06 * screenWidth),
+                      ),
+                      side: MaterialStateProperty.all<BorderSide>(
+                        const BorderSide(color: Color(0xFF04724D)),
+                      ),
+                    ),
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.04 * screenWidth,
+                      ),
+                    ),
+                  ),
+                ]
+              )
+            )
+          )
+        )
+      )
+    );
   }
 
   String generateBoothCode() {
