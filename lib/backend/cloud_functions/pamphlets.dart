@@ -7,7 +7,7 @@ import 'package:test/backend/local_functions/local_file_io.dart';
 import 'package:test/backend/local_functions/util.dart';
 import 'package:test/util/user_type.dart';
 
-uploadPamphlet(
+Future uploadPamphlet(
     String filePath,
     String fileName,
     String eventCode,
@@ -37,8 +37,8 @@ uploadPamphlet(
     bool isEventCodeValid = eventDetails != null;
     if (isEventCodeValid) {
       String? eventName = eventDetails['eventName'];
-      print('################### Get Event Details!');
-      await firestore.collection("uploaded_pamphlets").add({
+      print('################### Attempting Upload...!');
+      return await firestore.collection("uploaded_pamphlets").add({
         'eventCode': eventCode,
         'eventName': eventName,
         'boothNumber': boothNumber,

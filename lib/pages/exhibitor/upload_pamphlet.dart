@@ -1,14 +1,14 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+// import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:test/backend/cloud_functions/event.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart' as util;
+// import 'package:test/backend/local_functions/local_file_io.dart';
+// import 'package:test/backend/local_functions/util.dart' as util;
 import 'package:test/pages/exhibitor/confirmation.dart';
 import 'package:test/util/navigate.dart';
-import 'package:test/backend/cloud_functions/pamphlets.dart';
-import 'package:test/util/user_type.dart';
+// import 'package:test/backend/cloud_functions/pamphlets.dart';
+// import 'package:test/util/user_type.dart';
 
 class UploadPamphletPage extends StatefulWidget {
   const UploadPamphletPage({super.key});
@@ -19,21 +19,20 @@ class UploadPamphletPage extends StatefulWidget {
 
 class _UploadPamphletPageState extends State<UploadPamphletPage> {
   TextEditingController eventCodeInput = TextEditingController();
+  TextEditingController eventNameInput = TextEditingController();
   TextEditingController boothNumberInput = TextEditingController();
   TextEditingController orgNameInput = TextEditingController();
   TextEditingController yourNameInput = TextEditingController();
   TextEditingController emailAddressInput = TextEditingController();
   TextEditingController phoneNumberInput = TextEditingController();
   TextEditingController pamphletInput = TextEditingController();
-  late String boothCode;
-  late String eventName;
   late String _selectedFilePath = '';
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // Add a form key
+  bool isEventCodeConfirmed = false;
 
   @override
   void initState() {
-    boothCode = generateBoothCode();
     super.initState();
   }
 
@@ -87,16 +86,35 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
             ),
             SizedBox(width: screenWidth * 0.015),
             Expanded(
-              child: Text(
-                _selectedFilePath.isNotEmpty
-                    ? pamphletInput.text
-                    : 'Upload Pamphlet',
-                style: TextStyle(
-                  fontSize: screenWidth * 0.025,
-                  fontFamily: 'Roboto',
+              child: TextFormField(
+                // readOnly: true,
+                // keyboardType: TextInputType.none,
+                enabled: false,
+                controller: pamphletInput,
+                autofocus: false,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText:
+                      _selectedFilePath.isNotEmpty ? null : 'Upload Pamphlet',
+                  labelStyle: TextStyle(
+                    fontSize: screenWidth * 0.025,
+                    fontFamily: 'Roboto',
+                  ),
                 ),
-                overflow: TextOverflow.ellipsis,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please upload pamphlet';
+                  }
+                  return null;
+                },
               ),
+              // Text(
+              //   _selectedFilePath.isNotEmpty
+              //       ? pamphletInput.text
+              //       : 'Upload Pamphlet',
+              //   style:
+              //   overflow: TextOverflow.ellipsis,
+              // ),
             ),
           ],
         ),
@@ -111,8 +129,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
         builder: (BuildContext context) {
           if (eventInfo == null) {
             return AlertDialog(
-              title: const Text('EVENT CODE NOT FOUND'),
-              //content: const Text('Your event code was not found.'),
+              title: const Text('Invalid event code'),
+              content: const Text('Please enter a valid event code.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -123,10 +141,11 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
               ],
             );
           } else {
-            eventName = eventInfo['eventName'];
+            isEventCodeConfirmed = true;
+            eventNameInput.text = eventInfo['eventName'];
             return AlertDialog(
-              title: const Text('SUCCESS'),
-              //content: const Text('Your event code was not found.'),
+              title: const Text('Event code confirmed'),
+              // content: const Text('Your event code was not found.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -138,21 +157,6 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
             );
           }
         });
-
-    // return AlertDialog(
-    //   title: const Text('pending'),
-    //   //content: const Text('Your event code was not found.'),
-    //   actions: <Widget>[
-    //     TextButton(
-    //       onPressed: () {
-    //         Navigator.of(context).pop(); // Close the dialog
-    //       },
-    //       child: const Text('Close'),
-    //     ),
-    //   ],
-    // );
-    // },
-    // );
   }
 
   @override
@@ -175,10 +179,10 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
           child: Form(
             key: _formKey, // Set the key to the form
             child: Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   SizedBox(height: screenWidth * 0.1),
 
                   SizedBox(
@@ -186,6 +190,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                     child: Stack(
                       children: [
                         TextFormField(
+                          // readOnly: isEventCodeConfirmed ? true : false,
+                          enabled: !isEventCodeConfirmed,
                           controller: eventCodeInput,
                           autofocus: false,
                           textInputAction: TextInputAction.next,
@@ -211,7 +217,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                                borderRadius:
+                                    BorderRadius.circular(screenWidth * 0.05),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.2),
@@ -222,19 +229,23 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                                 ],
                               ),
                               child: TextButton(
-                                onPressed: () async {
-                                  final eventInfo =
-                                      await getEventInfo(eventCodeInput.text);
-                                  // ignore: use_build_context_synchronously
-                                  showEventCodeDialog(context, eventInfo);
-                                },
+                                onPressed: isEventCodeConfirmed
+                                    ? null
+                                    : () async {
+                                        final eventInfo = await getEventInfo(
+                                            eventCodeInput.text);
+                                        // ignore: use_build_context_synchronously
+                                        showEventCodeDialog(context, eventInfo);
+                                      },
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
                                           const Color(0xFF766561)),
                                   foregroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.white),
+                                          isEventCodeConfirmed
+                                              ? Colors.grey
+                                              : Colors.white),
                                 ),
                                 child: const Text('Confirm Event'),
                               ),
@@ -242,6 +253,35 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+
+                  SizedBox(height: screenWidth * 0.01),
+
+                  SizedBox(
+                    width: 0.6 * screenWidth,
+                    child: TextFormField(
+                      // readOnly: true,
+                      // keyboardType: TextInputType.none,
+                      enabled: false,
+                      controller: eventNameInput,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                        labelText: 'Event Name',
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please confirm event code';
+                        }
+                        return null;
+                      },
                     ),
                   ),
 
@@ -403,7 +443,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   buildPamphletUploadWidget(context),
 
                   SizedBox(height: screenWidth * 0.05),
-                  
+
                   SizedBox(
                     width: 0.3 * screenWidth,
                     height: 0.05 * screenHeight,
@@ -421,50 +461,39 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () async {
-                          boothCode = generateBoothCode();
-                          
                           if (_formKey.currentState!.validate()) {
-                            await uploadPamphlet(
-                                _selectedFilePath,
-                                pamphletInput.text,
-                                eventCodeInput.text,
-                                boothNumberInput.text,
-                                orgNameInput.text,
-                                yourNameInput.text,
-                                emailAddressInput.text,
-                                phoneNumberInput.text,
-                                boothCode);
                             if (mounted) {
                               final newBoothItem = {
-                                "boothCode": boothCode,
                                 "eventCode": eventCodeInput.text,
-                                "eventName": eventName,
+                                "eventName": eventNameInput.text,
                                 "boothNumber": boothNumberInput.text,
                                 "orgName": orgNameInput.text,
                                 "name": yourNameInput.text,
                                 "email": emailAddressInput.text,
                                 "phone": phoneNumberInput.text,
                               };
-                              saveToLocalFile(newBoothItem, UserType.exhibitor,
-                                  util.FileType.booth);
+
                               moveToPage(
                                   context,
                                   ConfirmationPage(
+                                    filePath: _selectedFilePath,
                                     boothInfo: newBoothItem,
+                                    pamphletName: pamphletInput.text,
                                   ));
                             }
                           }
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3E885E)),
+                            const Color(0xFF3E885E),
+                          ),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius:
-                                BorderRadius.circular(screenWidth * 0.03),
+                                  BorderRadius.circular(screenWidth * 0.03),
                             ),
                           ),
                           padding:
@@ -487,22 +516,12 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                       ),
                     ),
                   ),
-                ]
-              )
-            )
-          )
-        )
-      )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
-  }
-
-  String generateBoothCode() {
-    const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    final Random rnd = Random();
-    String code = '';
-    for (int i = 0; i < 7; i++) {
-      code += chars[rnd.nextInt(chars.length)];
-    }
-    return code;
   }
 }
