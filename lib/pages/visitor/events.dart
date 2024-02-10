@@ -197,14 +197,30 @@ class _EventsPageState extends State<EventsPage> {
                       final String startDate = _eventData[index]['startDate'];
                       final String endDate = _eventData[index]['endDate'];
                       final String eventCode = _eventData[index]['eventCode'];
-                      Color? getBgColor() {
-                        if (_selectedEventCode == "") {
-                          return Colors.white;
-                        } else {
-                          return eventCode == _selectedEventCode
-                              ? Colors.grey[50]
-                              : Colors.grey[300];
+                      Color? getBgColor(int idx) {
+                        // if (_selectedEventCode == "") {
+                        // if (idx % 2 == 0) {
+                        //   return const Color.fromARGB(220, 4, 114, 77);
+                        // } else {
+                        //   return const Color.fromARGB(220, 62, 136, 94);
+                        // }
+                        // return Colors.white;
+                        // } else {
+                        //   return eventCode == _selectedEventCode
+                        //       ? Colors.grey[50]
+                        //       : Colors.grey[300];
+                        // }
+                        if (eventCode == _selectedEventCode) {
+                          return const Color.fromARGB(255, 4, 114, 77);
                         }
+                        return const Color.fromARGB(240, 62, 136, 94);
+                      }
+
+                      double getElevation() {
+                        if (eventCode == _selectedEventCode) {
+                          return 10.toDouble();
+                        }
+                        return 0.toDouble();
                       }
 
                       // print("$index $eventName : $eventCode");
@@ -217,9 +233,11 @@ class _EventsPageState extends State<EventsPage> {
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            backgroundColor: getBgColor(),
+                            backgroundColor: getBgColor(index),
+                            shadowColor: Colors.black,
+                            elevation: getElevation(),
+                            // elevation: 10,
                           ),
-                          // TODO: query event by event code
                           onPressed: () => moveToPage(
                               context,
                               EventViewPage(
@@ -231,7 +249,22 @@ class _EventsPageState extends State<EventsPage> {
                           child: ListTile(
                             title: Text(
                               eventName,
-                              // style: const TextStyle(color: Colors.white),
+                              // textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                // shadows: <Shadow>[
+                                //   Shadow(
+                                //     offset: Offset(3.0, 3.0),
+                                //     blurRadius: 3.0,
+                                //     color: Color.fromARGB(255, 0, 0, 0),
+                                //   ),
+                                //   Shadow(
+                                //     offset: Offset(3.0, 3.0),
+                                //     blurRadius: 8.0,
+                                //     color: Color.fromARGB(125, 0, 0, 255),
+                                //   ),
+                                // ],
+                              ),
                             ),
                           ),
                         ),
