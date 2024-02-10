@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/local_functions/local_file_io.dart';
 import 'package:test/backend/local_functions/util.dart';
+import 'package:test/pages/common/search_bar.dart';
+import 'package:test/pages/visitor/file_information.dart';
+import 'package:test/util/button_style.dart';
+import 'package:test/util/navigate.dart';
 import 'package:test/util/user_type.dart';
 import 'package:test/pages/common/ad_bar.dart';
 
@@ -31,7 +35,6 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
   //     ),
   //   );
   // }
-  List _boothData = [];
 
   @override
   void initState() {
@@ -47,9 +50,25 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
     });
   }
 
+  List _boothData = [];
+  String _selectedBoothCode = "";
+  GlobalKey parentKey = GlobalKey(debugLabel: "parentKey");
+  Map<String, GlobalKey> keyDict = {};
+  final SearchController searchController = SearchController();
+  final ScrollController scrollController = ScrollController();
+
+  void setSelectedCode(String code) {
+    setState(() {
+      _selectedBoothCode = code;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(_boothData);
+    // print(_boothData);
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFFC2D3CD),
       appBar: AppBar(
@@ -62,42 +81,63 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: Scrollbar(
-          thickness: 15,
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: _boothData.length,
-            itemBuilder: (context, index) {
-              final String eventName = _boothData[index]['eventName'];
-              final String orgName = _boothData[index]['orgName'];
-              return Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
-                // child: ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(10)),
-                //   ),
-                child: ListTile(
-                  title: Text(orgName),
-                  subtitle: Text(eventName),
-                  tileColor: Colors.lightGreen,
-                  // trailing: ElevatedButton(
-                  //   child: const Text("Copy Event Code"),
-                  //   onPressed: () {
-                  //     // Clipboard.setData(ClipboardData(text: eventCode));
-                  //   },
-                  // ),
-                ),
-                // ),
-              );
-            }
-          ),
-        ),
+        child: _boothData.isEmpty
+            ? const SizedBox.shrink()
+            : Column(
+                children: [
+                  SizedBox(height: screenHeight * 0.04),
+                  CustomSearchBar(
+                      widthRatio: 0.8,
+                      dataList: _boothData,
+                      parentKey: parentKey,
+                      keyDict: keyDict,
+                      setSelectedCode: setSelectedCode,
+                      fileType: FileType.booth,
+                      scrollController: scrollController,
+                      searchController: searchController),
+                  SizedBox(height: screenHeight * 0.02),
+                  Expanded(
+                    child: Scrollbar(
+                      key: parentKey,
+                      thickness: 15,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          // shrinkWrap: true,
+                          itemCount: _boothData.length,
+                          itemBuilder: (context, index) {
+                            final fileInfo = _boothData[index];
+                            String boothCode = fileInfo['boothCode'];
+                            final String eventName = fileInfo['eventName'];
+                            // final String orgName = _savedBoothList[index]['orgName'];
+
+                            keyDict[boothCode] = GlobalKey();
+                            return Container(
+                              key: keyDict[boothCode],
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 100),
+                              child: ElevatedButton(
+                                style: getButtonStyle(
+                                    boothCode, _selectedBoothCode),
+                                onPressed: () => moveToPage(
+                                  context,
+                                  FileInformationPage(fileInfo: fileInfo),
+                                ),
+                                child: ListTile(
+                                  title: Text(
+                                      "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
+                                  subtitle: Text("($eventName)"),
+                                  textColor: Colors.white,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                ],
+              ),
       ),
       bottomNavigationBar: AdBar(
-        onUpdate: () {
-        },
+        onUpdate: () {},
       ),
     );
   }
