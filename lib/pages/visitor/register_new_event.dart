@@ -68,32 +68,45 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 ),
               ),
               SizedBox(height: screenWidth * 0.02),
-              ElevatedButton(
-                onPressed: () => registerButtonPressed(context),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  onPressed: () => registerButtonPressed(context),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                      ),
+                    ),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      EdgeInsets.symmetric(
+                          vertical: 0.01 * screenHeight,
+                          horizontal: 0.05 * screenWidth),
+                    ),
+                    side: MaterialStateProperty.all<BorderSide>(
+                      const BorderSide(color: Color(0xFF04724D)),
                     ),
                   ),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(
-                        vertical: 0.01 * screenHeight,
-                        horizontal: 0.05 * screenWidth),
-                  ),
-                  side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(color: Color(0xFF04724D)),
-                  ),
-                ),
-                child: const Text(
-                  "Register",
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 22,
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: screenWidth * 0.03,
+                    ),
                   ),
                 ),
               ),
