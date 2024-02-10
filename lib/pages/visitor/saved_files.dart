@@ -24,9 +24,11 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
 
   void loadEventListFromFile() {
     getListFromLocalFile(UserType.visitor, FileType.booth).then((value) {
-      setState(() {
-        _savedBoothList = value;
-      });
+      if (mounted) {
+        setState(() {
+          _savedBoothList = value;
+        });
+      }
     });
   }
 
@@ -96,7 +98,8 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
                               margin: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 100),
                               child: ElevatedButton(
-                                style: getButtonStyle(boothCode,_selectedBoothCode),
+                                style: getButtonStyle(
+                                    boothCode, _selectedBoothCode),
                                 onPressed: () => moveToPage(
                                   context,
                                   FileInformationPage(fileInfo: fileInfo),

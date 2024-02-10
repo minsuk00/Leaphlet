@@ -38,9 +38,11 @@ class _EventsPageState extends State<EventsPage> {
     getListFromLocalFile(UserType.visitor, FileType.event).then((value) {
       // debugPrint('############### INIT EVENTS PAGE ##################');
       // debugPrint('$value');
-      setState(() {
-        _eventData = value;
-      });
+      if (mounted) {
+        setState(() {
+          _eventData = value;
+        });
+      }
     });
   }
 

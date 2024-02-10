@@ -16,26 +16,6 @@ class ExistingFilesPage extends StatefulWidget {
 }
 
 class _ExistingFilesPageState extends State<ExistingFilesPage> {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: const Color(0xFFC2D3CD),
-  //     appBar: AppBar(
-  //       backgroundColor: const Color(0xFFC2D3CD),
-  //       leading: const BackButton(),
-  //       title: const Text("Existing Files"),
-  //     ),
-  //     body: Center(
-  //       child: ElevatedButton(
-  //         onPressed: () {
-  //           Navigator.pop(context);
-  //         },
-  //         child: const Text('Go back'),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -44,9 +24,11 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
 
   void loadEventListFromFile() {
     getListFromLocalFile(UserType.exhibitor, FileType.booth).then((value) {
-      setState(() {
-        _boothData = value;
-      });
+      if (mounted) {
+        setState(() {
+          _boothData = value;
+        });
+      }
     });
   }
 
