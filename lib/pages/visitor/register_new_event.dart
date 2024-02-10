@@ -67,21 +67,23 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                   },
                 ),
               ),
-
               SizedBox(height: screenWidth * 0.02),
-              
               ElevatedButton(
                 onPressed: () => registerButtonPressed(context),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
                     ),
                   ),
                   padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.05 * screenWidth),
+                    EdgeInsets.symmetric(
+                        vertical: 0.01 * screenHeight,
+                        horizontal: 0.05 * screenWidth),
                   ),
                   side: MaterialStateProperty.all<BorderSide>(
                     const BorderSide(color: Color(0xFF04724D)),
@@ -100,8 +102,7 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
         ),
       ),
       bottomNavigationBar: AdBar(
-        onUpdate: () {
-        },
+        onUpdate: () {},
       ),
     );
   }
@@ -131,10 +132,13 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 // String? endDate = eventDetails['endDate'];
                 //KAHVXKT
                 // debugPrint('################${eventDetails.runtimeType}');
-                print(
-                    "############ ${widget.registeredEventCodes.contains(eventCode)}");
+                bool isAlreadyRegistered =
+                    widget.registeredEventCodes.contains(eventCode);
+                // bool isAlreadyRegistered = false;
                 return AlertDialog(
-                  title: const Text("success"),
+                  title: Text(isAlreadyRegistered
+                      ? "event is already registered"
+                      : "event added!"),
                   actions: [
                     ElevatedButton(
                         onPressed: () {
@@ -144,10 +148,14 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                           //   "start_date": startDate,
                           //   "end_date": endDate,
                           // };
-                          saveToLocalFile(eventDetails, UserType.visitor,
-                                  FileType.event)
-                              .then(
-                                  (value) => popToPage(context, "EventsPage"));
+                          if (isAlreadyRegistered) {
+                            popToPage(context, "EventsPage");
+                          } else {
+                            saveToLocalFile(eventDetails, UserType.visitor,
+                                    FileType.event)
+                                .then((value) =>
+                                    popToPage(context, "EventsPage"));
+                          }
                         },
                         child: const Text("ok"))
                   ],

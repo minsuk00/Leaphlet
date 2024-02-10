@@ -133,45 +133,53 @@ class _EventsPageState extends State<EventsPage> {
             SizedBox(height: screenHeight * 0.04),
             getSearchBar(context),
 
-          // const Flexible(
-          //   child: FractionallySizedBox(
-          //     heightFactor: 0.08,
-          //   ),
-          // ),
-          // const Spacer(flex: 1),
-          SizedBox(height: screenHeight * 0.02),
-          SizedBox(
-            width: 0.4 * screenWidth,
-            height: 0.08 * screenHeight,
-            child: OutlinedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            // const Flexible(
+            //   child: FractionallySizedBox(
+            //     heightFactor: 0.08,
+            //   ),
+            // ),
+            // const Spacer(flex: 1),
+            SizedBox(height: screenHeight * 0.02),
+            SizedBox(
+              width: 0.4 * screenWidth,
+              height: 0.08 * screenHeight,
+              child: OutlinedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
                   ),
                 ),
-              ),
-              onPressed: () {
-                moveToPage(context, const RegisterNewEventPage()).then((_) {
-                  // debugPrint('################## push popped!!');
-                  loadEventListFromFile();
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(14),
-                child: Text(
-                  "ADD EVENT",
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: screenWidth * 0.04,
+                onPressed: () {
+                  var registeredEventCodes =
+                      _eventData.map((e) => e['eventCode'] as String);
+                  moveToPage(
+                          context,
+                          RegisterNewEventPage(
+                              registeredEventCodes:
+                                  registeredEventCodes.toList()))
+                      .then((_) {
+                    // debugPrint('################## push popped!!');
+                    loadEventListFromFile();
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Text(
+                    "ADD EVENT",
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: screenWidth * 0.04,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
             SizedBox(height: screenHeight * 0.06),
 
@@ -181,64 +189,62 @@ class _EventsPageState extends State<EventsPage> {
                 thickness: 15,
                 key: parentKey,
                 child: ListView.builder(
-                  controller: scrollController,
-                  // shrinkWrap: true,
-                  itemCount: _eventData.length,
-                  itemBuilder: (context, index) {
-                    final String eventName = _eventData[index]['eventName'];
-                    final String startDate = _eventData[index]['startDate'];
-                    final String endDate = _eventData[index]['endDate'];
-                    final String eventCode = _eventData[index]['eventCode'];
-                    Color? getBgColor() {
-                      if (_selectedEventCode == "") {
-                        return Colors.white;
-                      } else {
-                        return eventCode == _selectedEventCode
-                            ? Colors.grey[50]
-                            : Colors.grey[300];
+                    controller: scrollController,
+                    // shrinkWrap: true,
+                    itemCount: _eventData.length,
+                    itemBuilder: (context, index) {
+                      final String eventName = _eventData[index]['eventName'];
+                      final String startDate = _eventData[index]['startDate'];
+                      final String endDate = _eventData[index]['endDate'];
+                      final String eventCode = _eventData[index]['eventCode'];
+                      Color? getBgColor() {
+                        if (_selectedEventCode == "") {
+                          return Colors.white;
+                        } else {
+                          return eventCode == _selectedEventCode
+                              ? Colors.grey[50]
+                              : Colors.grey[300];
+                        }
                       }
-                    }
 
-                    // print("$index $eventName : $eventCode");
-                    keyDict[eventCode] = GlobalKey();
-                    return Container(
-                      key: keyDict[eventCode],
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 100),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          backgroundColor: getBgColor(),
-                        ),
-                        // TODO: query event by event code
-                        onPressed: () => moveToPage(
-                            context,
-                            EventViewPage(
-                              eventName: eventName,
-                              startDate: startDate,
-                              endDate: endDate,
-                              eventCode: eventCode,
-                            )),
-                        child: ListTile(
-                          title: Text(
-                            eventName,
-                            // style: const TextStyle(color: Colors.white),
+                      // print("$index $eventName : $eventCode");
+                      keyDict[eventCode] = GlobalKey();
+                      return Container(
+                        key: keyDict[eventCode],
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 100),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: getBgColor(),
+                          ),
+                          // TODO: query event by event code
+                          onPressed: () => moveToPage(
+                              context,
+                              EventViewPage(
+                                eventName: eventName,
+                                startDate: startDate,
+                                endDate: endDate,
+                                eventCode: eventCode,
+                              )),
+                          child: ListTile(
+                            title: Text(
+                              eventName,
+                              // style: const TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  }
-                ),
+                      );
+                    }),
               ),
             )
           ],
         ),
       ),
       bottomNavigationBar: AdBar(
-        onUpdate: () {
-        }, 
-      ),    
+        onUpdate: () {},
+      ),
     );
   }
 }
