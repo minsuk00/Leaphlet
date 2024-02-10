@@ -1,6 +1,6 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+// import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:test/backend/cloud_functions/event.dart';
 // import 'package:test/backend/local_functions/local_file_io.dart';
@@ -88,6 +88,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
             Expanded(
               child: TextFormField(
                 // readOnly: true,
+                // keyboardType: TextInputType.none,
                 enabled: false,
                 controller: pamphletInput,
                 autofocus: false,
@@ -261,6 +262,7 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                     width: 0.6 * screenWidth,
                     child: TextFormField(
                       // readOnly: true,
+                      // keyboardType: TextInputType.none,
                       enabled: false,
                       controller: eventNameInput,
                       autofocus: false,
@@ -476,13 +478,15 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                                   ConfirmationPage(
                                     filePath: _selectedFilePath,
                                     boothInfo: newBoothItem,
+                                    pamphletName: pamphletInput.text,
                                   ));
                             }
                           }
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3E885E)),
+                            const Color(0xFF3E885E),
+                          ),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                           shape:
