@@ -29,8 +29,7 @@ class FileInformationPage extends StatefulWidget {
   // final String phoneNumber;
   // final String boothCode;
   final Map<String, dynamic> fileInfo;
-  const FileInformationPage({Key? key, required this.fileInfo})
-      : super(key: key);
+  const FileInformationPage({Key? key, required this.fileInfo}) : super(key: key);
 
   @override
   State<FileInformationPage> createState() => _FileInformationPageState();
@@ -67,8 +66,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
     //   print("fileinfo ${widget.fileInfo}");
     // });
 
-    _savedBoothsList =
-        await getListFromLocalFile(UserType.visitor, FileType.booth);
+    _savedBoothsList = await getListFromLocalFile(UserType.visitor, FileType.booth);
     for (var savedBooth in _savedBoothsList) {
       if (savedBooth['boothCode'] == boothInfo['boothCode']) {
         setState(() {
@@ -86,13 +84,23 @@ class _FileInformationPageState extends State<FileInformationPage> {
     setState(() {
       if (isSaved) {
         isSaved = false;
-        deleteItemFromLocalFile(
-            boothInfo['boothCode']!, UserType.visitor, FileType.booth);
+        deleteItemFromLocalFile(boothInfo['boothCode']!, UserType.visitor, FileType.booth);
       } else {
         isSaved = true;
         saveToLocalFile(boothInfo, UserType.visitor, FileType.booth);
       }
     });
+  }
+
+  ElevatedButton getStarWidget() {
+    return ElevatedButton(
+      onPressed: toggleIsSaved,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+        iconColor: MaterialStateProperty.all<Color>(Colors.yellow),
+      ),
+      child: Icon(isSaved ? Icons.star : Icons.star_border),
+    );
   }
 
   Future<String> getPdfDownloadURL(String filename) async {
@@ -214,16 +222,22 @@ class _FileInformationPageState extends State<FileInformationPage> {
                     color: const Color(0xFFF1EED4),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: Text(
-                    "Booth Number: ${boothInfo['boothNumber']}",
-                    style: TextStyle(color: const Color(0xFF04724D), fontSize: screenWidth * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Booth Number: ${boothInfo['boothNumber']}",
+                        style: TextStyle(color: const Color(0xFF04724D), fontSize: screenWidth * 0.05),
+                      ),
+                      getStarWidget(),
+                    ],
                   ),
                 ),
               ),
             ),
 
             //SizedBox(height: screenWidth * 0.005),
-            
+
             Center(
               child: SizedBox(
                 width: 0.8 * screenWidth,
@@ -247,7 +261,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
                       ),
                       Text(
                         "Email: ${boothInfo['emailAddress']}",
-                        style:TextStyle(color: const Color(0xFF04724D), fontSize: screenWidth * 0.05),
+                        style: TextStyle(color: const Color(0xFF04724D), fontSize: screenWidth * 0.05),
                       ),
                       Text(
                         "Phone: ${boothInfo['phoneNumber']}",
@@ -260,9 +274,9 @@ class _FileInformationPageState extends State<FileInformationPage> {
             ),
 
             SizedBox(height: screenWidth * 0.05),
-            
+
             Column(
-              children:[
+              children: [
                 SizedBox(
                   width: 0.8 * screenWidth,
                   height: 0.1 * screenHeight,
@@ -279,34 +293,28 @@ class _FileInformationPageState extends State<FileInformationPage> {
                       ],
                     ),
                     child: ElevatedButton(
-                      onPressed: () => moveToPage(
-                        context, 
-                        PdfViewPage(url: boothInfo['pamphletURL']!)
-                      ),
+                      onPressed: () => moveToPage(context, PdfViewPage(url: boothInfo['pamphletURL']!)),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(screenWidth * 0.03), 
+                            borderRadius: BorderRadius.circular(screenWidth * 0.03),
                           ),
                         ),
                       ),
                       child: Text(
                         "View PDF: $pdfName",
                         style: TextStyle(fontSize: screenWidth * 0.05),
-                        ),
+                      ),
                     ),
                   ),
                 ),
-                
                 SizedBox(height: screenWidth * 0.02),
-                
-                if (_progress != null)
-                  const CircularProgressIndicator(),
+                if (_progress != null) const CircularProgressIndicator(),
                 if (_progress == null)
                   SizedBox(
-                    width: 0.8 * screenWidth, 
+                    width: 0.8 * screenWidth,
                     height: 0.1 * screenHeight,
                     child: Container(
                       decoration: BoxDecoration(
@@ -330,7 +338,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
                           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(screenWidth * 0.03), 
+                              borderRadius: BorderRadius.circular(screenWidth * 0.03),
                             ),
                           ),
                         ),
@@ -347,11 +355,9 @@ class _FileInformationPageState extends State<FileInformationPage> {
         ),
       ),
       bottomNavigationBar: AdBar(
-        onUpdate: () {
-        },
+        onUpdate: () {},
       ),
     );
-
   }
 }
 

@@ -32,6 +32,24 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
     });
   }
 
+  removeFromSaved(String boothCode) {
+    setState(() {
+      deleteItemFromLocalFile(boothCode, UserType.visitor, FileType.booth);
+      _savedBoothList = _savedBoothList.where((element) => element['boothCode'] != boothCode).toList();
+    });
+  }
+
+  ElevatedButton getStarWidget(String boothCode) {
+    return ElevatedButton(
+      onPressed: () => removeFromSaved(boothCode),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+        iconColor: MaterialStateProperty.all<Color>(Colors.yellow),
+      ),
+      child: const Icon(Icons.star),
+    );
+  }
+
   List _savedBoothList = [];
   String _selectedBoothCode = "";
   GlobalKey parentKey = GlobalKey(debugLabel: "parentKey");
@@ -95,19 +113,17 @@ class _SavedFilesPageState extends State<SavedFilesPage> {
                             keyDict[boothCode] = GlobalKey();
                             return Container(
                               key: keyDict[boothCode],
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 100),
+                              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
                               child: ElevatedButton(
-                                style: getButtonStyle(
-                                    boothCode, _selectedBoothCode),
+                                style: getButtonStyle(boothCode, _selectedBoothCode),
                                 onPressed: () => moveToPage(
                                   context,
                                   FileInformationPage(fileInfo: fileInfo),
                                 ),
                                 child: ListTile(
-                                  title: Text(
-                                      "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
+                                  title: Text("${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
                                   subtitle: Text("($eventName)"),
+                                  trailing: getStarWidget(fileInfo['boothCode']),
                                   textColor: Colors.white,
                                 ),
                               ),
