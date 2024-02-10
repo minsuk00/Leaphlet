@@ -1,6 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:test/backend/local_functions/util.dart';
 
+// ignore: must_be_immutable
+class CustomSearchBar extends StatefulWidget {
+  double widthRatio;
+  GlobalKey parentKey;
+  Map<String, GlobalKey> keyDict;
+  Function setSelectedCode;
+  SearchController searchController;
+  ScrollController scrollController;
+  FileType fileType;
+  List dataList;
+  CustomSearchBar({
+    Key? key,
+    required this.widthRatio,
+    required this.dataList,
+    required this.parentKey,
+    required this.keyDict,
+    required this.setSelectedCode,
+    required this.fileType,
+    required this.scrollController,
+    required this.searchController,
+  }) : super(key: key);
+
+  @override
+  State<CustomSearchBar> createState() => _CustomSearchBarState();
+}
+
+class _CustomSearchBarState extends State<CustomSearchBar> {
+  void modifyItemCode(String code) {
+    double anchorY = 0;
+    double targetY = 0;
+
+    if (code != "") {
+      RenderBox box =
+          widget.parentKey.currentContext?.findRenderObject() as RenderBox;
+      anchorY = box.localToGlobal(Offset.zero).dy;
+
+      BuildContext? ctx = widget.keyDict[code]?.currentContext;
+      if (ctx == null) {
+        //workaround. for some reason the bottom events has null for global key
+        targetY = widget.parentKey.currentContext!.size!.height + anchorY;
+      } else {
+        RenderBox tBox = ctx.findRenderObject() as RenderBox;
+        targetY = tBox.localToGlobal(Offset.zero).dy;
+      }
+    }
+
+    widget.setSelectedCode(code);
+    // setState(() {
+    if (code != "") {
+      widget.scrollController.animateTo(
+        targetY - anchorY,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
+    }
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final SearchAnchor searchAnchor = getSearchAnchor(context, widget.dataList,
+        widget.fileType, setState, modifyItemCode, widget.searchController);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: SizedBox(
+        width: widget.widthRatio * screenWidth,
+        child: searchAnchor,
+      ),
+    );
+  }
+}
+
 SearchAnchor getSearchAnchor(
     BuildContext context,
     List targetData,
