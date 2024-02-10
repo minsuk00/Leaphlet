@@ -151,7 +151,13 @@ class _EventsPageState extends State<EventsPage> {
                 ),
               ),
               onPressed: () {
-                moveToPage(context, const RegisterNewEventPage()).then((_) {
+                List<String> registeredEventCodes =
+                    _eventData.map((e) => e['eventCode']) as List<String>;
+                moveToPage(
+                    context,
+                    RegisterNewEventPage(
+                      registeredEventCodes: registeredEventCodes
+                    )).then((_) {
                   // debugPrint('################## push popped!!');
                   loadEventListFromFile();
                 });
@@ -236,7 +242,8 @@ class _EventsPageState extends State<EventsPage> {
             children: [
               Expanded(
                 child: Marquee(
-                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  text:
+                      "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
                   style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -250,8 +257,10 @@ class _EventsPageState extends State<EventsPage> {
               ElevatedButton(
                 onPressed: () => moveToPage(context, const InfoPage()),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),

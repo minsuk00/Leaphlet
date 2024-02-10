@@ -12,14 +12,17 @@ import 'package:test/pages/common/info.dart';
 import 'package:marquee/marquee.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
-  const RegisterNewEventPage({super.key});
+  final List<String> registeredEventCodes;
+  const RegisterNewEventPage({Key? key, required this.registeredEventCodes})
+      : super(key: key);
 
   @override
   State<RegisterNewEventPage> createState() => _RegisterNewEventPageState();
 }
 
 class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
-  final TextEditingController _eventCodeInputController = TextEditingController();
+  final TextEditingController _eventCodeInputController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -60,13 +63,12 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 },
               ),
             ),
-
             SizedBox(height: screenWidth * 0.02),
-            
             ElevatedButton(
               onPressed: () => registerButtonPressed(context),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -74,7 +76,9 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                   ),
                 ),
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                  EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.05 * screenWidth),
+                  EdgeInsets.symmetric(
+                      vertical: 0.01 * screenHeight,
+                      horizontal: 0.05 * screenWidth),
                 ),
                 side: MaterialStateProperty.all<BorderSide>(
                   const BorderSide(color: Color(0xFF04724D)),
@@ -98,7 +102,8 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
             children: [
               Expanded(
                 child: Marquee(
-                  text: "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
+                  text:
+                      "Join the eco-friendly movement! 🌿 Let's cut down on paper waste together to protect our planet.",
                   style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -112,8 +117,10 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
               ElevatedButton(
                 onPressed: () => moveToPage(context, const InfoPage()),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),
@@ -146,47 +153,48 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
           eventDetails != null; //TODO: check if event code is valid
       if (mounted) {
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            if (isEventCodeValid) {
-              // String? eventName = eventDetails['eventName'];
-              // String? startDate = eventDetails['startDate'];
-              // String? endDate = eventDetails['endDate'];
-              //KAHVXKT
-              // debugPrint('################${eventDetails.runtimeType}');
-              return AlertDialog(
-                title: const Text("success"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        // popNTimes(context, 2);
-                        // Map<String, dynamic> newEvent = {
-                        //   "event_name": eventName,
-                        //   "start_date": startDate,
-                        //   "end_date": endDate,
-                        // };
-                        saveToLocalFile(eventDetails, UserType.visitor,
-                                FileType.event)
-                            .then(
-                                (value) => popToPage(context, "EventsPage"));
-                      },
-                      child: const Text("ok"))
-                ],
-              );
-            } else {
-              return AlertDialog(
-                title: const Text("invalid event code"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        popOnce(context);
-                      },
-                      child: const Text("ok"))
-                ],
-              );
-            }
-          }
-        );
+            context: context,
+            builder: (BuildContext context) {
+              if (isEventCodeValid) {
+                // String? eventName = eventDetails['eventName'];
+                // String? startDate = eventDetails['startDate'];
+                // String? endDate = eventDetails['endDate'];
+                //KAHVXKT
+                // debugPrint('################${eventDetails.runtimeType}');
+                print(
+                    "############ ${widget.registeredEventCodes.contains(eventCode)}");
+                return AlertDialog(
+                  title: const Text("success"),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          // popNTimes(context, 2);
+                          // Map<String, dynamic> newEvent = {
+                          //   "event_name": eventName,
+                          //   "start_date": startDate,
+                          //   "end_date": endDate,
+                          // };
+                          saveToLocalFile(eventDetails, UserType.visitor,
+                                  FileType.event)
+                              .then(
+                                  (value) => popToPage(context, "EventsPage"));
+                        },
+                        child: const Text("ok"))
+                  ],
+                );
+              } else {
+                return AlertDialog(
+                  title: const Text("invalid event code"),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          popOnce(context);
+                        },
+                        child: const Text("ok"))
+                  ],
+                );
+              }
+            });
       }
     }
   }
