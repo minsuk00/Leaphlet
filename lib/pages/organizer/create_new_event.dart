@@ -41,151 +41,157 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
         leading: const BackButton(),
         title: const Text("Create New Event"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(paddingValue),
-          child: Form(
-            key: _formKey, // Set the key to the form
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: eventNameInput,
-                  autofocus: false,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(paddingValue),
+            child: Form(
+              key: _formKey, // Set the key to the form
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: eventNameInput,
+                    autofocus: false,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                      ),
+                      labelText: 'Event Name',
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
-                    labelText: 'Event Name',
-                    filled: true,
-                    fillColor: Colors.white,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an event name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an event name';
-                    }
-                    return null;
-                  },
-                ),
-                
-                SizedBox(height: screenWidth * 0.01),
+                  
+                  SizedBox(height: screenWidth * 0.01),
 
-                TextFormField(
-                  controller: startDateInput,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  TextFormField(
+                    controller: startDateInput,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                      ),
+                      icon: const Icon(Icons.calendar_today),
+                      labelText: "Start Date",
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
-                    icon: const Icon(Icons.calendar_today),
-                    labelText: "Start Date",
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime(2100),
-                    );
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1950),
+                        lastDate: DateTime(2100),
+                      );
 
-                    if (pickedDate != null) {
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      if (pickedDate != null) {
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
 
-                      if (endDateInput.text.isNotEmpty &&
-                          pickedDate.isAfter(
-                              DateTime.parse(endDateInput.text))) {
-                        // Selected start date is after the end date
-                        // Show error message
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                "Start date should be before end date!"),
-                          ),
-                        );
-                      } else {
-                        setState(() {
-                          startDateInput.text = formattedDate;
-                        });
+                        if (endDateInput.text.isNotEmpty &&
+                            pickedDate.isAfter(
+                                DateTime.parse(endDateInput.text))) {
+                          // Selected start date is after the end date
+                          // Show error message
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "Start date should be before end date!"),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            startDateInput.text = formattedDate;
+                          });
+                        }
                       }
-                    }
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a start date';
-                    }
-                    return null;
-                  },
-                ),
-                
-                SizedBox(height: screenWidth * 0.01),
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a start date';
+                      }
+                      return null;
+                    },
+                  ),
+                  
+                  SizedBox(height: screenWidth * 0.01),
 
-                TextFormField(
-                  controller: endDateInput,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  TextFormField(
+                    controller: endDateInput,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                      ),
+                      icon: const Icon(Icons.calendar_today),
+                      labelText: "End Date",
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
-                    icon: const Icon(Icons.calendar_today),
-                    labelText: "End Date",
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime(2100),
-                    );
-                    if (pickedDate != null) {
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1950),
+                        lastDate: DateTime(2100),
+                      );
+                      if (pickedDate != null) {
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
 
-                      if (startDateInput.text.isNotEmpty &&
-                          pickedDate.isBefore(
-                              DateTime.parse(startDateInput.text))) {
-                        // Selected end date is before the start date
-                        // Show error message
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                "End date should be after start date!"),
-                          ),
-                        );
-                      } else {
-                        setState(() {
-                          endDateInput.text = formattedDate;
-                        });
+                        if (startDateInput.text.isNotEmpty &&
+                            pickedDate.isBefore(
+                                DateTime.parse(startDateInput.text))) {
+                          // Selected end date is before the start date
+                          // Show error message
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "End date should be after start date!"),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            endDateInput.text = formattedDate;
+                          });
+                        }
                       }
-                    }
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select an end date';
-                    }
-                    return null;
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await createNewEvent(eventNameInput.text, startDateInput.text, endDateInput.text, eventCode);
-                      if (mounted) {
-                        showEventCodeDialog(context);
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select an end date';
                       }
-                    }
-                  },
-                  child: const Text('Submit Event'),
-                )
-              ]
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await createNewEvent(eventNameInput.text, startDateInput.text, endDateInput.text, eventCode);
+                        if (mounted) {
+                          showEventCodeDialog(context);
+                        }
+                      }
+                    },
+                    child: const Text('Submit Event'),
+                  )
+                ]
+              )
             )
           )
         )
