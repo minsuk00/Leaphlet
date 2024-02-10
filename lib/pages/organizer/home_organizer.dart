@@ -32,51 +32,36 @@ class _OrganizerHomePageState extends State<OrganizerHomePage> {
             SizedBox(
               width: 0.7 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const CreateNewEventPage()),                
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const CreateNewEventPage()),                
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Create New Event",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.05 * screenWidth,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: screenWidth * 0.03),
-
-            SizedBox(
-              width: 0.7 * screenWidth,
-              height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const CheckExistingEventsPage()),               
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
-                    ),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Check Existing Events",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.05 * screenWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Create New Event",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.05 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
@@ -88,23 +73,77 @@ class _OrganizerHomePageState extends State<OrganizerHomePage> {
             SizedBox(
               width: 0.7 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const InquiryPage()),                
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const CheckExistingEventsPage()),               
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Check Existing Events",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.05 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Inquiry",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.05 * screenWidth,
+              ),
+            ),
+
+            SizedBox(height: screenWidth * 0.03),
+
+            SizedBox(
+              width: 0.7 * screenWidth,
+              height: 0.15 * screenHeight,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const InquiryPage()),                
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Inquiry",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.05 * screenWidth,
+                      ),
                     ),
                   ),
                 ),

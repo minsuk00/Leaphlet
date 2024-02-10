@@ -81,20 +81,33 @@ class AdBarState extends State<AdBar> {
               ),
             ),
             const SizedBox(width: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                moveToPage(context, const InfoPage());
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  moveToPage(context, const InfoPage());
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF766561)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    ),
                   ),
                 ),
+                child: const Text("VIEW MORE"),
               ),
-              child: const Text("VIEW MORE"),
             ),
           ],
         ),

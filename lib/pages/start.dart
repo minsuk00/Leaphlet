@@ -66,63 +66,91 @@ class StartPage extends StatelessWidget {
             SizedBox(
               width: 0.75 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const VisitorHomePage()),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const VisitorHomePage()),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Use as Visitor",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.06 * screenWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Use as Visitor",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.06 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: screenWidth * 0.03),
+
+            SizedBox(height: screenWidth * 0.04),
             
             SizedBox(
               width: 0.75 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () {
-                  if (loginState == 'guest') {
-                    _showGuestRestrictionDialog(context);
-                  } else {
-                    moveToPage(context, const ExhibitorHomePage());
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
                     ),
-                  ),
+                  ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Use as Exhibitor",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.06 * screenWidth,
+                child: OutlinedButton(
+                  onPressed: () {
+                    if (loginState == 'guest') {
+                      _showGuestRestrictionDialog(context);
+                    } else {
+                      moveToPage(context, const ExhibitorHomePage());
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
+                    ),
+                    //elevation: MaterialStateProperty.all<double>(5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Use as Exhibitor",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.06 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
             
-            SizedBox(height: screenWidth * 0.03),
+            SizedBox(height: screenWidth * 0.04),
 
             TextButton(
               onPressed: () {

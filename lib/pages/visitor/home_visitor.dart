@@ -27,23 +27,36 @@ class VisitorHomePage extends StatelessWidget {
             SizedBox(
               width: 0.6 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const EventsPage()),                
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const EventsPage()),                
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Events",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.06 * screenWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Events",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.06 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
@@ -55,22 +68,35 @@ class VisitorHomePage extends StatelessWidget {
             SizedBox(
               width: 0.6 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const SavedFilesPage()),                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const SavedFilesPage()),                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Saved Files",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.06 * screenWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Saved Files",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.06 * screenWidth,
+                      ),
                     ),
                   ),
                 ),
@@ -82,22 +108,35 @@ class VisitorHomePage extends StatelessWidget {
             SizedBox(
               width: 0.6 * screenWidth,
               height: 0.15 * screenHeight,
-              child: OutlinedButton(
-                onPressed: () => moveToPage(context, const InfoPage()),                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  onPressed: () => moveToPage(context, const InfoPage()),                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text("Info",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.06 * screenWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text("Info",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.06 * screenWidth,
+                      ),
                     ),
                   ),
                 ),

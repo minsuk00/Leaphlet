@@ -143,30 +143,43 @@ class _EventsPageState extends State<EventsPage> {
             SizedBox(
               width: 0.4 * screenWidth,
               height: 0.08 * screenHeight,
-              child: OutlinedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      ),
                     ),
                   ),
-                ),
-                onPressed: () {
-                  moveToPage(context, const RegisterNewEventPage()).then((_) {
-                    // debugPrint('################## push popped!!');
-                    loadEventListFromFile();
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(
-                    "ADD EVENT",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: screenWidth * 0.04,
+                  onPressed: () {
+                    moveToPage(context, const RegisterNewEventPage()).then((_) {
+                      // debugPrint('################## push popped!!');
+                      loadEventListFromFile();
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(
+                      "ADD EVENT",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: screenWidth * 0.04,
+                      ),
                     ),
                   ),
                 ),

@@ -66,9 +66,17 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
           color: const Color(0xFFECE2D8),
           borderRadius: BorderRadius.circular(screenWidth * 0.03),
           border: Border.all(color: Colors.grey),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         padding: EdgeInsets.symmetric(
-            vertical: screenWidth * 0.015, horizontal: screenWidth * 0.05),
+            vertical: screenWidth * 0.015, horizontal: screenWidth * 0.03),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -200,23 +208,36 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                         Positioned(
                           right: screenWidth * 0.02,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextButton(
-                              onPressed: () async {
-                                final eventInfo =
-                                    await getEventInfo(eventCodeInput.text);
-                                // ignore: use_build_context_synchronously
-                                showEventCodeDialog(context, eventInfo);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        const Color(0xFF766561)),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
                               ),
-                              child: const Text('Confirm Event'),
+                              child: TextButton(
+                                onPressed: () async {
+                                  final eventInfo =
+                                      await getEventInfo(eventCodeInput.text);
+                                  // ignore: use_build_context_synchronously
+                                  showEventCodeDialog(context, eventInfo);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          const Color(0xFF766561)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                ),
+                                child: const Text('Confirm Event'),
+                              ),
                             ),
                           ),
                         ),
@@ -382,70 +403,87 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
                   buildPamphletUploadWidget(context),
 
                   SizedBox(height: screenWidth * 0.05),
-
-                  ElevatedButton(
-                    onPressed: () async {
-                      boothCode = generateBoothCode();
-                      
-                      if (_formKey.currentState!.validate()) {
-                        await uploadPamphlet(
-                            _selectedFilePath,
-                            pamphletInput.text,
-                            eventCodeInput.text,
-                            boothNumberInput.text,
-                            orgNameInput.text,
-                            yourNameInput.text,
-                            emailAddressInput.text,
-                            phoneNumberInput.text,
-                            boothCode);
-                        if (mounted) {
-                          final newBoothItem = {
-                            "boothCode": boothCode,
-                            "eventCode": eventCodeInput.text,
-                            "eventName": eventName,
-                            "boothNumber": boothNumberInput.text,
-                            "orgName": orgNameInput.text,
-                            "name": yourNameInput.text,
-                            "email": emailAddressInput.text,
-                            "phone": phoneNumberInput.text,
-                          };
-                          saveToLocalFile(newBoothItem, UserType.exhibitor,
-                              util.FileType.booth);
-                          moveToPage(
-                              context,
-                              ConfirmationPage(
-                                boothInfo: newBoothItem,
-                              ));
-                        }
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF3E885E)),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(screenWidth * 0.03),
+                  
+                  SizedBox(
+                    width: 0.3 * screenWidth,
+                    height: 0.05 * screenHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          boothCode = generateBoothCode();
+                          
+                          if (_formKey.currentState!.validate()) {
+                            await uploadPamphlet(
+                                _selectedFilePath,
+                                pamphletInput.text,
+                                eventCodeInput.text,
+                                boothNumberInput.text,
+                                orgNameInput.text,
+                                yourNameInput.text,
+                                emailAddressInput.text,
+                                phoneNumberInput.text,
+                                boothCode);
+                            if (mounted) {
+                              final newBoothItem = {
+                                "boothCode": boothCode,
+                                "eventCode": eventCodeInput.text,
+                                "eventName": eventName,
+                                "boothNumber": boothNumberInput.text,
+                                "orgName": orgNameInput.text,
+                                "name": yourNameInput.text,
+                                "email": emailAddressInput.text,
+                                "phone": phoneNumberInput.text,
+                              };
+                              saveToLocalFile(newBoothItem, UserType.exhibitor,
+                                  util.FileType.booth);
+                              moveToPage(
+                                  context,
+                                  ConfirmationPage(
+                                    boothInfo: newBoothItem,
+                                  ));
+                            }
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF3E885E)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                BorderRadius.circular(screenWidth * 0.03),
+                            ),
+                          ),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.symmetric(
+                                vertical: 0.003 * screenHeight,
+                                horizontal: 0.01 * screenWidth),
+                          ),
+                          side: MaterialStateProperty.all<BorderSide>(
+                            const BorderSide(color: Color(0xFF04724D)),
+                          ),
                         ),
-                      ),
-                      padding:
-                          MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        EdgeInsets.symmetric(
-                            vertical: 0.01 * screenHeight,
-                            horizontal: 0.06 * screenWidth),
-                      ),
-                      side: MaterialStateProperty.all<BorderSide>(
-                        const BorderSide(color: Color(0xFF04724D)),
-                      ),
-                    ),
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 0.04 * screenWidth,
+                        child: Text(
+                          "Confirm",
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 0.04 * screenWidth,
+                          ),
+                        ),
                       ),
                     ),
                   ),
