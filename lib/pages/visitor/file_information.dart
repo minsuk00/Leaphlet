@@ -28,7 +28,7 @@ class FileInformationPage extends StatefulWidget {
   // final String emailAddress;
   // final String phoneNumber;
   // final String boothCode;
-  final Map<String, String?> fileInfo;
+  final Map<String, dynamic> fileInfo;
   const FileInformationPage({Key? key, required this.fileInfo})
       : super(key: key);
 
@@ -39,7 +39,7 @@ class FileInformationPage extends StatefulWidget {
 class _FileInformationPageState extends State<FileInformationPage> {
   final TextStyle myTextStyle = const TextStyle(fontSize: 25);
   // String? localPath;
-  Map<String, String?> boothInfo = {};
+  Map<String, dynamic> boothInfo = {};
   bool isSaved = false;
   List<dynamic> _savedBoothsList = [];
   double? _progress;
