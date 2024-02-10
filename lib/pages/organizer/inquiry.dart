@@ -78,7 +78,7 @@ class _InquiryPageState extends State<InquiryPage> {
                   },
                 ),
 
-                SizedBox(height: screenWidth * 0.01),
+                SizedBox(height: screenWidth * 0.02),
                 
                 TextFormField(
                   controller: _messageInputController,
@@ -99,34 +99,51 @@ class _InquiryPageState extends State<InquiryPage> {
                   },
                 ),
                 
-                SizedBox(height: screenWidth * 0.03),
+                SizedBox(height: screenWidth * 0.04),
                 
-                ElevatedButton(
-                  onPressed: submitInquiryButtonPressed,
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                SizedBox(
+                  width: 0.3 * screenWidth,
+                  height: 0.05 * screenHeight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: submitInquiryButtonPressed,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                          ),
+                        ),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                        ),
+                        side: MaterialStateProperty.all<BorderSide>(
+                          const BorderSide(color: Color(0xFF04724D)),
+                        ),
                       ),
-                    ),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
-                    ),
-                    side: MaterialStateProperty.all<BorderSide>(
-                      const BorderSide(color: Color(0xFF04724D)),
-                    ),
-                  ),
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 0.04 * screenWidth,
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 0.04 * screenWidth,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ],
+              ]
             ),
           ),
         ),

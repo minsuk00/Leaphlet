@@ -33,6 +33,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height; 
     double paddingValue = screenWidth * 0.2;
     return Scaffold(
       backgroundColor: const Color(0xFFC2D3CD),
@@ -75,7 +76,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                     },
                   ),
                   
-                  SizedBox(height: screenWidth * 0.01),
+                  SizedBox(height: screenWidth * 0.02),
 
                   TextFormField(
                     controller: startDateInput,
@@ -128,7 +129,7 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                     },
                   ),
                   
-                  SizedBox(height: screenWidth * 0.01),
+                  SizedBox(height: screenWidth * 0.02),
 
                   TextFormField(
                     controller: endDateInput,
@@ -179,17 +180,51 @@ class _CreateNewEventPageState extends State<CreateNewEventPage> {
                       return null;
                     },
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await createNewEvent(eventNameInput.text, startDateInput.text, endDateInput.text, eventCode);
-                        if (mounted) {
-                          showEventCodeDialog(context);
-                        }
-                      }
-                    },
-                    child: const Text('Submit Event'),
-                  )
+
+                  SizedBox(height: screenWidth * 0.02), 
+                  
+                  SizedBox(
+                    width: 0.3 * screenWidth,
+                    height: 0.05 * screenHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await createNewEvent(eventNameInput.text, startDateInput.text, endDateInput.text, eventCode);
+                            if (mounted) {
+                              showEventCodeDialog(context);
+                            }
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                          elevation: MaterialStateProperty.all<double>(0), // Set elevation to 0 because it's handled by BoxDecoration
+                          shadowColor: MaterialStateProperty.all<Color>(Colors.transparent), // Set shadow color to transparent
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            'Submit Event',
+                            style: TextStyle(
+                              fontSize: 0.03 * screenWidth, // Adjust the font size as desired
+                              color: Colors.white, // Set the text color to white
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ]
               )
             )

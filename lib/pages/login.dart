@@ -52,90 +52,124 @@ class _LogInPageState extends State<LogInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [              
-              OutlinedButton(
-                onPressed: () async {
-                  // setState(() {
-                  //   loginState = 'google_auth'; // Set login state to 'google_auth'
-                  // });
-                  // logInButtonPressed(context, usernameController.text, loginState);
-                  // Google authentication
-                  GoogleSignInAccount? signinAccount = await googleLogin.signIn();
-                  if (signinAccount == null) return;
-                  GoogleSignInAuthentication auth =
-                      await signinAccount.authentication;
-                  final OAuthCredential credential = GoogleAuthProvider.credential(
-                    idToken: auth.idToken,
-                    accessToken: auth.accessToken,
-                  );
-                  // register login information to firebase
-                  User? user =
-                      (await FirebaseAuth.instance.signInWithCredential(credential))
-                          .user;
-                  if (user != null) {
-                    setState(() {
-                      loginState = 'google_auth';
-                      // _displayName = user.displayName!;
-                    });
-                    if (mounted) {
-                      logInButtonPressed(context, usernameController.text, loginState, googleLogin);
-                    }
-                  }                  
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            children: [
+              SizedBox(
+                width: 0.5 * screenWidth,
+                height: 0.1 * screenHeight,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: OutlinedButton(
+                    onPressed: () async {
+                      // setState(() {
+                      //   loginState = 'google_auth'; // Set login state to 'google_auth'
+                      // });
+                      // logInButtonPressed(context, usernameController.text, loginState);
+                      // Google authentication
+                      GoogleSignInAccount? signinAccount = await googleLogin.signIn();
+                      if (signinAccount == null) return;
+                      GoogleSignInAuthentication auth =
+                          await signinAccount.authentication;
+                      final OAuthCredential credential = GoogleAuthProvider.credential(
+                        idToken: auth.idToken,
+                        accessToken: auth.accessToken,
+                      );
+                      // register login information to firebase
+                      User? user =
+                          (await FirebaseAuth.instance.signInWithCredential(credential))
+                              .user;
+                      if (user != null) {
+                        setState(() {
+                          loginState = 'google_auth';
+                          // _displayName = user.displayName!;
+                        });
+                        if (mounted) {
+                          logInButtonPressed(context, usernameController.text, loginState, googleLogin);
+                        }
+                      }                  
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                      ),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                      ),
+                      side: MaterialStateProperty.all<BorderSide>(
+                        const BorderSide(color: Color(0xFF04724D)),
+                      ),
                     ),
-                  ),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
-                  ),
-                  side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(color: Color(0xFF04724D)),
-                  ),
-                ),
-                child: Text(
-                  "Log in with Google",
-                  style: TextStyle(
-                    fontSize: 0.04 * screenWidth,
-                    fontFamily: 'Roboto',
-                    //fontStyle: FontStyle.italic,
+                    child: Text(
+                      "Log in with Google",
+                      style: TextStyle(
+                        fontSize: 0.04 * screenWidth,
+                        fontFamily: 'Roboto',
+                        //fontStyle: FontStyle.italic,
+                      ),
+                    ),
                   ),
                 ),
               ),
 
-              SizedBox(height: screenWidth * 0.02),
+              SizedBox(height: screenWidth * 0.04),
 
-              OutlinedButton(
-                onPressed: () {
-                  setState(() {
-                    loginState = 'guest'; // Set login state to 'guest'
-                  });
-                  logInButtonPressed(context, usernameController.text, loginState, googleLogin);
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              SizedBox(
+                width: 0.5 * screenWidth,
+                height: 0.1 * screenHeight,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        loginState = 'guest'; // Set login state to 'guest'
+                      });
+                      logInButtonPressed(context, usernameController.text, loginState, googleLogin);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF04724D)),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                        ),
+                      ),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
+                      ),
+                      side: MaterialStateProperty.all<BorderSide>(
+                        const BorderSide(color: Color(0xFF04724D)),
+                      ),
                     ),
-                  ),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.06 * screenWidth),
-                  ),
-                  side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(color: Color(0xFF04724D)),
-                  ),
-                ),
-                child: Text(
-                  "Log in as a GUEST",
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 0.04 * screenWidth,
+                    child: Text(
+                      "Log in as a GUEST",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 0.04 * screenWidth,
+                      ),
+                    ),
                   ),
                 ),
               ),
