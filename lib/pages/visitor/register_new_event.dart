@@ -12,16 +12,14 @@ import 'package:test/pages/common/ad_bar.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
   final List<String> registeredEventCodes;
-  const RegisterNewEventPage({Key? key, required this.registeredEventCodes})
-      : super(key: key);
+  const RegisterNewEventPage({Key? key, required this.registeredEventCodes}) : super(key: key);
 
   @override
   State<RegisterNewEventPage> createState() => _RegisterNewEventPageState();
 }
 
 class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
-  final TextEditingController _eventCodeInputController =
-      TextEditingController();
+  final TextEditingController _eventCodeInputController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -83,19 +81,15 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 child: ElevatedButton(
                   onPressed: () => registerButtonPressed(context),
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenWidth * 0.03),
                       ),
                     ),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.symmetric(
-                          vertical: 0.01 * screenHeight,
-                          horizontal: 0.05 * screenWidth),
+                      EdgeInsets.symmetric(vertical: 0.01 * screenHeight, horizontal: 0.05 * screenWidth),
                     ),
                     side: MaterialStateProperty.all<BorderSide>(
                       const BorderSide(color: Color(0xFF04724D)),
@@ -145,30 +139,17 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                 // String? endDate = eventDetails['endDate'];
                 //KAHVXKT
                 // debugPrint('################${eventDetails.runtimeType}');
-                bool isAlreadyRegistered =
-                    widget.registeredEventCodes.contains(eventCode);
+                bool isAlreadyRegistered = widget.registeredEventCodes.contains(eventCode);
                 // bool isAlreadyRegistered = false;
+                if (!isAlreadyRegistered) {
+                  saveToLocalFile(eventDetails, UserType.visitor, FileType.event);
+                }
                 return AlertDialog(
-                  title: Text(isAlreadyRegistered
-                      ? "event is already registered"
-                      : "event added!"),
+                  title: Text(isAlreadyRegistered ? "event is already registered" : "event added!"),
                   actions: [
                     ElevatedButton(
                         onPressed: () {
-                          // popNTimes(context, 2);
-                          // Map<String, dynamic> newEvent = {
-                          //   "event_name": eventName,
-                          //   "start_date": startDate,
-                          //   "end_date": endDate,
-                          // };
-                          if (isAlreadyRegistered) {
-                            popToPage(context, "EventsPage");
-                          } else {
-                            saveToLocalFile(eventDetails, UserType.visitor,
-                                    FileType.event)
-                                .then((value) =>
-                                    popToPage(context, "EventsPage"));
-                          }
+                          popToPage(context, "EventsPage");
                         },
                         child: const Text("ok"))
                   ],
