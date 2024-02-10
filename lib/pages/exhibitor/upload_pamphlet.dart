@@ -129,8 +129,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
         builder: (BuildContext context) {
           if (eventInfo == null) {
             return AlertDialog(
-              title: const Text('EVENT CODE NOT FOUND'),
-              //content: const Text('Your event code was not found.'),
+              title: const Text('Invalid event code'),
+              content: const Text('Please enter a valid event code.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -144,8 +144,8 @@ class _UploadPamphletPageState extends State<UploadPamphletPage> {
             isEventCodeConfirmed = true;
             eventNameInput.text = eventInfo['eventName'];
             return AlertDialog(
-              title: const Text('SUCCESS'),
-              //content: const Text('Your event code was not found.'),
+              title: const Text('Event code confirmed'),
+              // content: const Text('Your event code was not found.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
