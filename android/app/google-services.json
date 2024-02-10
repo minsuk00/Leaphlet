@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "137168125339",
+    "project_id": "solution-challenge-2024",
+    "storage_bucket": "solution-challenge-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137168125339:android:0e5f216c67b4f642edb53e",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137168125339-98jlhl7p0gp4p0osvk9kdudnfn6sflct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test",
+            "certificate_hash": "4c6808fa5fc9c25006e78ced71c68421ac0f4480"
+          }
+        },
+        {
+          "client_id": "137168125339-j9uhos61rdidb1713c9od3vcvaa1ajba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test",
+            "certificate_hash": "18938d2550aab784d2a1c75e1825f909ea8cc756"
+          }
+        },
+        {
+          "client_id": "137168125339-pd9lavgkrolso6pn81lll3ljkj9fiqol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test",
+            "certificate_hash": "e7327095c7b775fb53dfcfa491b22d608b004dbc"
+          }
+        },
+        {
+          "client_id": "137168125339-lem7hi2rsvouqqqe0bh5ousgr2sa5oir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB881hdBPSpq4khtqVNFApJwkCeTMvfe-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137168125339-lem7hi2rsvouqqqe0bh5ousgr2sa5oir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "137168125339-12sh536l84l8a9gbqoriknae6tcuf121.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.test.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
