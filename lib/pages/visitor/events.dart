@@ -99,11 +99,11 @@ class _EventsPageState extends State<EventsPage> {
                   // const Spacer(flex: 1),
                   SizedBox(height: screenHeight * 0.02),
                   SizedBox(
-                    width: 0.4 * screenWidth,
+                    width: 0.6 * screenWidth,
                     height: 0.08 * screenHeight,
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.3),
@@ -143,7 +143,7 @@ class _EventsPageState extends State<EventsPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Text(
-                            "ADD EVENT",
+                            "REGISTER NEW EVENT",
                             style: TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: screenWidth * 0.04,
