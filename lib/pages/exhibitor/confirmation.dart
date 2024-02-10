@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:test/backend/cloud_functions/pamphlets.dart';
 import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/pages/exhibitor/home_exhibitor.dart';
+// import 'package:test/pages/exhibitor/home_exhibitor.dart';
 import 'package:test/util/navigate.dart';
 import 'package:test/util/user_type.dart';
 import 'package:test/backend/local_functions/util.dart' as util;
