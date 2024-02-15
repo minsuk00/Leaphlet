@@ -206,7 +206,9 @@ class StartPage extends StatelessWidget {
 
   String _buildAppBarTitle() {
     if (loginState == 'google_auth') {
-      return 'Logged in as $username (Google)';
+      // return 'Logged in as $username (Google)';
+      String displayName = googleLogin.currentUser?.displayName ?? '';
+      return 'Logged in as $displayName';
     } else if (loginState == 'guest') {
       return 'Logged in as a GUEST';
     } else {
