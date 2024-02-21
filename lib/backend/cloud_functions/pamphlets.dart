@@ -7,16 +7,8 @@ import 'package:leaphlet/backend/local_functions/local_file_io.dart';
 import 'package:leaphlet/backend/local_functions/util.dart';
 import 'package:leaphlet/util/user_type.dart';
 
-Future uploadPamphlet(
-    String filePath,
-    String fileName,
-    String eventCode,
-    String boothNumber,
-    String orgName,
-    String yourName,
-    String emailAddress,
-    String phoneNumber,
-    String boothCode) async {
+Future uploadPamphlet(String filePath, String fileName, String eventCode, String boothNumber, String orgName, String yourName, String emailAddress,
+    String phoneNumber, String boothCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -60,10 +52,7 @@ Future<Map<String, String>?> getBoothInfo(String boothCode) async {
   try {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     // search document based on given eventcode
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection("uploaded_pamphlets")
-        .where('boothCode', isEqualTo: boothCode)
-        .get();
+    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore.collection("uploaded_pamphlets").where('boothCode', isEqualTo: boothCode).get();
 
     if (snapshot.docs.isNotEmpty) {
       var doc = snapshot.docs.first.data();
@@ -116,11 +105,9 @@ Future<Map<String, String>?> getBoothInfo(String boothCode) async {
 Future<String?> getPamphletPdf(String url) async {
   try {
     final String localPath;
-    List<dynamic> localPamphletList =
-        await getListFromLocalFile(UserType.all, FileType.pamphlet);
+    List<dynamic> localPamphletList = await getListFromLocalFile(UserType.all, FileType.pamphlet);
     print("############ local pdf list: $localPamphletList");
-    Iterable<dynamic> localCache =
-        localPamphletList.where((element) => element['url'] == url);
+    Iterable<dynamic> localCache = localPamphletList.where((element) => element['url'] == url);
 
     if (localCache.isNotEmpty) {
       //get from local cache if already cached
@@ -161,10 +148,8 @@ getAllBoothInfoForAnEvent(String eventCode) async {
 
   try {
     // search document based on given eventcode
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
-        .collection("uploaded_pamphlets")
-        .where('eventCode', isEqualTo: eventCode)
-        .get();
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await firestore.collection("uploaded_pamphlets").where('eventCode', isEqualTo: eventCode).orderBy("boothNumber").get();
 
     if (snapshot.docs.isNotEmpty) {
       // add all boot information to list
