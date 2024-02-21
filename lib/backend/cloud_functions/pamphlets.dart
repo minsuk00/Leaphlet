@@ -184,7 +184,8 @@ getAllBoothInfoForAnEvent(String eventCode) async {
 
       return boothsInfo;
     } else {
-      return null;
+      print("snapshot empty");
+      return [];
     }
   } catch (e) {
     print('Error fetching event data: $e');
