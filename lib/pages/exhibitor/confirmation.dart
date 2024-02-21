@@ -74,7 +74,19 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         if (res == null) {
           throw Exception("======UPLOAD FAILED======");
         }
-        saveToLocalFile(widget.boothInfo, UserType.exhibitor, util.FileType.booth);
+        final Map<String, dynamic> newBoothObject = {
+          "eventCode": widget.boothInfo['eventCode'],
+          "eventName": widget.boothInfo['eventName'],
+          "boothNumber": widget.boothInfo['boothNumber'],
+          "boothCode": widget.boothInfo['boothCode'],
+          "orgName": widget.boothInfo['orgName'],
+          "yourName": widget.boothInfo['name'],
+          "emailAddress": widget.boothInfo['email'],
+          "phoneNumber": widget.boothInfo['phone'],
+          "pamphletURL": "uploaded_pdfs/${widget.pamphletName}",
+        };
+        saveToLocalFile(newBoothObject, UserType.exhibitor, util.FileType.booth);
+        // saveToLocalFile(widget.boothInfo, UserType.exhibitor, util.FileType.booth);
         showSuccessDialog();
         print("======UPLOAD COMPLETE!======");
       }).catchError((_) {

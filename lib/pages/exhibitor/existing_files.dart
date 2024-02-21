@@ -20,6 +20,7 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
   void initState() {
     super.initState();
     loadEventListFromFile();
+    // resetLocalListFile(UserType.exhibitor, FileType.booth);
   }
 
   void loadEventListFromFile() {
@@ -95,18 +96,15 @@ class _ExistingFilesPageState extends State<ExistingFilesPage> {
                             keyDict[boothCode] = GlobalKey();
                             return Container(
                               key: keyDict[boothCode],
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 100),
+                              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
                               child: ElevatedButton(
-                                style: getButtonStyle(
-                                    boothCode, _selectedBoothCode),
+                                style: getButtonStyle(boothCode, _selectedBoothCode),
                                 onPressed: () => moveToPage(
                                   context,
                                   FileInformationPage(fileInfo: fileInfo),
                                 ),
                                 child: ListTile(
-                                  title: Text(
-                                      "${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
+                                  title: Text("${fileInfo['orgName']} (${fileInfo['boothNumber']})"),
                                   subtitle: Text("($eventName)"),
                                   textColor: Colors.white,
                                 ),

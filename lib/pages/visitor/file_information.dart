@@ -196,6 +196,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(boothInfo);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     String? pdfName = boothInfo['pamphletURL']?.substring(14);

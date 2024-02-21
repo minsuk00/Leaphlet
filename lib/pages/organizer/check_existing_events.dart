@@ -25,6 +25,7 @@ class _CheckExistingEventsPageState extends State<CheckExistingEventsPage> {
   void initState() {
     super.initState();
     loadEventListFromFile();
+    // resetLocalListFile(UserType.organizer, FileType.event);
   }
 
   void loadEventListFromFile() {
