@@ -65,11 +65,14 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         widget.boothInfo['email']!,
         widget.boothInfo['phone']!,
         widget.boothInfo['boothCode']!,
-      ).then((_) {
+      ).then((res) {
         if (mounted) {
           setState(() {
             isUploading = false;
           });
+        }
+        if (res == null) {
+          throw Exception("======UPLOAD FAILED======");
         }
         saveToLocalFile(widget.boothInfo, UserType.exhibitor, util.FileType.booth);
         showSuccessDialog();

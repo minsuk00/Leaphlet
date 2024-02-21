@@ -42,7 +42,8 @@ Future uploadPamphlet(String filePath, String fileName, String eventCode, String
         'pamphletURL': fileUrl,
       });
     }
-    print('File Uploaded');
+    // return -1;
+    // print('File Uploaded');
   } catch (e) {
     print('Error. Failed to upload: $e');
   }
