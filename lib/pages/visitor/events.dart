@@ -75,141 +75,129 @@ class _EventsPageState extends State<EventsPage> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: _eventData.isEmpty
-            ? const SizedBox.shrink()
-            : Column(
-                children: [
-                  SizedBox(height: screenHeight * 0.04),
-                  // getSearchBar(context),
-                  CustomSearchBar(
-                      widthRatio: 0.6,
-                      dataList: _eventData,
-                      parentKey: parentKey,
-                      keyDict: keyDict,
-                      setSelectedCode: setSelectedCode,
-                      fileType: FileType.event,
-                      scrollController: scrollController,
-                      searchController: searchController),
+        // child: _eventData.isEmpty
+        // ? const SizedBox.shrink()
+        child: Column(
+          children: [
+            SizedBox(height: screenHeight * 0.04),
+            // getSearchBar(context),
+            CustomSearchBar(
+                widthRatio: 0.6,
+                dataList: _eventData,
+                parentKey: parentKey,
+                keyDict: keyDict,
+                setSelectedCode: setSelectedCode,
+                fileType: FileType.event,
+                scrollController: scrollController,
+                searchController: searchController),
 
-                  // const Flexible(
-                  //   child: FractionallySizedBox(
-                  //     heightFactor: 0.08,
-                  //   ),
-                  // ),
-                  // const Spacer(flex: 1),
-                  SizedBox(height: screenHeight * 0.02),
-                  SizedBox(
-                    width: 0.6 * screenWidth,
-                    height: 0.08 * screenHeight,
-                    child: Container(
-                      decoration: BoxDecoration(
+            // const Flexible(
+            //   child: FractionallySizedBox(
+            //     heightFactor: 0.08,
+            //   ),
+            // ),
+            // const Spacer(flex: 1),
+            SizedBox(height: screenHeight * 0.02),
+            SizedBox(
+              width: 0.6 * screenWidth,
+              height: 0.08 * screenHeight,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF3E885E)),
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.03),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          var registeredEventCodes =
-                              _eventData.map((e) => e['eventCode'] as String);
-                          moveToPage(
-                                  context,
-                                  RegisterNewEventPage(
-                                      registeredEventCodes:
-                                          registeredEventCodes.toList()))
-                              .then((_) {
-                            // debugPrint('################## push popped!!');
-                            loadEventListFromFile();
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: Text(
-                            "REGISTER NEW EVENT",
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontSize: screenWidth * 0.04,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                   ),
-
-                  SizedBox(height: screenHeight * 0.06),
-
-                  Expanded(
-                    // flex: 100,
-                    child: Scrollbar(
-                      thickness: 15,
-                      key: parentKey,
-                      child: ListView.builder(
-                          controller: scrollController,
-                          // shrinkWrap: true,
-                          itemCount: _eventData.length,
-                          itemBuilder: (context, index) {
-                            final eventInfo = _eventData[index];
-
-                            // print("$index $eventName : $eventCode");
-                            keyDict[eventInfo['eventCode']] = GlobalKey();
-                            return Container(
-                              key: keyDict[eventInfo['eventCode']],
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 100),
-                              child: ElevatedButton(
-                                style: getButtonStyle(
-                                    eventInfo['eventCode'], _selectedEventCode),
-                                onPressed: () => moveToPage(
-                                    context,
-                                    EventViewPage(
-                                      eventInfo: eventInfo,
-                                    )),
-                                child: ListTile(
-                                  title: Text(
-                                    eventInfo['eventName'],
-                                    // textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      // shadows: <Shadow>[
-                                      //   Shadow(
-                                      //     offset: Offset(3.0, 3.0),
-                                      //     blurRadius: 3.0,
-                                      //     color: Color.fromARGB(255, 0, 0, 0),
-                                      //   ),
-                                      //   Shadow(
-                                      //     offset: Offset(3.0, 3.0),
-                                      //     blurRadius: 8.0,
-                                      //     color: Color.fromARGB(125, 0, 0, 255),
-                                      //   ),
-                                      // ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
+                  onPressed: () {
+                    var registeredEventCodes = _eventData.map((e) => e['eventCode'] as String);
+                    moveToPage(context, RegisterNewEventPage(registeredEventCodes: registeredEventCodes.toList())).then((_) {
+                      // debugPrint('################## push popped!!');
+                      loadEventListFromFile();
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(
+                      "REGISTER NEW EVENT",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: screenWidth * 0.04,
+                      ),
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
+            ),
+
+            SizedBox(height: screenHeight * 0.06),
+
+            Expanded(
+              // flex: 100,
+              child: Scrollbar(
+                thickness: 15,
+                key: parentKey,
+                child: ListView.builder(
+                    controller: scrollController,
+                    // shrinkWrap: true,
+                    itemCount: _eventData.length,
+                    itemBuilder: (context, index) {
+                      final eventInfo = _eventData[index];
+
+                      // print("$index $eventName : $eventCode");
+                      keyDict[eventInfo['eventCode']] = GlobalKey();
+                      return Container(
+                        key: keyDict[eventInfo['eventCode']],
+                        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
+                        child: ElevatedButton(
+                          style: getButtonStyle(eventInfo['eventCode'], _selectedEventCode),
+                          onPressed: () => moveToPage(
+                              context,
+                              EventViewPage(
+                                eventInfo: eventInfo,
+                              )),
+                          child: ListTile(
+                            title: Text(
+                              eventInfo['eventName'],
+                              // textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                // shadows: <Shadow>[
+                                //   Shadow(
+                                //     offset: Offset(3.0, 3.0),
+                                //     blurRadius: 3.0,
+                                //     color: Color.fromARGB(255, 0, 0, 0),
+                                //   ),
+                                //   Shadow(
+                                //     offset: Offset(3.0, 3.0),
+                                //     blurRadius: 8.0,
+                                //     color: Color.fromARGB(125, 0, 0, 255),
+                                //   ),
+                                // ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: AdBar(
         onUpdate: () {},
