@@ -150,7 +150,7 @@ getAllBoothInfoForAnEvent(String eventCode) async {
   try {
     // search document based on given eventcode
     QuerySnapshot<Map<String, dynamic>> snapshot =
-        await firestore.collection("uploaded_pamphlets").where('eventCode', isEqualTo: eventCode).orderBy("boothNumber").get();
+        await firestore.collection("uploaded_pamphlets").where('eventCode', isEqualTo: eventCode).orderBy("orgName").get();
 
     if (snapshot.docs.isNotEmpty) {
       // add all boot information to list
