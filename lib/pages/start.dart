@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/exhibitor/home_exhibitor.dart';
-import 'package:test/pages/organizer/home_organizer.dart';
-import 'package:test/pages/visitor/home_visitor.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/pages/login.dart';
+import 'package:leaphlet/pages/exhibitor/home_exhibitor.dart';
+import 'package:leaphlet/pages/organizer/home_organizer.dart';
+import 'package:leaphlet/pages/visitor/home_visitor.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/pages/login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class StartPage extends StatelessWidget {

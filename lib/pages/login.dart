@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/start.dart';
+import 'package:leaphlet/pages/start.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

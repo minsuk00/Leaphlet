@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:test/backend/cloud_functions/test_firestore.dart';
+import 'package:leaphlet/backend/cloud_functions/test_firestore.dart';
 
 class OrganizerHomePage extends StatefulWidget {
   const OrganizerHomePage({super.key});

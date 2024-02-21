@@ -2,10 +2,10 @@
 
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/pages/login.dart';
-import 'package:test/util/user_type.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/pages/login.dart';
+import 'package:leaphlet/util/user_type.dart';
 
 import 'firebase_options.dart';
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.

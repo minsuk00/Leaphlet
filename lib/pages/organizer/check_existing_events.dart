@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:test/backend/local_functions/deprecated_event.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/pages/common/search_bar.dart';
-import 'package:test/pages/visitor/event_view.dart';
-import 'package:test/util/button_style.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/util/user_type.dart';
+// import 'package:leaphlet/backend/local_functions/deprecated_event.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/pages/common/search_bar.dart';
+import 'package:leaphlet/pages/visitor/event_view.dart';
+import 'package:leaphlet/util/button_style.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/util/user_type.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:test/cloud_functions/test_firestore.dart';
+// import 'package:leaphlet/cloud_functions/test_firestore.dart';
 
 class CheckExistingEventsPage extends StatefulWidget {
   const CheckExistingEventsPage({super.key});

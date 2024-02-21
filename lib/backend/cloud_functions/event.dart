@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/util/user_type.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/util/user_type.dart';
 
 Future<Map<String, String?>?> getEventInfo(String eventCode) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/pages/common/search_bar.dart';
-import 'package:test/util/button_style.dart';
-// import 'package:test/backend/local_functions/deprecated_event.dart';
-// import 'package:test/backend/local_functions/util.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/pages/common/search_bar.dart';
+import 'package:leaphlet/util/button_style.dart';
+// import 'package:leaphlet/backend/local_functions/deprecated_event.dart';
+// import 'package:leaphlet/backend/local_functions/util.dart';
 
 // import 'dart:convert';
 // import 'dart:io';
 
 // import 'package:flutter/services.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/pages/visitor/event_view.dart';
-import 'package:test/pages/visitor/register_new_event.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/pages/visitor/event_view.dart';
+import 'package:leaphlet/pages/visitor/register_new_event.dart';
 // import 'package:path_provider/path_provider.dart';
-import 'package:test/util/user_type.dart';
-import 'package:test/pages/common/ad_bar.dart';
+import 'package:leaphlet/util/user_type.dart';
+import 'package:leaphlet/pages/common/ad_bar.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});

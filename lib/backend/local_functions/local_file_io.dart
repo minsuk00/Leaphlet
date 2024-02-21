@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/util/user_type.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/util/user_type.dart';
 
 const FILE_NAME_PREFIX_EVENT = "local_event_info_";
 const FILE_NAME_PREFIX_BOOTH = "local_booth_info_";

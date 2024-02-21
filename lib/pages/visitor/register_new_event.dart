@@ -1,14 +1,14 @@
 // import 'dart:convert';
 // import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-// import 'package:test/backend/local_functions/deprecated_event.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/backend/cloud_functions/event.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+// import 'package:leaphlet/backend/local_functions/deprecated_event.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/backend/cloud_functions/event.dart';
 // import 'package:path_provider/path_provider.dart';
-import 'package:test/util/user_type.dart';
-import 'package:test/pages/common/ad_bar.dart';
+import 'package:leaphlet/util/user_type.dart';
+import 'package:leaphlet/pages/common/ad_bar.dart';
 
 class RegisterNewEventPage extends StatefulWidget {
   final List<String> registeredEventCodes;

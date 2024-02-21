@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:test/pages/common/info.dart';
-import 'package:test/util/navigate.dart';
+import 'package:leaphlet/pages/common/info.dart';
+import 'package:leaphlet/util/navigate.dart';
 
 class AdBar extends StatefulWidget {
   final Function() onUpdate;

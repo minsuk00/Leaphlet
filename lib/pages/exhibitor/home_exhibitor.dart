@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/exhibitor/upload_pamphlet.dart';
-import 'package:test/pages/exhibitor/existing_files.dart';
-import 'package:test/pages/common/info.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/pages/common/ad_bar.dart';
+import 'package:leaphlet/pages/exhibitor/upload_pamphlet.dart';
+import 'package:leaphlet/pages/exhibitor/existing_files.dart';
+import 'package:leaphlet/pages/common/info.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/pages/common/ad_bar.dart';
 
 class ExhibitorHomePage extends StatefulWidget {
   const ExhibitorHomePage({super.key});

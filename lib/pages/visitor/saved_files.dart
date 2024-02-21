@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/common/search_bar.dart';
-import 'package:test/pages/visitor/file_information.dart';
-import 'package:test/pages/common/ad_bar.dart';
-import 'package:test/backend/local_functions/local_file_io.dart';
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/util/button_style.dart';
-import 'package:test/util/user_type.dart';
-import 'package:test/util/navigate.dart';
+import 'package:leaphlet/pages/common/search_bar.dart';
+import 'package:leaphlet/pages/visitor/file_information.dart';
+import 'package:leaphlet/pages/common/ad_bar.dart';
+import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/util/button_style.dart';
+import 'package:leaphlet/util/user_type.dart';
+import 'package:leaphlet/util/navigate.dart';
 
 class SavedFilesPage extends StatefulWidget {
   const SavedFilesPage({super.key});

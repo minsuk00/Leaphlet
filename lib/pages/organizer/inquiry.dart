@@ -1,11 +1,11 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:test/backend/cloud_functions/inquiry.dart';
-import 'package:test/util/navigate.dart';
+import 'package:leaphlet/backend/cloud_functions/inquiry.dart';
+import 'package:leaphlet/util/navigate.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
-// import 'package:test/cloud_functions/test_firestore.dart';
+// import 'package:leaphlet/cloud_functions/test_firestore.dart';
 
 class InquiryPage extends StatefulWidget {
   const InquiryPage({super.key});

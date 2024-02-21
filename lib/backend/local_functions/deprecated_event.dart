@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:test/backend/local_functions/util.dart';
-import 'package:test/util/user_type.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
+import 'package:leaphlet/util/user_type.dart';
 
 // ignore: constant_identifier_names
 const FILE_NAME_PREFIX = "local_event_info_";

@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/backend/cloud_functions/event.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/backend/cloud_functions/event.dart';
 
 class CreateNewEventPage extends StatefulWidget {
   const CreateNewEventPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/common/info.dart';
-import 'package:test/pages/visitor/events.dart';
-import 'package:test/pages/visitor/saved_files.dart';
-import 'package:test/util/navigate.dart';
-import 'package:test/pages/common/ad_bar.dart';
+import 'package:leaphlet/pages/common/info.dart';
+import 'package:leaphlet/pages/visitor/events.dart';
+import 'package:leaphlet/pages/visitor/saved_files.dart';
+import 'package:leaphlet/util/navigate.dart';
+import 'package:leaphlet/pages/common/ad_bar.dart';
 
 class VisitorHomePage extends StatelessWidget {
   const VisitorHomePage({super.key});

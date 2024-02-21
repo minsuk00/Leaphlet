@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test/pages/organizer/create_new_event.dart';
-import 'package:test/pages/organizer/check_existing_events.dart';
-import 'package:test/pages/organizer/inquiry.dart';
-import 'package:test/util/navigate.dart';
+import 'package:leaphlet/pages/organizer/create_new_event.dart';
+import 'package:leaphlet/pages/organizer/check_existing_events.dart';
+import 'package:leaphlet/pages/organizer/inquiry.dart';
+import 'package:leaphlet/util/navigate.dart';
 
 
 class OrganizerHomePage extends StatefulWidget {

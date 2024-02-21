@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test/backend/local_functions/util.dart';
+import 'package:leaphlet/backend/local_functions/util.dart';
 
 // ignore: must_be_immutable
 class CustomSearchBar extends StatefulWidget {

@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 // import 'dart:math';
 import 'package:file_picker/file_picker.dart';
-import 'package:test/backend/cloud_functions/event.dart';
-// import 'package:test/backend/local_functions/local_file_io.dart';
-// import 'package:test/backend/local_functions/util.dart' as util;
-import 'package:test/pages/exhibitor/confirmation.dart';
-import 'package:test/util/navigate.dart';
-// import 'package:test/backend/cloud_functions/pamphlets.dart';
-// import 'package:test/util/user_type.dart';
+import 'package:leaphlet/backend/cloud_functions/event.dart';
+// import 'package:leaphlet/backend/local_functions/local_file_io.dart';
+// import 'package:leaphlet/backend/local_functions/util.dart' as util;
+import 'package:leaphlet/pages/exhibitor/confirmation.dart';
+import 'package:leaphlet/util/navigate.dart';
+// import 'package:leaphlet/backend/cloud_functions/pamphlets.dart';
+// import 'package:leaphlet/util/user_type.dart';
 
 class UploadPamphletPage extends StatefulWidget {
   const UploadPamphletPage({super.key});
