@@ -11,10 +11,10 @@ This repository contains our team's submission to [Solution Challenge 2024](http
 <summary><h2 style="display:inline">Table of Contents</h2></summary>
 <br/>
 
-- [What is Leaphlet?](#what-is-leaphlet)
-- [Setup](#setup)
-- [License](#license)
-- [The Leaphlet Team](#the-leaphlet-team)
+- [What is Leaphlet?](#🧐-what-is-leaphlet)
+- [Setup](#🛠️-setup)
+- [License](#🛡️-license)
+- [The Leaphlet Team](#😀-the-leaphlet-team)
 </details>
 
 ---
