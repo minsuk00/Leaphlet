@@ -11,13 +11,15 @@ This repository contains our team's submission to [Solution Challenge 2024](http
 <summary><h2 style="display:inline">Table of Contents</h2></summary>
 <br/>
 
-- [What is Leaphlet?](#🧐-what-is-leaphlet)
-- [Setup](#🛠️-setup)
-- [License](#🛡️-license)
-- [The Leaphlet Team](#😀-the-leaphlet-team)
+- [What is Leaphlet?](#what-is-leaphlet)
+- [Setup](#setup)
+- [License](#license)
+- [The Leaphlet Team](#the-leaphlet-team)
 </details>
 
 ---
+<a name="what-is-leaphlet"></a>
+
 ## 🧐 What is Leaphlet?
 ### Description
 Our project, Leaphlet, is a digital brochure app created as an attempt to reduce paper waste at events, exhibitions and symposiums. The exhibitor's version allows exhibitors of an event to upload their company profile and leaflet to the app, and others invited to the event can view and save leaflets from different booths and companies through the visitor version. 
@@ -33,6 +35,8 @@ The United Nations’ [Sustainable Development goals](https://sdgs.un.org/goals)
     - send inquiries
 
 ---
+<a name="setup"></a>
+
 ## 🛠️ Setup
 You can either download the [apk](https://github.com/minsuk00/Leaphlet/releases) directly or run the application locally
 ### Built with
@@ -55,8 +59,12 @@ You can either download the [apk](https://github.com/minsuk00/Leaphlet/releases)
     flutter run
     ```
 ---
+<a name="license"></a>
+
 ## 🛡️ License
 This project is licensed under the MIT License :)
+
+<a name="the-leaphlet-team"></a>
 
 ## 😀 The Leaphlet Team
 Leaphlet was created by Ryudai, Sara, Hosu, and Minsuk
