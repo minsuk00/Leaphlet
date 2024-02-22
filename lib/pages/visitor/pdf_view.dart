@@ -31,10 +31,8 @@ class _PdfViewPageState extends State<PdfViewPage> {
       body: localPath != null
           ?
           //  Text(localPath!)
-          Expanded(
-              child: PDFView(
-                filePath: localPath,
-              ),
+          PDFView(
+              filePath: localPath,
             )
           : const Center(child: CircularProgressIndicator()),
     );

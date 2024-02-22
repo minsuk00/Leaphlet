@@ -138,10 +138,12 @@ Future<String?> getPamphletPdf(String url) async {
     return localPath;
   } on FirebaseException catch (e) {
     print("Firebase Exception: $e");
+    return null;
   } catch (e) {
     print('error: $e');
+    return null;
   }
-  return null;
+  // return null;
 }
 
 getAllBoothInfoForAnEvent(String eventCode) async {
