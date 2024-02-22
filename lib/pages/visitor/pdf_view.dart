@@ -29,7 +29,9 @@ class _PdfViewPageState extends State<PdfViewPage> {
     return Scaffold(
       appBar: AppBar(),
       body: localPath != null
-          ? Expanded(
+          ?
+          //  Text(localPath!)
+          Expanded(
               child: PDFView(
                 filePath: localPath,
               ),

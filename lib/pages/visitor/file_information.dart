@@ -42,6 +42,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
   bool isSaved = false;
   List<dynamic> _savedBoothsList = [];
   double? _progress;
+  bool _downloadComplete = false;
 
   @override
   void initState() {
@@ -164,6 +165,9 @@ class _FileInformationPageState extends State<FileInformationPage> {
         // response.data is List<int> type
         raf.writeFromSync(response.data);
         await raf.close();
+        setState(() {
+          _downloadComplete = true;
+        });
       } else {
         print("###ERROR... PERMISSION NOT GRANTED");
       }
@@ -344,7 +348,7 @@ class _FileInformationPageState extends State<FileInformationPage> {
                           ),
                         ),
                         child: Text(
-                          "Download PDF",
+                          _downloadComplete ? "Download PDF (✓)" : "Download PDF",
                           style: TextStyle(fontSize: screenWidth * 0.05),
                         ),
                       ),
