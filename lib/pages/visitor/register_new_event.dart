@@ -149,7 +149,8 @@ class _RegisterNewEventPageState extends State<RegisterNewEventPage> {
                   actions: [
                     ElevatedButton(
                         onPressed: () {
-                          popToPage(context, "EventsPage");
+                          // popToPage(context, "EventsPage");
+                          popNTimes(context, 2);
                         },
                         child: const Text("ok"))
                   ],

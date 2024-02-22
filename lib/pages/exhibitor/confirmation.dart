@@ -41,7 +41,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               actions: [
                 OutlinedButton(
                   onPressed: () {
-                    popToPage(context, "ExhibitorHomePage");
+                    // popToPage(context, "ExhibitorHomePage");
+                    popNTimes(context, 3);
                   },
                   child: const Text('OK'),
                 ),

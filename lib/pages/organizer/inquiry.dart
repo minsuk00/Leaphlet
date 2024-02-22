@@ -176,7 +176,8 @@ class _InquiryPageState extends State<InquiryPage> {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      popToPage(context, "OrganizerHomePage");
+                      // popToPage(context, "OrganizerHomePage");
+                      popNTimes(context, 2);
                     },
                     child: const Text('OK'),
                   ),
