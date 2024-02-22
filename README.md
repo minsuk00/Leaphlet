@@ -39,7 +39,7 @@ The United Nations’ [Sustainable Development goals](https://sdgs.un.org/goals)
 
 ## 🛠️ Setup
 You can either download the [apk](https://github.com/minsuk00/Leaphlet/releases) directly or run the application locally.
-Use [41G8M37] as a sample event code.
+<br/>Use __[41G8M37]__ as a sample event code.
 ### Built with
 - Frontend: Flutter (Android)
 - Backend: Firebase (FlutterFire)
