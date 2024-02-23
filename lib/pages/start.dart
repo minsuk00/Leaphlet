@@ -7,6 +7,9 @@ import 'package:leaphlet/pages/login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class StartPage extends StatelessWidget {
+  final bool ENABLE_GUEST_MODE_RESTRICTION = true;
+  // final bool ENABLE_GUEST_MODE_RESTRICTION = false;
+
   const StartPage({Key? key, this.username = '', this.loginState = '', required this.googleLogin}) : super(key: key);
   final String username;
   final String loginState;
@@ -91,7 +94,8 @@ class StartPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(14),
-                    child: Text("Use as Visitor",
+                    child: Text(
+                      "Use as Visitor",
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 0.06 * screenWidth,
@@ -101,9 +105,7 @@ class StartPage extends StatelessWidget {
                 ),
               ),
             ),
-
             SizedBox(height: screenWidth * 0.04),
-            
             SizedBox(
               width: 0.75 * screenWidth,
               height: 0.15 * screenHeight,
@@ -121,7 +123,7 @@ class StartPage extends StatelessWidget {
                 ),
                 child: OutlinedButton(
                   onPressed: () {
-                    if (loginState == 'guest') {
+                    if (loginState == 'guest' && ENABLE_GUEST_MODE_RESTRICTION) {
                       _showGuestRestrictionDialog(context);
                     } else {
                       moveToPage(context, const ExhibitorHomePage());
@@ -139,7 +141,8 @@ class StartPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(14),
-                    child: Text("Use as Exhibitor",
+                    child: Text(
+                      "Use as Exhibitor",
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 0.06 * screenWidth,
@@ -149,17 +152,15 @@ class StartPage extends StatelessWidget {
                 ),
               ),
             ),
-            
             SizedBox(height: screenWidth * 0.04),
-
             TextButton(
               onPressed: () {
-                if (loginState == 'guest') {
+                if (loginState == 'guest' && ENABLE_GUEST_MODE_RESTRICTION) {
                   _showGuestRestrictionDialog(context);
                 } else {
                   moveToPage(context, const OrganizerHomePage());
                 }
-              },              
+              },
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3E885E)),
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -171,7 +172,8 @@ class StartPage extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Text("Use as Organizer",
+              child: Text(
+                "Use as Organizer",
                 style: TextStyle(
                   fontSize: 0.04 * screenWidth,
                   fontFamily: 'Roboto',
@@ -183,6 +185,7 @@ class StartPage extends StatelessWidget {
       ),
     );
   }
+
   List<Widget> _buildAppBarActions(BuildContext context) {
     if (loginState == 'google_auth') {
       return [
