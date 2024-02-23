@@ -59,7 +59,7 @@ You can either download the [apk](https://github.com/minsuk00/Leaphlet/releases)
     ```
     flutter run
     ```
-    (warning: Google log-in functionality requires pre-configuration of Firebase. Disable *showGuestRestrictionDialog()* method in *lib/pages/start.dart* as a bypass)
+    (warning: Google log-in functionality requires pre-configuration of Firebase. Set *ENABLE_GUEST_MODE_RESTRICTION* variable to *false* in *lib/pages/start.dart* as a bypass)
 ---
 <a name="license"></a>
 
